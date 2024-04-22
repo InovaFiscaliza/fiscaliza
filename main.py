@@ -46,3 +46,21 @@ class Fiscaliza:
                 "Não foi possível conectar ao servidor do Fiscaliza"
             ) from e
         return fiscaliza
+
+
+class Issue:
+    def __init__(self, fiscaliza: Fiscaliza, issue_id: int | str):
+        self.fiscaliza = fiscaliza
+        self.issue_id = issue_id
+        self.issue = self.fiscaliza.issue.get(
+            issue_id, include=["relations", "attachments"]
+        )
+
+    @property
+    def attrs(self):
+        try:
+            return dict(list(self.issue))
+        except Exception:
+            return {}
+        
+    @property
