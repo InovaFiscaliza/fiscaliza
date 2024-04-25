@@ -52,10 +52,42 @@ class Issue:
     def __init__(self, fiscaliza: Fiscaliza, issue_id: int | str):
         self.fiscaliza = fiscaliza
         self.issue_id = issue_id
-        self.issue = self.fiscaliza.issue.get(
+        self._issue = self.fiscaliza.issue.get(
             issue_id, include=["relations", "attachments"]
         )
 
+    @staticmethod
+    def _utf2ascii(s: str) -> str:
+        """Receives a string and returns the same in ASCII format without spaces"""
+        s = re.sub(UTFCHARS, "", s)
+        return unidecode(s.replace(" ", "_"))
+
+    @staticmethod
+    def _format_json_string(field: str) -> str:
+        """Recebe uma string formatada como json e retorna a mesma string formatada como json"""
+        string = field.replace("'", '"').replace("=>", ": ")
+        try:
+            valor = json.loads(string)
+            return valor
+        except (json.JSONDecodeError, TypeError):
+            return string
+        return field
+
+    @staticmethod
+    def extract_string(field: str) -> str | list:
+        """Recebe uma string formatada como json e retorna somente o valor 'value' da string"""
+        if isinstance(field, dict):
+            if not (valor := field.get("valor")):
+                valor = field.get("name", field)
+            return valor
+        if isinstance(field, str):
+            json_obj = Issue._format_json_string(field)
+            if isinstance(json_obj, str):
+                return json_obj
+            return Issue.extract_string(json_obj)
+        if isinstance(field, list):
+            return [Issue.extract_string(f) for f in field]
+        return field
     @property
     def attrs(self):
         try:
