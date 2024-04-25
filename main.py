@@ -88,11 +88,60 @@ class Issue:
         if isinstance(field, list):
             return [Issue.extract_string(f) for f in field]
         return field
+
     @property
-    def attrs(self):
+    def type(self) -> str:
+        if tracker := self._attrs.get("tracker"):
+            return self._utf2ascii(tracker.get("name", ""))
+
+    @property
+    def _attrs(self) -> dict:
         try:
-            return dict(list(self.issue))
-        except Exception:
+            return dict(list(self._issue))
+        except Exception as e:
+            raise Exception(
+                f"Não foi possível obter os atributos da issue {self.issue_id}"
+            ) from e
+
+    @cached_property
+    def attrs(self) -> dict:
+        special_fields = ["relations", "attachments", "custom_fields", "journals"]
+        attrs = {k: v for k, v in self._attrs.items() if k not in special_fields}
+        attrs["Anexos"] = self.attachments
+        attrs.update(self.custom_fields)
+        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
+        relations = {}
+        for k, v in self.relations.items():
+            relations[k] = {
+                "Tipo": getattr(v, "type"),
+                "Status": Issue.extract_string(v._attrs.get("status")),
+                "Nome": v._attrs.get("subject"),
+                "Descricao": v._attrs.get("description"),
+            }
+        attrs["Relacoes"] = relations
+        return attrs
+
+    @property
+    def attachments(self) -> dict:
+        return {
+            d["filename"]: d["content_url"] for d in self._attrs.get("attachments", [])
+        }
+
+    @property
+    def custom_fields(self) -> dict:
+        return {
+            self._utf2ascii(d["name"]): d["value"]
+            for d in self._attrs.get("custom_fields", [])
+        }
+
+    @property
+    def relations(self) -> dict:
+        relations = {}
+        for relation in self._attrs.get("relations", []):
+            issue_id = relation.get("issue_id")
+            relations[issue_id] = Issue(self.fiscaliza, issue_id)
+        return relations
+
             return {}
         
     @property
