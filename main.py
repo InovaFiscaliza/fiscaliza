@@ -1,13 +1,23 @@
+import json
 import os
-import urllib3
-from redminelib import Redmine
+import re
+from datetime import datetime, timedelta
+from functools import cached_property
+from typing import Iterator
 
 import typer
-from requests.exceptions import SSLError, ConnectionError
-from constants import URL_PD, URL_HM
+import urllib3
 from dotenv import load_dotenv
+from redminelib import Redmine
+from requests.exceptions import ConnectionError, SSLError
+from unidecode import unidecode
+from fastcore.xtras import dumps, Path
+
+from constants import URL_HM, URL_PD
 
 load_dotenv(override=True)
+
+UTFCHARS = re.compile(r"[!\"#$%&'()*+\,\-\.\/:;<=>\?@[\\]\^`_\{\|\}~]")
 
 
 class Fiscaliza:
@@ -19,6 +29,8 @@ class Fiscaliza:
         self.teste = teste
         self.key = key
         self.url = URL_HM if teste else URL_PD
+        self.client = self.authenticate()
+        self.cache = {}
 
     def authenticate(self):
         try:
@@ -47,20 +59,45 @@ class Fiscaliza:
             ) from e
         return fiscaliza
 
+    def issue_details(self, issue: str) -> dict:
+        if self.cache.get(issue):
+            return self.cache[issue].details
+        issue_obj = Issue(self.client, issue)
+        self.cache[issue] = issue_obj
+        return issue_obj.details
+
+    def save_cache(self, folder: Path):
+        Path(folder).mkdir(exist_ok=True)
+        for issue, issue_obj in self.cache.items():
+            json.dump(
+                issue_obj.details,
+                (folder / f"{issue}.json").open("w"),
+                ensure_ascii=False,
+                indent=2,
+            )
+
 
 class Issue:
-    def __init__(self, fiscaliza: Fiscaliza, issue_id: int | str):
+    def __init__(self, fiscaliza: Redmine, issue_id: int | str):
         self.fiscaliza = fiscaliza
         self.issue_id = issue_id
         self._issue = self.fiscaliza.issue.get(
-            issue_id, include=["relations", "attachments"]
+            issue_id,
+            include=[
+                "relations",
+                "attachments",
+                "children",
+                "journals",
+                "changesets",
+                "allowed_statuses",
+            ],
         )
 
     @staticmethod
     def _utf2ascii(s: str) -> str:
         """Receives a string and returns the same in ASCII format without spaces"""
         s = re.sub(UTFCHARS, "", s)
-        return unidecode(s.replace(" ", "_"))
+        return unidecode(s.replace(" ", "_").lower())
 
     @staticmethod
     def _format_json_string(field: str) -> str:
@@ -91,11 +128,11 @@ class Issue:
 
     @property
     def type(self) -> str:
-        if tracker := self._attrs.get("tracker"):
+        if tracker := self.attrs.get("tracker"):
             return self._utf2ascii(tracker.get("name", ""))
 
     @property
-    def _attrs(self) -> dict:
+    def attrs(self) -> dict:
         try:
             return dict(list(self._issue))
         except Exception as e:
@@ -103,45 +140,113 @@ class Issue:
                 f"Não foi possível obter os atributos da issue {self.issue_id}"
             ) from e
 
-    @cached_property
-    def attrs(self) -> dict:
-        special_fields = ["relations", "attachments", "custom_fields", "journals"]
-        attrs = {k: v for k, v in self._attrs.items() if k not in special_fields}
-        attrs["Anexos"] = self.attachments
-        attrs.update(self.custom_fields)
-        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
-        relations = {}
-        for k, v in self.relations.items():
-            relations[k] = {
-                "Tipo": getattr(v, "type"),
-                "Status": Issue.extract_string(v._attrs.get("status")),
-                "Nome": v._attrs.get("subject"),
-                "Descricao": v._attrs.get("description"),
-            }
-        attrs["Relacoes"] = relations
-        return attrs
-
     @property
     def attachments(self) -> dict:
         return {
-            d["filename"]: d["content_url"] for d in self._attrs.get("attachments", [])
+            d["filename"]: d["content_url"] for d in self.attrs.get("attachments", [])
         }
 
     @property
     def custom_fields(self) -> dict:
         return {
             self._utf2ascii(d["name"]): d["value"]
-            for d in self._attrs.get("custom_fields", [])
+            for d in self.attrs.get("custom_fields", [])
         }
 
     @property
     def relations(self) -> dict:
         relations = {}
-        for relation in self._attrs.get("relations", []):
+        for relation in self.attrs.get("relations", []):
             issue_id = relation.get("issue_id")
+            if self.attrs["id"] == issue_id:
+                continue
             relations[issue_id] = Issue(self.fiscaliza, issue_id)
         return relations
 
-            return {}
-        
-    @property
+    def project_members(self) -> Iterator:
+        project_id = Issue.extract_string(self.attrs["project"]).lower()
+        return (
+            {k: Issue.extract_string(v) for k, v in dict(m).items()}
+            for m in self.fiscaliza.project_membership.filter(project_id=project_id)
+        )
+
+    @cached_property
+    def issue_members(self, role: str = "Inspeção-Execução") -> dict:
+        return {
+            m["id"]: m["user"]
+            for m in self.project_members()
+            if role in m["roles"] and "user" in m
+        }
+
+    def update_on(self) -> str:
+        if journal := self.attrs["journals"]:
+            journal = journal[-1]
+            key = "user"
+        else:
+            journal = self.attrs
+            key = "author"
+
+        user = journal[key]["name"]
+        date = datetime.strptime(
+            journal["created_on"], "%Y-%m-%dT%H:%M:%SZ"
+        ) - timedelta(hours=3)
+        return f"Atualizado por {user} em {datetime.strftime(date, '%d/%m/%Y')} às {date.time()}"
+
+    def format_relations(self) -> dict:
+        """
+        Formats the relations of an issue as a dictionary.
+
+        Returns:
+            dict: A dictionary where the keys are the relation types, and the values are dictionaries containing the type, status, name, and description of the related issue.
+        """
+        relations = {}
+        for k, v in self.relations.items():
+            relations[k] = {
+                "Tipo": getattr(v, "type"),
+                "Status": Issue.extract_string(v.attrs.get("status")),
+                "Nome": v.attrs.get("subject"),
+                "Descricao": v.attrs.get("description"),
+            }
+        return relations
+
+    @cached_property
+    def details(self) -> dict:
+        """Retrieves the details of an issue as a dictionary.
+
+        Returns:
+            dict: A dictionary containing the details of the issue, including its attachments, custom fields, journals, and other relevant information.
+        """
+
+        special_fields = ["relations", "attachments", "custom_fields", "journals"]
+        attrs = {k: v for k, v in self.attrs.items() if k not in special_fields}
+        attrs["anexos"] = self.attachments
+        attrs.update(self.custom_fields)
+        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
+        attrs["relacoes"] = self.format_relations()
+        attrs["atualizacao"] = self.update_on()
+        attrs["membros"] = list(self.issue_members.values())
+        attrs["fiscal_responsavel"] = self.issue_members.get(
+            attrs.get("fiscal_responsavel"), ""
+        )
+        attrs["fiscais"] = [
+            self.issue_members.get(f, "") for f in attrs.get("fiscais", [])
+        ]
+        return attrs
+
+
+def test_detalhar_issue(issue: str):
+    from pprint import pprint
+
+    fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"])
+    issue_obj = Issue(fiscaliza.client, issue)
+    pprint(issue_obj.details)
+    json.dump(
+        issue_obj.details,
+        (Path.cwd() / f"{issue}.json").open("w"),
+        indent=2,
+        ensure_ascii=False,
+    )
+
+
+if __name__ == "__main__":
+    typer.run(test_detalhar_issue)
