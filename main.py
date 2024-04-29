@@ -202,10 +202,10 @@ class Issue:
         relations = {}
         for k, v in self.relations.items():
             relations[k] = {
-                "Tipo": getattr(v, "type"),
-                "Status": Issue.extract_string(v.attrs.get("status")),
-                "Nome": v.attrs.get("subject"),
-                "Descricao": v.attrs.get("description"),
+                "tipo": getattr(v, "type"),
+                "status": Issue.extract_string(v.attrs.get("status")),
+                "nome": v.attrs.get("subject"),
+                "descricao": v.attrs.get("description"),
             }
         return relations
 
