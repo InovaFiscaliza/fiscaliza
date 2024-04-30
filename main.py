@@ -159,7 +159,7 @@ class Issue:
         for relation in self.attrs.get("relations", []):
             issue_id = relation.get("issue_id")
             if self.attrs["id"] == issue_id:
-                continue
+                issue_id = relation.get("issue_to_id")
             relations[issue_id] = Issue(self.fiscaliza, issue_id)
         return relations
 
