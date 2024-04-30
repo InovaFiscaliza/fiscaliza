@@ -219,16 +219,16 @@ class Issue:
         special_fields = ["relations", "attachments", "custom_fields", "journals"]
         attrs = {k: v for k, v in self.attrs.items() if k not in special_fields}
         attrs["Anexos"] = self.attachments
-        attrs.update(self.custom_fields)
+        attrs.update({k: v.get("value", "") for k, v in self.custom_fields.items()})
         attrs = {k: self.extract_string(v) for k, v in attrs.items()}
-        attrs["Relações"] = self.format_relations()
-        attrs["Atualização"] = self.update_on()
+        attrs["Relacoes"] = self.format_relations()
+        attrs["Atualizacao"] = self.update_on()
         attrs["Membros"] = list(self.issue_members().values())
-        attrs["Fiscal responsável"] = self.issue_members().get(
-            attrs.get("Fiscal responsável"), ""
+        attrs["Fiscal_responsavel"] = self.issue_members().get(
+            attrs.get("Fiscal_responsavel"), ""
         )
         attrs["Fiscais"] = [
-            self.issue_members().get(f, "") for f in attrs.get("Fiscais", [])
+            self.issue_members().get(f, "") for f in attrs.get("fiscais", [])
         ]
         return attrs
 
