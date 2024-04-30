@@ -17,7 +17,7 @@ from constants import URL_HM, URL_PD
 
 load_dotenv(override=True)
 
-UTFCHARS = re.compile(r"[!\"#$%&'()*+\,\-\.\/:;<=>\?@[\\]\^`_\{\|\}~]")
+UTFCHARS = re.compile(r"[!\"#$%&'\(\)*+\,\-\.\/:;<=>\?@\[\\\]\^`_\{\|\}~]")
 
 
 class Fiscaliza:
