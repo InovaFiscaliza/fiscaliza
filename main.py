@@ -30,7 +30,7 @@ class Fiscaliza:
         self.key = key
         self.url = URL_HM if teste else URL_PD
         self.client = self.authenticate()
-        self.cache = {}
+        self.issues = {}
 
     def authenticate(self):
         try:
@@ -60,15 +60,15 @@ class Fiscaliza:
         return fiscaliza
 
     def issue_details(self, issue: str) -> dict:
-        if self.cache.get(issue):
-            return self.cache[issue].details
+        if self.issues.get(issue):
+            return self.issues[issue].details
         issue_obj = Issue(self.client, issue)
-        self.cache[issue] = issue_obj
+        self.issues[issue] = issue_obj
         return issue_obj.details
 
     def save_cache(self, folder: Path):
         Path(folder).mkdir(exist_ok=True)
-        for issue, issue_obj in self.cache.items():
+        for issue, issue_obj in self.issues.items():
             json.dump(
                 issue_obj.details,
                 (folder / f"{issue}.json").open("w"),
@@ -150,8 +150,7 @@ class Issue:
     @property
     def custom_fields(self) -> dict:
         return {
-            self._utf2ascii(d["name"]): d["value"]
-            for d in self.attrs.get("custom_fields", [])
+            self._utf2ascii(d["name"]): d for d in self.attrs.get("custom_fields", [])
         }
 
     @property
@@ -164,18 +163,18 @@ class Issue:
             relations[issue_id] = Issue(self.fiscaliza, issue_id)
         return relations
 
-    def project_members(self) -> Iterator:
+    @cached_property
+    def project_members(self) -> list:
         project_id = Issue.extract_string(self.attrs["project"]).lower()
-        return (
+        return [
             {k: Issue.extract_string(v) for k, v in dict(m).items()}
             for m in self.fiscaliza.project_membership.filter(project_id=project_id)
-        )
+        ]
 
-    @cached_property
     def issue_members(self, role: str = "Inspeção-Execução") -> dict:
         return {
             m["id"]: m["user"]
-            for m in self.project_members()
+            for m in self.project_members
             if role in m["roles"] and "user" in m
         }
 
@@ -203,10 +202,10 @@ class Issue:
         relations = {}
         for k, v in self.relations.items():
             relations[k] = {
-                "tipo": getattr(v, "type"),
+                "type": getattr(v, "type"),
                 "status": Issue.extract_string(v.attrs.get("status")),
-                "nome": v.attrs.get("subject"),
-                "descricao": v.attrs.get("description"),
+                "name": v.attrs.get("subject"),
+                "description": v.attrs.get("description"),
             }
         return relations
 
@@ -217,20 +216,19 @@ class Issue:
         Returns:
             dict: A dictionary containing the details of the issue, including its attachments, custom fields, journals, and other relevant information.
         """
-
         special_fields = ["relations", "attachments", "custom_fields", "journals"]
         attrs = {k: v for k, v in self.attrs.items() if k not in special_fields}
-        attrs["anexos"] = self.attachments
+        attrs["Anexos"] = self.attachments
         attrs.update(self.custom_fields)
         attrs = {k: self.extract_string(v) for k, v in attrs.items()}
-        attrs["relacoes"] = self.format_relations()
-        attrs["atualizacao"] = self.update_on()
-        attrs["membros"] = list(self.issue_members.values())
-        attrs["fiscal_responsavel"] = self.issue_members.get(
-            attrs.get("fiscal_responsavel"), ""
+        attrs["Relações"] = self.format_relations()
+        attrs["Atualização"] = self.update_on()
+        attrs["Membros"] = list(self.issue_members().values())
+        attrs["Fiscal responsável"] = self.issue_members().get(
+            attrs.get("Fiscal responsável"), ""
         )
-        attrs["fiscais"] = [
-            self.issue_members.get(f, "") for f in attrs.get("fiscais", [])
+        attrs["Fiscais"] = [
+            self.issue_members().get(f, "") for f in attrs.get("Fiscais", [])
         ]
         return attrs
 
@@ -240,7 +238,8 @@ def test_detalhar_issue(issue: str):
 
     fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"])
     issue_obj = Issue(fiscaliza.client, issue)
-    pprint(issue_obj.details)
+    # pprint(issue_obj.attrs)
+    pprint(issue_obj.custom_fields)
     json.dump(
         issue_obj.details,
         (Path.cwd() / f"{issue}.json").open("w"),
