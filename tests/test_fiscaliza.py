@@ -31,4 +31,4 @@ class TestFiscaliza:
         fiscaliza = Fiscaliza(username, password, teste, key=key)
         assert fiscaliza.key == os.environ["KEY"]
         assert fiscaliza.username == os.environ["USERAPI"]
-        assert isinstance(fiscaliza.authenticate(), Redmine)
+        assert isinstance(fiscaliza.client, Redmine)
