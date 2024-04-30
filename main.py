@@ -92,12 +92,13 @@ class Issue:
                 "allowed_statuses",
             ],
         )
+        self._ascii2utf = {}
 
-    @staticmethod
-    def _utf2ascii(s: str) -> str:
+    def _utf2ascii(self, s: str) -> str:
         """Receives a string and returns the same in ASCII format without spaces"""
-        s = re.sub(UTFCHARS, "", s)
-        return unidecode(s.replace(" ", "_").lower())
+        decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_"))
+        self._ascii2utf[decoded_string] = s
+        return decoded_string
 
     @staticmethod
     def _format_json_string(field: str) -> str:
