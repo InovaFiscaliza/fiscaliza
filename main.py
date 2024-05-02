@@ -173,6 +173,18 @@ class Issue:
             )
         ]
 
+    @cached_property
+    def names2id(self) -> dict:
+        return {
+            member["user"]["name"]: member["user"]["id"]
+            for member in self.project_members
+            if "user" in member
+        }
+
+    @cached_property
+    def ids2names(self) -> dict:
+        return {v: k for k, v in self.names2id.items()}
+
     def issue_members(self, role: str = "Inspeção-Execução") -> dict:
         return {
             member["user"]["id"]: member["user"]["name"]
