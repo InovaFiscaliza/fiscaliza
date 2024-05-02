@@ -167,15 +167,17 @@ class Issue:
     def project_members(self) -> list:
         project_id = Issue.extract_string(self.attrs["project"]).lower()
         return [
-            {k: Issue.extract_string(v) for k, v in dict(m).items()}
-            for m in self.fiscaliza.project_membership.filter(project_id=project_id)
+            dict(member)
+            for member in self.fiscaliza.project_membership.filter(
+                project_id=project_id, limit=None
+            )
         ]
 
     def issue_members(self, role: str = "Inspeção-Execução") -> dict:
         return {
-            m["id"]: m["user"]
-            for m in self.project_members
-            if role in m["roles"] and "user" in m
+            member["user"]["id"]: member["user"]["name"]
+            for member in self.project_members
+            if role in Issue.extract_string(member["roles"]) and "user" in member
         }
 
     def update_on(self) -> str:
