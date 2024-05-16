@@ -108,8 +108,7 @@ class Issue:
         """Recebe uma string formatada como json e retorna a mesma string formatada como json"""
         string = field.replace("'", '"').replace("=>", ": ")
         try:
-            valor = json.loads(string)
-            return valor
+            return json.loads(string)
         except (json.JSONDecodeError, TypeError):
             return string
         return field
