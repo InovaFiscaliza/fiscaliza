@@ -111,7 +111,6 @@ class Issue:
             return json.loads(string)
         except (json.JSONDecodeError, TypeError):
             return string
-        return field
 
     @staticmethod
     def extract_string(field: str) -> str | list:
@@ -161,11 +160,11 @@ class Issue:
 
     @property
     def type(self) -> str:
-        if tracker := self.attrs.get("tracker"):
+        if tracker := self._attrs.get("tracker"):
             return self._utf2ascii(tracker.get("name", ""))
 
     @property
-    def attrs(self) -> dict:
+    def _attrs(self) -> dict:
         try:
             return dict(list(self._issue))
         except Exception as e:
@@ -174,30 +173,32 @@ class Issue:
             ) from e
 
     @property
-    def attachments(self) -> dict:
-        return {
-            d["filename"]: d["content_url"] for d in self.attrs.get("attachments", [])
-        }
-
-    @property
     def custom_fields(self) -> dict:
-        return {
-            self._utf2ascii(d["name"]): d for d in self.attrs.get("custom_fields", [])
-        }
+        custom_fields = {}
+        for field in self._attrs.get("custom_fields", []):
+            name = self._utf2ascii(field["name"])
+            if value := field.get("value"):
+                if isinstance(value, str):
+                    if "=>" in value:
+                        name = name.upper()
+                        self._ascii2utf[name] = field["name"]
+                        self._special_fields.add(name)
+            custom_fields[name] = field
+        return custom_fields
 
     @property
     def relations(self) -> dict:
         relations = {}
-        for relation in self.attrs.get("relations", []):
+        for relation in self._attrs.get("relations", []):
             issue_id = relation.get("issue_id")
-            if self.attrs["id"] == issue_id:
+            if self._attrs["id"] == issue_id:
                 issue_id = relation.get("issue_to_id")
             relations[issue_id] = Issue(self.fiscaliza, issue_id)
         return relations
 
     @cached_property
     def project_members(self) -> list:
-        project_id = Issue.extract_string(self.attrs["project"]).lower()
+        project_id = Issue.extract_string(self._attrs["project"]).lower()
         return [
             dict(member)
             for member in self.fiscaliza.project_membership.filter(
@@ -217,6 +218,12 @@ class Issue:
     def ids2names(self) -> dict:
         return {v: k for k, v in self.names2id.items()}
 
+    def _utf2ascii(self, s: str) -> str:
+        """Receives a string and returns the same in ASCII format without spaces"""
+        decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_").lower())
+        self._ascii2utf[decoded_string] = s
+        return decoded_string
+
     def issue_members(self, role: str = "Inspeção-Execução") -> dict:
         return {
             member["user"]["id"]: member["user"]["name"]
@@ -225,11 +232,11 @@ class Issue:
         }
 
     def update_on(self) -> str:
-        if journal := self.attrs["journals"]:
+        if journal := self._attrs["journals"]:
             journal = journal[-1]
             key = "user"
         else:
-            journal = self.attrs
+            journal = self._attrs
             key = "author"
 
         user = journal[key]["name"]
@@ -249,11 +256,27 @@ class Issue:
         for k, v in self.relations.items():
             relations[k] = {
                 "type": getattr(v, "type"),
-                "status": Issue.extract_string(v.attrs.get("status")),
-                "name": v.attrs.get("subject"),
-                "description": v.attrs.get("description"),
+                "status": Issue.extract_string(v._attrs.get("status")),
+                "name": v._attrs.get("subject"),
+                "description": v._attrs.get("description"),
             }
         return relations
+
+    @cached_property
+    def attrs(self) -> dict:
+        """Retrieves the attributes of an issue as a dictionary."""
+        special_fields = ["relations", "attachments", "custom_fields", "journals"]
+        attrs = {}
+        for k, v in self._attrs.items():
+            if k in special_fields:
+                continue
+            elif k not in self._fields:
+                k = k.upper()
+            else:
+                self.editable_fields.add(k)
+            attrs[k] = v
+        attrs["custom_fields"] = self.custom_fields
+        return attrs
 
     @cached_property
     def details(self) -> dict:
@@ -262,30 +285,36 @@ class Issue:
         Returns:
             dict: A dictionary containing the details of the issue, including its attachments, custom fields, journals, and other relevant information.
         """
-        special_fields = ["relations", "attachments", "custom_fields", "journals"]
-        attrs = {k: v for k, v in self.attrs.items() if k not in special_fields}
-        attrs["Anexos"] = self.attachments
-        attrs.update({k: v.get("value", "") for k, v in self.custom_fields.items()})
-        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
-        attrs["Relacoes"] = self.format_relations()
-        attrs["Atualizacao"] = self.update_on()
-        attrs["Membros"] = list(self.issue_members().values())
-        attrs["Fiscal_responsavel"] = self.issue_members().get(
-            attrs.get("Fiscal_responsavel"), ""
+        attrs = self.attrs.copy()
+        attrs.update(
+            {k: v.get("value", "") for k, v in attrs.pop("custom_fields").items()}
         )
-        attrs["Fiscais"] = [
-            self.issue_members().get(f, "") for f in attrs.get("fiscais", [])
+        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
+        attrs["ANEXOS"] = [
+            file["content_url"] for file in self._attrs.get("attachments", [])
         ]
+        attrs["RELACOES"] = self.format_relations()
+        attrs["ATUALIZACAO"] = self.update_on()
+        attrs["MEMBROS"] = list(self.issue_members().values())
+        attrs["fiscal_responsavel"] = self.ids2names.get(
+            attrs.get("fiscal_responsavel"), ""
+        )
+        attrs["fiscais"] = [self.ids2names.get(f, "") for f in attrs.get("fiscais", [])]
         return attrs
 
 
-def test_detalhar_issue(issue: str):
+def test_detalhar_issue(issue: str, teste: bool = True):
     from pprint import pprint
 
-    fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"])
+    fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"], teste)
     issue_obj = Issue(fiscaliza.client, issue)
-    # pprint(issue_obj.attrs)
-    pprint(issue_obj.custom_fields)
+    # pprint(issue_obj._attrs)
+    pprint(issue_obj.attrs)
+    pprint(issue_obj.details)
+    pprint(issue_obj._fields)
+
+    # pprint(Issue.extract_string(issue_obj.attrs["project"]).lower())
+
     json.dump(
         issue_obj.details,
         (Path.cwd() / f"{issue}.json").open("w"),
