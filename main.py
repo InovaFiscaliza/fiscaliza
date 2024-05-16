@@ -130,6 +130,36 @@ class Issue:
         return field
 
     @property
+    def _atomic_fields(self):
+        return {
+            "project": "project_id",
+            "subject": "subject",
+            "tracker": "tracker_id",
+            "description": "description",
+            "status": "status_id",
+            "priority": "priority_id",
+            "assigned_to": "assigned_to_id",
+            "parent": "parent_issue_id",
+            "start_date": "start_date",
+            "due_date": "due_date",
+            "estimated_hours": "estimated_hours",
+            "done_ratio": "done_ratio",
+        }
+
+    @property
+    def _composite_fields(self):
+        return {
+            "notes": "notes",
+            "private_notes": "private_notes",
+            "custom_fields": "custom_fields",
+            "uploads": "uploads",
+        }
+
+    @property
+    def _fields(self):
+        return self._atomic_fields | self._composite_fields
+
+    @property
     def type(self) -> str:
         if tracker := self.attrs.get("tracker"):
             return self._utf2ascii(tracker.get("name", ""))
