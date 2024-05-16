@@ -3,7 +3,6 @@ import os
 import re
 from datetime import datetime, timedelta
 from functools import cached_property
-from typing import Iterator
 
 import typer
 import urllib3
@@ -11,7 +10,7 @@ from dotenv import load_dotenv
 from redminelib import Redmine
 from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
-from fastcore.xtras import dumps, Path
+from fastcore.xtras import Path
 
 from constants import URL_HM, URL_PD
 
@@ -59,12 +58,12 @@ class Fiscaliza:
             ) from e
         return fiscaliza
 
-    def issue_details(self, issue: str) -> dict:
-        if self.issues.get(issue):
-            return self.issues[issue].details
+    def get_issue(self, issue: str) -> dict:
+        if issue_obj := self.issues.get(issue):
+            return issue_obj
         issue_obj = Issue(self.client, issue)
         self.issues[issue] = issue_obj
-        return issue_obj.details
+        return issue_obj
 
     def save_cache(self, folder: Path):
         Path(folder).mkdir(exist_ok=True)
