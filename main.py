@@ -96,6 +96,12 @@ class Issue:
         self._ascii2utf = {}
         self._special_fields = set()
         self.editable_fields = set()
+        self.init()
+
+    def init(self):
+        _ = self.attrs
+        self.editable_fields.add("gerar_relatorio")
+        self.editable_fields.add("html")
 
     def _utf2ascii(self, s: str) -> str:
         """Receives a string and returns the same in ASCII format without spaces"""
@@ -184,6 +190,8 @@ class Issue:
                         self._ascii2utf[name] = field["name"]
                         self._special_fields.add(name)
             custom_fields[name] = field
+            if name not in self._special_fields:
+                self.editable_fields.add(name)
         return custom_fields
 
     @property
@@ -309,9 +317,10 @@ def test_detalhar_issue(issue: str, teste: bool = True):
     fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"], teste)
     issue_obj = Issue(fiscaliza.client, issue)
     # pprint(issue_obj._attrs)
-    pprint(issue_obj.attrs)
+    # pprint(issue_obj.attrs)
     pprint(issue_obj.details)
-    pprint(issue_obj._fields)
+    print(80 * "=")
+    pprint(issue_obj.editable_fields)
 
     # pprint(Issue.extract_string(issue_obj.attrs["project"]).lower())
 
