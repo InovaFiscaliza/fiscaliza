@@ -89,10 +89,13 @@ class Issue:
                 "children",
                 "journals",
                 "changesets",
+                "watchers",
                 "allowed_statuses",
             ],
         )
         self._ascii2utf = {}
+        self._special_fields = set()
+        self.editable_fields = set()
 
     def _utf2ascii(self, s: str) -> str:
         """Receives a string and returns the same in ASCII format without spaces"""
