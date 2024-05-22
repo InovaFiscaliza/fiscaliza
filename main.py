@@ -77,36 +77,30 @@ class Fiscaliza:
 
 
 class Issue:
-    def __init__(self, fiscaliza: Redmine, issue_id: int | str):
-        self.fiscaliza = fiscaliza
-        self.issue_id = issue_id
-        self._issue = self.fiscaliza.issue.get(
+    def __init__(self, client: Redmine, issue_id: int | str):
+        self.client = client
+        self.id = issue_id
+        self._issue = self.client.issue.get(
             issue_id,
             include=[
                 "relations",
                 "attachments",
-                "children",
+                # "children",
                 "journals",
-                "changesets",
-                "watchers",
+                # "changesets",
+                # "watchers",
                 "allowed_statuses",
             ],
         )
         self._ascii2utf = {}
         self._special_fields = set()
-        self.editable_fields = set()
+        self.editable_fields = {}
         self.init()
 
     def init(self):
         _ = self.attrs
-        self.editable_fields.add("gerar_relatorio")
-        self.editable_fields.add("html")
-
-    def _utf2ascii(self, s: str) -> str:
-        """Receives a string and returns the same in ASCII format without spaces"""
-        decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_"))
-        self._ascii2utf[decoded_string] = s
-        return decoded_string
+        self.editable_fields["gerar_relatorio"] = "0"
+        self.editable_fields["html"] = ""
 
     @staticmethod
     def _format_json_string(field: str) -> str:
@@ -168,16 +162,18 @@ class Issue:
         if tracker := self._attrs.get("tracker"):
             return self._utf2ascii(tracker.get("name", ""))
 
-    @property
+    @cached_property
     def _attrs(self) -> dict:
+        _ = list(self._issue)
+        self._issue.project.refresh()  # Prevent partial attrs return
         try:
             return dict(list(self._issue))
         except Exception as e:
             raise Exception(
-                f"Não foi possível obter os atributos da issue {self.issue_id}"
+                f"Não foi possível obter os atributos da issue {self.id}"
             ) from e
 
-    @property
+    @cached_property
     def custom_fields(self) -> dict:
         custom_fields = {}
         for field in self._attrs.get("custom_fields", []):
@@ -185,30 +181,47 @@ class Issue:
             if value := field.get("value"):
                 if isinstance(value, str):
                     if "=>" in value:
-                        name = name.upper()
+                        # name = name.upper()
                         self._ascii2utf[name] = field["name"]
                         self._special_fields.add(name)
             custom_fields[name] = field
             if name not in self._special_fields:
-                self.editable_fields.add(name)
+                if (value := self.extract_string(value)) is None:
+                    value = ""
+                self.editable_fields[name] = value
         return custom_fields
 
-    @property
+    @cached_property
     def relations(self) -> dict:
         relations = {}
         for relation in self._attrs.get("relations", []):
             issue_id = relation.get("issue_id")
             if self._attrs["id"] == issue_id:
                 issue_id = relation.get("issue_to_id")
-            relations[issue_id] = Issue(self.fiscaliza, issue_id)
+            relations[issue_id] = Issue(self.client, issue_id)
         return relations
+
+    @cached_property
+    def update_on(self) -> str:
+        if journal := self._attrs["journals"]:
+            journal = journal[-1]
+            key = "user"
+        else:
+            journal = self._attrs
+            key = "author"
+
+        user = journal[key]["name"]
+        date = datetime.strptime(
+            journal["created_on"], "%Y-%m-%dT%H:%M:%SZ"
+        ) - timedelta(hours=3)
+        return f"Atualizado por {user} em {datetime.strftime(date, '%d/%m/%Y')} às {date.time()}"
 
     @cached_property
     def project_members(self) -> list:
         project_id = Issue.extract_string(self._attrs["project"]).lower()
         return [
             dict(member)
-            for member in self.fiscaliza.project_membership.filter(
+            for member in self.client.project_membership.filter(
                 project_id=project_id, limit=None
             )
         ]
