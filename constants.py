@@ -5726,3 +5726,16 @@ MUNICIPIOS = [
     "PB/Serra Redonda",
     "MG/Pot\u00e9",
 ]
+
+TIPOS_DE_INSPECAO = {
+    "Técnica": (
+        "Bloqueio Administrativo",
+        "Certificação",
+        "Medição de CEMRF (RNI)",
+        "Outorga - Aspectos não Técnicos",
+        "Outorga - Aspectos Técnicos",
+        "Uso do Espectro - Interferência",
+        "Uso do Espectro - Monitoração",
+        "Uso do Espectro - Não Outorgado",
+    )
+}
