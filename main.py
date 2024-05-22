@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from pathlib import Path
 from datetime import datetime, timedelta
 from functools import cached_property
 
@@ -10,7 +11,6 @@ from dotenv import load_dotenv
 from redminelib import Redmine
 from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
-from fastcore.xtras import Path
 
 from constants import URL_HM, URL_PD, STATUS
 
@@ -130,25 +130,16 @@ class Issue:
     @property
     def _atomic_fields(self):
         return {
-            "project": "project_id",
-            "subject": "subject",
-            "tracker": "tracker_id",
             "description": "description",
             "status": "status_id",
-            "priority": "priority_id",
-            "assigned_to": "assigned_to_id",
-            "parent": "parent_issue_id",
             "start_date": "start_date",
             "due_date": "due_date",
-            "estimated_hours": "estimated_hours",
-            "done_ratio": "done_ratio",
         }
 
     @property
     def _composite_fields(self):
         return {
             "notes": "notes",
-            "private_notes": "private_notes",
             "custom_fields": "custom_fields",
             "uploads": "uploads",
         }
@@ -238,50 +229,6 @@ class Issue:
     def ids2names(self) -> dict:
         return {v: k for k, v in self.names2id.items()}
 
-    def _utf2ascii(self, s: str) -> str:
-        """Receives a string and returns the same in ASCII format without spaces"""
-        decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_").lower())
-        self._ascii2utf[decoded_string] = s
-        return decoded_string
-
-    def issue_members(self, role: str = "Inspeção-Execução") -> dict:
-        return {
-            member["user"]["id"]: member["user"]["name"]
-            for member in self.project_members
-            if role in Issue.extract_string(member["roles"]) and "user" in member
-        }
-
-    def update_on(self) -> str:
-        if journal := self._attrs["journals"]:
-            journal = journal[-1]
-            key = "user"
-        else:
-            journal = self._attrs
-            key = "author"
-
-        user = journal[key]["name"]
-        date = datetime.strptime(
-            journal["created_on"], "%Y-%m-%dT%H:%M:%SZ"
-        ) - timedelta(hours=3)
-        return f"Atualizado por {user} em {datetime.strftime(date, '%d/%m/%Y')} às {date.time()}"
-
-    def format_relations(self) -> dict:
-        """
-        Formats the relations of an issue as a dictionary.
-
-        Returns:
-            dict: A dictionary where the keys are the relation types, and the values are dictionaries containing the type, status, name, and description of the related issue.
-        """
-        relations = {}
-        for k, v in self.relations.items():
-            relations[k] = {
-                "type": getattr(v, "type"),
-                "status": Issue.extract_string(v._attrs.get("status")),
-                "name": v._attrs.get("subject"),
-                "description": v._attrs.get("description"),
-            }
-        return relations
-
     @cached_property
     def attrs(self) -> dict:
         """Retrieves the attributes of an issue as a dictionary."""
@@ -293,7 +240,7 @@ class Issue:
             elif k not in self._fields:
                 k = k.upper()
             else:
-                self.editable_fields.add(k)
+                self.editable_fields[k] = self.extract_string(v)
             attrs[k] = v
         attrs["custom_fields"] = self.custom_fields
         return attrs
@@ -313,14 +260,89 @@ class Issue:
         attrs["ANEXOS"] = [
             file["content_url"] for file in self._attrs.get("attachments", [])
         ]
-        attrs["RELACOES"] = self.format_relations()
-        attrs["ATUALIZACAO"] = self.update_on()
-        attrs["MEMBROS"] = list(self.issue_members().values())
+        attrs["RELACOES"] = self._format_relations()
+        attrs["ATUALIZACAO"] = self.update_on
+        attrs["MEMBROS"] = list(self._issue_members().values())
         attrs["fiscal_responsavel"] = self.ids2names.get(
             attrs.get("fiscal_responsavel"), ""
         )
         attrs["fiscais"] = [self.ids2names.get(f, "") for f in attrs.get("fiscais", [])]
         return attrs
+
+    def _utf2ascii(self, s: str) -> str:
+        """Receives a string and returns the same in ASCII format without spaces"""
+        decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_")).lower()
+        self._ascii2utf[decoded_string] = s
+        return decoded_string
+
+    def _issue_members(self, role: str = "Inspeção-Execução") -> dict:
+        return {
+            member["user"]["id"]: member["user"]["name"]
+            for member in self.project_members
+            if role in Issue.extract_string(member["roles"]) and "user" in member
+        }
+
+    def _format_relations(self) -> dict:
+        """
+        Formats the relations of an issue as a dictionary.
+
+        Returns:
+            dict: A dictionary where the keys are the relation types, and the values are dictionaries containing the type, status, name, and description of the related issue.
+        """
+        relations = {}
+        for k, v in self.relations.items():
+            relations[k] = {
+                "type": getattr(v, "type"),
+                "status": Issue.extract_string(v._attrs.get("status")),
+                "name": v._attrs.get("subject"),
+                "description": v._attrs.get("description"),
+            }
+        return relations
+
+    def _fiscais2ids(self, fiscais: list) -> list:
+        if not isinstance(fiscais, list):
+            fiscais = [fiscais]
+        id_fiscais = []
+        for fiscal in fiscais:
+            if id_fiscal := self.names2id.get(fiscal):
+                id_fiscais.append(id_fiscal)
+        return id_fiscais
+
+    def _check_data(self, dados: dict) -> dict:
+        data = dados.copy()
+        if status := dados.get("status"):
+            data["status"] = STATUS.get(status)
+        if fiscais := dados.get("fiscais"):
+            if id_fiscais := self._fiscais2ids(fiscais):
+                data["fiscais"] = id_fiscais
+        if fiscal_responsavel := dados.get("fiscal_responsavel"):
+            if id_fiscal_responsavel := self.names2id.get(fiscal_responsavel):
+                data["fiscal_responsavel"] = id_fiscal_responsavel
+        return data
+
+    # def refresh(self) -> None:
+    #     """Refreshes the issue's attributes."""
+    #     # for attr in self.__dict__:
+    #     #     if isinstance(getattr(self.__class__, attr, None), cached_property):
+    #     #         cached_attrs = getattr(self, attr)
+    #     #         del cached_attrs  # Clear cache for each attribute
+    #     self = Issue(self.client, self.id)
+    #     self.init()
+
+    def update(self, dados: dict) -> bool:
+        """Updates an issue with the given data."""
+        data = self._check_data(dados)
+        submitted_fields = {"custom_fields": []}
+        for k, v in self._atomic_fields.items():
+            if k in data:
+                submitted_fields[v] = data.pop(k)
+        # Extract notes and upload
+        for k, v in data.items():
+            if value := self.custom_fields.get(k):
+                value = {"id": value["id"], "value": v}
+                submitted_fields["custom_fields"].append(value)
+        print(submitted_fields)
+        return self.client.issue.update(self.id, **submitted_fields)
 
 
 def test_detalhar_issue(issue: str, teste: bool = True):
