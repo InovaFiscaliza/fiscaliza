@@ -12,7 +12,7 @@ from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
 from fastcore.xtras import Path
 
-from constants import URL_HM, URL_PD
+from constants import URL_HM, URL_PD, STATUS
 
 load_dotenv(override=True)
 
