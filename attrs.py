@@ -379,6 +379,7 @@ FIELDS = {
     "situacao_de_risco_a_vida": {
         "id": 150,
         "name": "Situação de risco à vida?",
+        "options": ["1", "0"],
         "value": {"valor": "", "texto": ""},
     },
     "subtema": {
