@@ -187,7 +187,12 @@ FIELDS = {
         "mandatory": True,
         "value": "",
     },
-    "houve_interferencia": {"id": 149, "name": "Houve interferência?", "value": ""},
+    "houve_interferencia": {
+        "id": 149,
+        "name": "Houve interferência?",
+        "map": {"Sim": {"mandatory": ["identificada_a_origem"]}, "Não": {}},
+        "value": "",
+    },
     "houve_obice": {
         "id": 136,
         "name": "Houve óbice?",
@@ -198,6 +203,12 @@ FIELDS = {
     "identificacao_da_nao_outorgada": {
         "id": 250,
         "name": "Identificação da não Outorgada",
+        "value": "",
+    },
+    "identificada_a_origem": {
+        "id": 162,
+        "name": "Identificada a origem?",
+        "map": {"1": {"mandatory": ["sanada_ou_mitigada"]}, "0": {}},
         "value": "",
     },
     "instrumentos_utilizados": {
@@ -362,6 +373,12 @@ FIELDS = {
         "mandatory": True,
         "value": [{"id": "", "valor": "", "texto": ""}],
     },
+    "sanada_ou_mitigada": {
+        "id": 159,
+        "name": "Sanada ou mitigada?",
+        "options": ["1", "0"],
+        "value": "",
+    },
     "servicos_da_inspecao": {
         "id": 57,
         "name": "Serviços da Inspeção",
@@ -379,7 +396,7 @@ FIELDS = {
     "situacao_de_risco_a_vida": {
         "id": 150,
         "name": "Situação de risco à vida?",
-        "options": ["1", "0"],
+        "options": ["Sim", "Não"],
         "value": {"valor": "", "texto": ""},
     },
     "subtema": {
