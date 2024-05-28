@@ -1,8 +1,50 @@
-from .constants import SERVICOS, MUNICIPIOS, TIPOS_DE_INSPECAO
+from constants import MUNICIPIOS, SERVICOS
 
-COMMON = {"status": "", "description": "", "start_date": "", "due_date": ""}
+ALL = {"status": "", "description": "", "start_date": "", "due_date": ""}
 
-TECNICA = COMMON | {
+HIDDEN = {
+    "gerar_plai": {
+        "id": 426,
+        "name": "Gerar PLAI",
+        "tipo_processo": {
+            "Gestão da Fiscalização: Lacração, Apreensão e Interrupção": "100000539",
+            "Gestão da Fiscalização: Processo de Guarda": "100000618",
+        },
+        "replace_colon": True,
+        "value": {"criar_processo": "", "tipo_processo": "", "coord_fi": ""},
+    }
+}
+
+
+TECNICA = [
+    "agrupamento",
+    "ano_de_execucao",
+    "app_fiscaliza",
+    "classe_da_inspecao",
+    "coordenacao_responsavel",
+    "data_de_inicio_efetivo",
+    "entidade_da_inspecao",
+    "fiscais",
+    "fiscal_responsavel",
+    "horas_de_conclusao",
+    "horas_de_deslocamento",
+    "horas_de_execucao",
+    "horas_de_preparacao",
+    "no_pcdp",
+    "no_sav",
+    "no_sei_processo_fiscalizacao",
+    "precisa_reservar_instrumentos",
+    "procedimentos",
+    "servicos_da_inspecao",
+    "subtema",
+    "tema",
+    "tipo_de_inspecao",
+    "total_de_horas",
+    "ufmunicipio",
+    "utilizou_algum_instrumento",
+]
+
+FIELDS = {
     "agrupamento": {"id": 213, "name": "Agrupamento", "value": ""},
     "altura_do_sistema_irradiante": {
         "id": 131,
@@ -14,7 +56,7 @@ TECNICA = COMMON | {
     "area_do_pacp": {
         "id": 416,
         "name": "Área do PACP",
-        "map": [
+        "options": [
             "1-Comércio",
             "2-ISP",
             "3-E-commerce",
@@ -29,6 +71,13 @@ TECNICA = COMMON | {
         "name": "Classe da Inspeção",
         "value": {"valor": "", "texto": ""},
     },
+    "cnpjcpf_da_entidade": {"id": 141, "name": "CNPJ/CPF da Entidade", "value": ""},
+    "copiar_instrumento_da_reserva": {
+        "id": 629,
+        "name": "Copiar instrumento da reserva?",
+        "options": ["0", "1"],
+        "value": "",
+    },
     "coordenacao_responsavel": {
         "id": 178,
         "name": "Coordenação responsável",
@@ -37,7 +86,8 @@ TECNICA = COMMON | {
     "coordenadas_geograficas": {
         "id": 717,
         "name": "Coordenadas Geográficas",
-        "value": "",
+        "replace_colon": True,
+        "value": {"latitude": "", "longitude": ""},
     },
     "data_de_inicio_efetivo": {
         "id": 627,
@@ -52,8 +102,9 @@ TECNICA = COMMON | {
     "dadospacp": {"id": 415, "name": "DadosPACP", "value": ""},
     "entidade_com_cadastro_stel": {
         "id": 189,
-        "name": "Entidade com " "cadastro STEL?",
-        "map": ["Sim", "Não"],
+        "name": "Entidade com cadastro STEL?",
+        "mandatory": True,
+        "options": ["Sim", "Não"],
         "value": "",
     },
     "entidade_da_inspecao": {
@@ -64,48 +115,113 @@ TECNICA = COMMON | {
     },
     "entidade_outorgada": {"id": 138, "name": "Entidade outorgada?", "value": ""},
     "esta_em_operacao": {"id": 139, "name": "Está em operação?", "value": ""},
-    "fiscal_responsavel": {"id": 25, "name": "Fiscal responsável", "value": ""},
-    "fiscais": {"id": 26, "name": "Fiscais", "multiple": True, "value": [""]},
+    "fiscal_responsavel": {
+        "id": 25,
+        "name": "Fiscal responsável",
+        "mandatory": True,
+        "value": "",
+    },
+    "fiscais": {
+        "id": 26,
+        "name": "Fiscais",
+        "mandatory": True,
+        "multiple": True,
+        "value": [""],
+    },
     "frequencias": {"id": 180, "name": "Frequência(s)", "value": ""},
-    "horas_de_conclusao": {"id": 94, "name": "Horas de conclusão", "value": ""},
+    "horas_de_conclusao": {
+        "id": 94,
+        "name": "Horas de conclusão",
+        "mandatory": True,
+        "value": "",
+    },
     "horas_de_deslocamento": {
         "id": 92,
         "name": "Horas de Deslocamento",
+        "mandatory": True,
         "value": "",
     },
-    "horas_de_execucao": {"id": 93, "name": "Horas de Execução", "value": ""},
-    "horas_de_preparacao": {"id": 91, "name": "Horas de Preparação", "value": ""},
+    "horas_de_execucao": {
+        "id": 93,
+        "name": "Horas de Execução",
+        "mandatory": True,
+        "value": "",
+    },
+    "horas_de_preparacao": {
+        "id": 91,
+        "name": "Horas de Preparação",
+        "mandatory": True,
+        "value": "",
+    },
     "houve_interferencia": {"id": 149, "name": "Houve interferência?", "value": ""},
     "houve_obice": {
         "id": 136,
         "name": "Houve óbice?",
-        "map": ["Sim", "Não"],
+        "mandatory": True,
+        "options": ["Sim", "Não"],
+        "value": "",
+    },
+    "instrumentos_utilizados": {
+        "id": 599,
+        "name": "Instrumentos Utilizados",
+        "mandatory": True,
         "value": "",
     },
     "irregularidade": {
         "id": 73,
         "name": "Irregularidade",
         "multiple": True,
-        "map": ["Comercialização de produtos", "Utilização de produtos"],
+        "options": ["Comercialização de produtos", "Utilização de produtos"],
         "value": [{"valor": "", "texto": ""}],
     },
-    "latitude_coordenadas": {
-        "id": 170,
-        "name": "Latitude (coordenadas)",
-        "value": "",
-    },
+    "latitude_coordenadas": {"id": 170, "name": "Latitude (coordenadas)", "value": ""},
+    "lai_vinculadas": {"id": 481, "name": "LAI vinculadas", "value": ""},
     "longitude_coordenadas": {
         "id": 171,
         "name": "Longitude (coordenadas)",
         "value": "",
     },
+    "motivo_de_lai": {
+        "id": 164,
+        "multiple": True,
+        "options": [
+            "Risco à vida",
+            "Clandestinidade",
+            "Interferência prejudicial",
+            "Uso de produto não certificado",
+            " Garantir a segurança (exposição a campos eletromagnéticos)",
+            " Necessidade de assegurar o planejamento, o gerenciamento e a coordenação do uso de espectro de radiofrequências (justificar)",
+        ],
+        "name": "Motivo de LAI",
+        "value": [""],
+    },
+    "no_do_lacre": {"id": 165, "name": "Nº do lacre", "value": ""},
     "no_pcdp": {"id": 112, "name": "Nº PCDP", "value": ""},
     "no_sav": {"id": 111, "name": "Nº SAV", "value": ""},
+    "no_sei_do_aviso_lai": {
+        "id": 427,
+        "name": "Nº SEI do Aviso LAI",
+        "replace_colon": True,
+        "value": {"numero": ""},
+    },
+    "no_sei_do_plaiguarda": {
+        "id": 426,
+        "name": "Nº SEI do PLAI/Guarda",
+        "replace_colon": True,
+        "value": {"numero": ""},
+    },
     "no_sei_processo_fiscalizacao": {
         "id": 422,
         "name": "Nº SEI Processo Fiscalização",
+        "mandatory": True,
         "replace_colon": True,
         "value": {"numero": ""},
+    },
+    "nome_da_entidade": {
+        "id": 140,
+        "name": "Nome da Entidade",
+        "mandatory": True,
+        "value": "",
     },
     "observacao_tecnica_amostral": {
         "id": 693,
@@ -116,6 +232,8 @@ TECNICA = COMMON | {
     "precisa_reservar_instrumentos": {
         "id": 596,
         "name": "Precisa reservar instrumentos?",
+        "mandatory": True,
+        "map": {"1": {"mandatory": ["reserva_de_instrumentos"]}, "0": {}},
         "value": "",
     },
     "procedimentos": {
@@ -157,20 +275,34 @@ TECNICA = COMMON | {
     },
     "qnt_produt_lacradosapreend": {
         "id": 143,
-        "name": "Qnt. produt. " "lacrados/apreend.",
+        "name": "Qnt. produt. lacrados/apreend.",
         "value": "",
+    },
+    "reserva_de_instrumentos": {
+        "id": 597,
+        "multiple": True,
+        "name": "Reserva de instrumentos",
+        "mandatory": True,
+        "value": [
+            {
+                "id": "",
+                "valor": "",
+                "texto": "",
+            }
+        ],
     },
     "servicos_da_inspecao": {
         "id": 57,
         "name": "Serviços da Inspeção",
         "multiple": True,
-        "map": SERVICOS,
+        "options": SERVICOS,
         "value": [{"valor": "", "texto": ""}],
     },
     "situacao_constatada": {
         "id": 62,
         "name": "Situação constatada",
-        "map": ["Regular", "Irregular", "Inconclusivo", "Não analisado"],
+        "mandatory": True,
+        "options": ["Regular", "Irregular", "Inconclusivo", "Não analisado"],
         "value": "",
     },
     "situacao_de_risco_a_vida": {
@@ -193,22 +325,167 @@ TECNICA = COMMON | {
     "tipo_de_inspecao": {
         "id": 2,
         "name": "Tipo de inspeção",
-        "map": TIPOS_DE_INSPECAO["Técnica"],
+        "mandatory": True,
+        "map": {
+            "Bloqueio Administrativo": {
+                "mandatory": [
+                    "nome_da_entidade",
+                    "observacao_tecnica_amostral",
+                    "utilizou_algum_instrumento",
+                    "utilizou_tecnicas_amostrais",
+                ],
+                "optional": [],
+            },
+            "Certificação": {
+                "mandatory": [
+                    # "coordenadas_geograficas", #This should comme from latitude_coordenadas
+                    # "dadospacp",
+                    "endereco_da_inspecao",
+                    "entidade_com_cadastro_stel",
+                    "houve_obice",
+                    "latitude_coordenadas",
+                    "longitude_coordenadas",
+                    "nome_da_entidade",
+                    "observacao_tecnica_amostral",
+                    "qnt_produt_lacradosapreend",
+                    "situacao_constatada",
+                    "utilizou_tecnicas_amostrais",
+                ],
+                "optional": [
+                    "area_do_pacp",
+                    "cnpjcpf_da_entidade",
+                    "documento_instaurador_do_pado",
+                    "irregularidade",
+                ],
+            },
+            "Medição de CEMRF (RNI)": {
+                "mandatory": [
+                    "entidade_outorgada",
+                    "latitude_coordenadas",
+                    "longitude_coordenadas",
+                    "frequencia_inicial",
+                    "unidade_da_frequencia_inicial",
+                    "frequencia_final",
+                    "unidade_da_frequencia_final",
+                    "latitude_da_estacao",
+                    "longitude_da_estacao",
+                    "tipo_de_medicao",
+                    "campo_eletrico_rms_vm",
+                    "campo_eletrico__pico_vm",
+                    "utilizou_tecnicas_amostrais",
+                    "observacao_tecnica_amostral",
+                    "coordenadas_geograficas",
+                    "coordenadas_estacao",
+                ],
+                "optional": [],
+            },
+            "Outorga - Aspectos não Técnicos": {
+                "mandatory": [
+                    "situacao_constatada",
+                    "irregularidade",
+                    "pai_instaurado_pela_anatel",
+                    "utilizou_tecnicas_amostrais",
+                    "observacao_tecnica_amostral",
+                ],
+                "optional": [],
+            },
+            "Outorga - Aspectos Técnicos": {
+                "mandatory": [
+                    "altura_do_sistema_irradiante",
+                    "uso_de_produto_homologado",
+                    "houve_obice",
+                    "entidade_outorgada",
+                    "esta_em_operacao",
+                    "situacao_constatada",
+                    "irregularidade",
+                    "documento_instaurador_do_pado",
+                    "potencia_medida",
+                    "unidade_de_potencia",
+                    "frequencias",
+                    "unidade_de_frequencia",
+                    "utilizou_apoio_policial",
+                    "houve_interferencia",
+                    "situacao_de_risco_a_vida",
+                    "latitude_coordenadas",
+                    "longitude_coordenadas",
+                    "utilizou_tecnicas_amostrais",
+                    "observacao_tecnica_amostral",
+                    "coordenadas_geograficas",
+                ],
+                "optional": [],
+            },
+            "Uso do Espectro - Interferência": {
+                "mandatory": [
+                    "utilizou_tecnicas_amostrais",
+                    "observacao_tecnica_amostral",
+                    "foi_constatada_interferencia",
+                    "observacoes",
+                ],
+                "optional": [],
+            },
+            "Uso do Espectro - Monitoração": {
+                "mandatory": [
+                    "qtd_de_emissoes",
+                    "qtd_licenciadas",
+                    "qtd_identificadas",
+                    "latitude_coordenadas",
+                    "longitude_coordenadas",
+                    "acao_de_risco_a_vida_criada",
+                    "frequencia_inicial",
+                    "unidade_da_frequencia_inicial",
+                    "frequencia_final",
+                    "unidade_da_frequencia_final",
+                    "no_sei_relatorio_monitoramento",
+                    "coordenadas_geograficas",
+                ],
+                "optional": [],
+            },
+            "Uso do Espectro - Não Outorgado": {
+                "mandatory": [
+                    "entidade_com_cadastro_stel",
+                    "uso_de_produto_homologado",
+                    "situacao_constatada",
+                    "irregularidade",
+                    "potencia_medida",
+                    "unidade_de_potencia",
+                    "frequencias",
+                    "unidade_de_frequencia",
+                    "utilizou_apoio_policial",
+                    "qnt_produt_lacradosapreend",
+                    "tipificacao_da_infracao",
+                    "houve_interferencia",
+                    "situacao_de_risco_a_vida",
+                    "latitude_coordenadas",
+                    "longitude_coordenadas",
+                    "identificacao_da_nao_outorgada",
+                    "utilizou_tecnicas_amostrais",
+                    "observacao_tecnica_amostral",
+                    "coordenadas_geograficas",
+                ],
+                "optional": [],
+            },
+        },
         "value": {"valor": "", "texto": ""},
+    },
+    "tipo_do_processo_plai": {
+        "id": 426,
+        "name": "Tipo do Processo PLAI",
+        "options": [
+            "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
+            "Gestão da Fiscalização: Processo de Guarda",
+        ],
+        "value": "",
     },
     "total_de_horas": {"id": 1789, "name": "Total de horas", "value": ""},
     "ufmunicipio": {
         "id": 31,
         "name": "UF/Município",
+        "mandatory": True,
         "multiple": True,
-        "map": MUNICIPIOS,
+        "options": MUNICIPIOS,
         "value": [{"valor": "", "texto": ""}],
     },
-    "unidade_de_frequencia": {
-        "id": 84,
-        "name": "Unidade de Frequência",
-        "value": "",
-    },
+    "unidade_de_frequencia": {"id": 84, "name": "Unidade de Frequência", "value": ""},
     "unidade_de_potencia": {"id": 82, "name": "Unidade de Potência", "value": ""},
     "uso_de_produto_homologado": {
         "id": 132,
@@ -218,7 +495,14 @@ TECNICA = COMMON | {
     "utilizou_algum_instrumento": {
         "id": 598,
         "name": "Utilizou algum instrumento?",
-        "map": ["1", "0"],
+        "mandatory": True,
+        "map": {
+            "1": {
+                "mandatory": ["instrumentos_utilizados"],
+                "optional": ["copiar_instrumento_da_reserva"],
+            },
+            "0": {},
+        },
         "value": "",
     },
     "utilizou_apoio_policial": {
@@ -229,7 +513,69 @@ TECNICA = COMMON | {
     "utilizou_tecnicas_amostrais": {
         "id": 692,
         "name": "Utilizou técnicas amostrais?",
-        "map": ["Usou técnicas amostrais", "Não usou técnicas amostrais"],
+        "mandatory": True,
+        "options": ["Usou técnicas amostrais", "Não usou técnicas amostrais"],
+        "value": "",
+    },
+    "endereco_da_inspecao": {"id": 142, "name": "Endereço da Inspeção", "value": ""},
+    "frequencia_inicial": {"id": 156, "name": "Frequência inicial", "value": "10"},
+    "unidade_da_frequencia_inicial": {
+        "id": 157,
+        "name": "Unidade da frequência inicial",
+        "value": "MHz",
+    },
+    "frequencia_final": {"id": 158, "name": "Frequência final", "value": "20"},
+    "unidade_da_frequencia_final": {
+        "id": 159,
+        "name": "Unidade da frequência final",
+        "value": "MHz",
+    },
+    "latitude_da_estacao": {"id": 191, "name": "Latitude da estação", "value": ""},
+    "longitude_da_estacao": {"id": 192, "name": "Longitude da estação", "value": ""},
+    "tipo_de_medicao": {"id": 193, "name": "Tipo de medição", "value": ""},
+    "campo_eletrico_rms_vm": {
+        "id": 194,
+        "name": "Campo elétrico RMS (V/m)",
+        "value": "",
+    },
+    "campo_eletrico__pico_vm": {
+        "id": 195,
+        "name": "Campo elétrico - pico (V/m)",
+        "value": "",
+    },
+    "coordenadas_estacao": {"id": 718, "name": "Coordenadas Estação", "value": ""},
+    "pai_instaurado_pela_anatel": {
+        "id": 160,
+        "name": "PAI instaurado pela Anatel?",
+        "value": "",
+    },
+    "foi_constatada_interferencia": {
+        "id": 1967,
+        "name": "Foi constatada interferência?",
+        "value": "",
+    },
+    "observacoes": {"id": 1973, "name": "Observações", "value": ""},
+    "qtd_de_emissoes": {"id": 69, "name": "Qtd. de Emissões", "value": ""},
+    "qtd_licenciadas": {"id": 730, "name": "Qtd. Licenciadas", "value": ""},
+    "qtd_identificadas": {"id": 731, "name": "Qtd. Identificadas", "value": ""},
+    "acao_de_risco_a_vida_criada": {
+        "id": 154,
+        "name": "Ação de risco à vida criada?",
+        "value": "",
+    },
+    "no_sei_relatorio_monitoramento": {
+        "id": 544,
+        "name": "Nº SEI Relatório Monitoramento",
+        "value": "",
+    },
+    "tipificacao_da_infracao": {
+        "id": 148,
+        "name": "Tipificação da infração",
+        "value": "",
+    },
+    "identificacao_da_nao_outorgada": {
+        "id": 250,
+        "name": "Identificação da não Outorgada",
         "value": "",
     },
 }
