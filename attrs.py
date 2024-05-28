@@ -304,6 +304,7 @@ FIELDS = {
         "id": 71,
         "name": "Procedimentos",
         "multiple": True,
+        "mandatory": True,
         "map": {
             "Nenhum": {},
             "Lacração": {
