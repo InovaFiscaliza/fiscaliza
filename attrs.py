@@ -45,6 +45,11 @@ TECNICA = [
 ]
 
 FIELDS = {
+    "acao_de_risco_a_vida_criada": {
+        "id": 154,
+        "name": "Ação de risco à vida criada?",
+        "value": "",
+    },
     "agrupamento": {"id": 213, "name": "Agrupamento", "value": ""},
     "altura_do_sistema_irradiante": {
         "id": 131,
@@ -66,29 +71,41 @@ FIELDS = {
         ],
         "value": {"texto": "", "valor": ""},
     },
+    "campo_eletrico__pico_vm": {
+        "id": 195,
+        "name": "Campo elétrico - pico (V/m)",
+        "value": "",
+    },
+    "campo_eletrico_rms_vm": {
+        "id": 194,
+        "name": "Campo elétrico RMS (V/m)",
+        "value": "",
+    },
     "classe_da_inspecao": {
         "id": 89,
         "name": "Classe da Inspeção",
         "value": {"valor": "", "texto": ""},
     },
     "cnpjcpf_da_entidade": {"id": 141, "name": "CNPJ/CPF da Entidade", "value": ""},
-    "copiar_instrumento_da_reserva": {
-        "id": 629,
-        "name": "Copiar instrumento da reserva?",
-        "options": ["0", "1"],
-        "value": "",
-    },
     "coordenacao_responsavel": {
         "id": 178,
         "name": "Coordenação responsável",
         "value": "",
     },
+    "coordenadas_estacao": {"id": 718, "name": "Coordenadas Estação", "value": ""},
     "coordenadas_geograficas": {
         "id": 717,
         "name": "Coordenadas Geográficas",
         "replace_colon": True,
         "value": {"latitude": "", "longitude": ""},
     },
+    "copiar_instrumento_da_reserva": {
+        "id": 629,
+        "name": "Copiar instrumento da reserva?",
+        "options": ["0", "1"],
+        "value": "",
+    },
+    "dadospacp": {"id": 415, "name": "DadosPACP", "value": ""},
     "data_de_inicio_efetivo": {
         "id": 627,
         "name": "Data de início efetivo",
@@ -99,7 +116,7 @@ FIELDS = {
         "name": "Documento instaurador do PADO",
         "value": "",
     },
-    "dadospacp": {"id": 415, "name": "DadosPACP", "value": ""},
+    "endereco_da_inspecao": {"id": 142, "name": "Endereço da Inspeção", "value": ""},
     "entidade_com_cadastro_stel": {
         "id": 189,
         "name": "Entidade com cadastro STEL?",
@@ -115,12 +132,6 @@ FIELDS = {
     },
     "entidade_outorgada": {"id": 138, "name": "Entidade outorgada?", "value": ""},
     "esta_em_operacao": {"id": 139, "name": "Está em operação?", "value": ""},
-    "fiscal_responsavel": {
-        "id": 25,
-        "name": "Fiscal responsável",
-        "mandatory": True,
-        "value": "",
-    },
     "fiscais": {
         "id": 26,
         "name": "Fiscais",
@@ -128,6 +139,19 @@ FIELDS = {
         "multiple": True,
         "value": [""],
     },
+    "fiscal_responsavel": {
+        "id": 25,
+        "name": "Fiscal responsável",
+        "mandatory": True,
+        "value": "",
+    },
+    "foi_constatada_interferencia": {
+        "id": 1967,
+        "name": "Foi constatada interferência?",
+        "value": "",
+    },
+    "frequencia_final": {"id": 158, "name": "Frequência final", "value": "20"},
+    "frequencia_inicial": {"id": 156, "name": "Frequência inicial", "value": "10"},
     "frequencias": {"id": 180, "name": "Frequência(s)", "value": ""},
     "horas_de_conclusao": {
         "id": 94,
@@ -161,6 +185,11 @@ FIELDS = {
         "options": ["Sim", "Não"],
         "value": "",
     },
+    "identificacao_da_nao_outorgada": {
+        "id": 250,
+        "name": "Identificação da não Outorgada",
+        "value": "",
+    },
     "instrumentos_utilizados": {
         "id": 599,
         "name": "Instrumentos Utilizados",
@@ -174,13 +203,15 @@ FIELDS = {
         "options": ["Comercialização de produtos", "Utilização de produtos"],
         "value": [{"valor": "", "texto": ""}],
     },
-    "latitude_coordenadas": {"id": 170, "name": "Latitude (coordenadas)", "value": ""},
     "lai_vinculadas": {"id": 481, "name": "LAI vinculadas", "value": ""},
+    "latitude_coordenadas": {"id": 170, "name": "Latitude (coordenadas)", "value": ""},
+    "latitude_da_estacao": {"id": 191, "name": "Latitude da estação", "value": ""},
     "longitude_coordenadas": {
         "id": 171,
         "name": "Longitude (coordenadas)",
         "value": "",
     },
+    "longitude_da_estacao": {"id": 192, "name": "Longitude da estação", "value": ""},
     "motivo_de_lai": {
         "id": 164,
         "multiple": True,
@@ -217,6 +248,11 @@ FIELDS = {
         "replace_colon": True,
         "value": {"numero": ""},
     },
+    "no_sei_relatorio_monitoramento": {
+        "id": 544,
+        "name": "Nº SEI Relatório Monitoramento",
+        "value": "",
+    },
     "nome_da_entidade": {
         "id": 140,
         "name": "Nome da Entidade",
@@ -226,6 +262,12 @@ FIELDS = {
     "observacao_tecnica_amostral": {
         "id": 693,
         "name": "Observação (técnica amostral)",
+        "value": "",
+    },
+    "observacoes": {"id": 1973, "name": "Observações", "value": ""},
+    "pai_instaurado_pela_anatel": {
+        "id": 160,
+        "name": "PAI instaurado pela Anatel?",
         "value": "",
     },
     "potencia_medida": {"id": 81, "name": "Potência medida", "value": ""},
@@ -287,18 +329,15 @@ FIELDS = {
         "name": "Qnt. produt. lacrados/apreend.",
         "value": "",
     },
+    "qtd_de_emissoes": {"id": 69, "name": "Qtd. de Emissões", "value": ""},
+    "qtd_identificadas": {"id": 731, "name": "Qtd. Identificadas", "value": ""},
+    "qtd_licenciadas": {"id": 730, "name": "Qtd. Licenciadas", "value": ""},
     "reserva_de_instrumentos": {
         "id": 597,
         "multiple": True,
         "name": "Reserva de instrumentos",
         "mandatory": True,
-        "value": [
-            {
-                "id": "",
-                "valor": "",
-                "texto": "",
-            }
-        ],
+        "value": [{"id": "", "valor": "", "texto": ""}],
     },
     "servicos_da_inspecao": {
         "id": 57,
@@ -331,6 +370,11 @@ FIELDS = {
         "multiple": True,
         "value": [{"valor": "", "texto": ""}],
     },
+    "tipificacao_da_infracao": {
+        "id": 148,
+        "name": "Tipificação da infração",
+        "value": "",
+    },
     "tipo_de_inspecao": {
         "id": 2,
         "name": "Tipo de inspeção",
@@ -347,8 +391,6 @@ FIELDS = {
             },
             "Certificação": {
                 "mandatory": [
-                    # "coordenadas_geograficas", #This should comme from latitude_coordenadas
-                    # "dadospacp",
                     "endereco_da_inspecao",
                     "entidade_com_cadastro_stel",
                     "houve_obice",
@@ -476,6 +518,7 @@ FIELDS = {
         },
         "value": {"valor": "", "texto": ""},
     },
+    "tipo_de_medicao": {"id": 193, "name": "Tipo de medição", "value": ""},
     "tipo_do_processo_plai": {
         "id": 426,
         "name": "Tipo do Processo PLAI",
@@ -493,6 +536,16 @@ FIELDS = {
         "multiple": True,
         "options": MUNICIPIOS,
         "value": [{"valor": "", "texto": ""}],
+    },
+    "unidade_da_frequencia_final": {
+        "id": 159,
+        "name": "Unidade da frequência final",
+        "value": "MHz",
+    },
+    "unidade_da_frequencia_inicial": {
+        "id": 157,
+        "name": "Unidade da frequência inicial",
+        "value": "MHz",
     },
     "unidade_de_frequencia": {"id": 84, "name": "Unidade de Frequência", "value": ""},
     "unidade_de_potencia": {"id": 82, "name": "Unidade de Potência", "value": ""},
@@ -524,67 +577,6 @@ FIELDS = {
         "name": "Utilizou técnicas amostrais?",
         "mandatory": True,
         "options": ["Usou técnicas amostrais", "Não usou técnicas amostrais"],
-        "value": "",
-    },
-    "endereco_da_inspecao": {"id": 142, "name": "Endereço da Inspeção", "value": ""},
-    "frequencia_inicial": {"id": 156, "name": "Frequência inicial", "value": "10"},
-    "unidade_da_frequencia_inicial": {
-        "id": 157,
-        "name": "Unidade da frequência inicial",
-        "value": "MHz",
-    },
-    "frequencia_final": {"id": 158, "name": "Frequência final", "value": "20"},
-    "unidade_da_frequencia_final": {
-        "id": 159,
-        "name": "Unidade da frequência final",
-        "value": "MHz",
-    },
-    "latitude_da_estacao": {"id": 191, "name": "Latitude da estação", "value": ""},
-    "longitude_da_estacao": {"id": 192, "name": "Longitude da estação", "value": ""},
-    "tipo_de_medicao": {"id": 193, "name": "Tipo de medição", "value": ""},
-    "campo_eletrico_rms_vm": {
-        "id": 194,
-        "name": "Campo elétrico RMS (V/m)",
-        "value": "",
-    },
-    "campo_eletrico__pico_vm": {
-        "id": 195,
-        "name": "Campo elétrico - pico (V/m)",
-        "value": "",
-    },
-    "coordenadas_estacao": {"id": 718, "name": "Coordenadas Estação", "value": ""},
-    "pai_instaurado_pela_anatel": {
-        "id": 160,
-        "name": "PAI instaurado pela Anatel?",
-        "value": "",
-    },
-    "foi_constatada_interferencia": {
-        "id": 1967,
-        "name": "Foi constatada interferência?",
-        "value": "",
-    },
-    "observacoes": {"id": 1973, "name": "Observações", "value": ""},
-    "qtd_de_emissoes": {"id": 69, "name": "Qtd. de Emissões", "value": ""},
-    "qtd_licenciadas": {"id": 730, "name": "Qtd. Licenciadas", "value": ""},
-    "qtd_identificadas": {"id": 731, "name": "Qtd. Identificadas", "value": ""},
-    "acao_de_risco_a_vida_criada": {
-        "id": 154,
-        "name": "Ação de risco à vida criada?",
-        "value": "",
-    },
-    "no_sei_relatorio_monitoramento": {
-        "id": 544,
-        "name": "Nº SEI Relatório Monitoramento",
-        "value": "",
-    },
-    "tipificacao_da_infracao": {
-        "id": 148,
-        "name": "Tipificação da infração",
-        "value": "",
-    },
-    "identificacao_da_nao_outorgada": {
-        "id": 250,
-        "name": "Identificação da não Outorgada",
         "value": "",
     },
 }
