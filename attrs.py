@@ -485,7 +485,6 @@ FIELDS = {
             },
             "Outorga - Aspectos Técnicos": {
                 "mandatory": [
-                    "altura_do_sistema_irradiante",
                     # "coordenadas_geograficas",
                     "entidade_outorgada",
                     "esta_em_operacao",
@@ -494,6 +493,7 @@ FIELDS = {
                     "latitude_coordenadas",
                     "longitude_coordenadas",
                     "observacao_tecnica_amostral",
+                    "servicos_da_inspecao",
                     "situacao_constatada",
                     "situacao_de_risco_a_vida",
                     "uso_de_produto_homologado",
@@ -501,6 +501,7 @@ FIELDS = {
                     "utilizou_tecnicas_amostrais",
                 ],
                 "optional": [
+                    "altura_do_sistema_irradiante",
                     "cnpjcpf_da_entidade",
                     "documento_instaurador_do_pado",
                     "frequencias",
