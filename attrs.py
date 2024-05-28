@@ -205,7 +205,13 @@ FIELDS = {
         "id": 73,
         "name": "Irregularidade",
         "multiple": True,
-        "options": ["Comercialização de produtos", "Utilização de produtos"],
+        "options": [
+            "Comercialização de produtos",
+            "Utilização de produtos",
+            "Conteúdo",
+            "Outros aspectos não técnicos",
+            "Recursos de acessibilidade",
+        ],
         "value": [{"valor": "", "texto": ""}],
     },
     "lai_vinculadas": {"id": 481, "name": "LAI vinculadas", "value": ""},
@@ -441,10 +447,11 @@ FIELDS = {
                     "irregularidade",
                     "observacao_tecnica_amostral",
                     "pai_instaurado_pela_anatel",
+                    "servicos_da_inspecao",
                     "situacao_constatada",
                     "utilizou_tecnicas_amostrais",
                 ],
-                "optional": [],
+                "optional": ["cnpjcpf_da_entidade"],
             },
             "Outorga - Aspectos Técnicos": {
                 "mandatory": [
