@@ -2,6 +2,14 @@ from constants import MUNICIPIOS, SERVICOS
 
 ALL = {"status": "", "description": "", "start_date": "", "due_date": ""}
 
+SPECIAL = [
+    "latitude_coordenadas",
+    "longitude_coordenadas",
+    "latitude_da_estacao",
+    "longitude_da_estacao",
+    "gerar_plai",
+]
+
 HIDDEN = {
     "gerar_plai": {
         "id": 426,
@@ -12,37 +20,43 @@ HIDDEN = {
         },
         "replace_colon": True,
         "value": {"criar_processo": "", "tipo_processo": "", "coord_fi": ""},
-    }
+    },
+    "gerar_relatorio": {
+        "id": 541,
+        "name": "Gerar Relatório",
+        "map": {"1": {"mandatory": ["Html"]}, "0": {}},
+        "value": "",
+    },
+    "Html": {
+        "id": 543,
+        "name": "Html",
+        "value": "",
+    },
 }
 
+TIPOS_DE_INSPECAO = {
+    "Técnica": [
+        "agrupamento",
+        "coordenacao_responsavel",
+        "entidade_da_inspecao",
+        "fiscais",
+        "fiscal_responsavel",
+        "horas_de_conclusao",
+        "horas_de_deslocamento",
+        "horas_de_execucao",
+        "horas_de_preparacao",
+        "no_pcdp",
+        "no_sav",
+        "no_sei_processo_fiscalizacao",
+        "precisa_reservar_instrumentos",
+        "procedimentos",
+        "servicos_da_inspecao",
+        "tipo_de_inspecao",
+        "ufmunicipio",
+        "utilizou_algum_instrumento",
+    ]
+}
 
-TECNICA = [
-    "agrupamento",
-    "ano_de_execucao",
-    "app_fiscaliza",
-    "classe_da_inspecao",
-    "coordenacao_responsavel",
-    "data_de_inicio_efetivo",
-    "entidade_da_inspecao",
-    "fiscais",
-    "fiscal_responsavel",
-    "horas_de_conclusao",
-    "horas_de_deslocamento",
-    "horas_de_execucao",
-    "horas_de_preparacao",
-    "no_pcdp",
-    "no_sav",
-    "no_sei_processo_fiscalizacao",
-    "precisa_reservar_instrumentos",
-    "procedimentos",
-    "servicos_da_inspecao",
-    "subtema",
-    "tema",
-    "tipo_de_inspecao",
-    "total_de_horas",
-    "ufmunicipio",
-    "utilizou_algum_instrumento",
-]
 
 FIELDS = {
     "acao_de_risco_a_vida_criada": {
@@ -56,8 +70,8 @@ FIELDS = {
         "name": "Altura do sistema irradiante",
         "value": "",
     },
-    "ano_de_execucao": {"id": 5, "name": "Ano de Execução", "value": ""},
-    "app_fiscaliza": {"id": 463, "name": "App Fiscaliza", "value": ""},
+    # "ano_de_execucao": {"id": 5, "name": "Ano de Execução", "value": ""},
+    # "app_fiscaliza": {"id": 463, "name": "App Fiscaliza", "value": ""},
     "area_do_pacp": {
         "id": 416,
         "name": "Área do PACP",
@@ -81,11 +95,11 @@ FIELDS = {
         "name": "Campo elétrico RMS (V/m)",
         "value": "",
     },
-    "classe_da_inspecao": {
-        "id": 89,
-        "name": "Classe da Inspeção",
-        "value": {"valor": "", "texto": ""},
-    },
+    # "classe_da_inspecao": {
+    #     "id": 89,
+    #     "name": "Classe da Inspeção",
+    #     "value": {"valor": "", "texto": ""},
+    # },
     "cnpjcpf_da_entidade": {"id": 141, "name": "CNPJ/CPF da Entidade", "value": ""},
     "coordenacao_responsavel": {
         "id": 178,
@@ -106,11 +120,11 @@ FIELDS = {
         "value": "",
     },
     "dadospacp": {"id": 415, "name": "DadosPACP", "value": ""},
-    "data_de_inicio_efetivo": {
-        "id": 627,
-        "name": "Data de início efetivo",
-        "value": "",
-    },
+    # "data_de_inicio_efetivo": {
+    #     "id": 627,
+    #     "name": "Data de início efetivo",
+    #     "value": "",
+    # },
     "documento_instaurador_do_pado": {
         "id": 134,
         "name": "Documento instaurador do PADO",
@@ -160,8 +174,18 @@ FIELDS = {
         "name": "Foi constatada interferência?",
         "value": "",
     },
-    "frequencia_final": {"id": 158, "name": "Frequência final", "value": "20"},
-    "frequencia_inicial": {"id": 156, "name": "Frequência inicial", "value": "10"},
+    "frequencia_final": {
+        "id": 158,
+        "name": "Frequência final",
+        "mandatory": True,
+        "value": "20",
+    },
+    "frequencia_inicial": {
+        "id": 156,
+        "name": "Frequência inicial",
+        "mandatory": True,
+        "value": "10",
+    },
     "frequencias": {"id": 180, "name": "Frequência(s)", "value": ""},
     "horas_de_conclusao": {
         "id": 94,
@@ -399,18 +423,18 @@ FIELDS = {
         "options": ["Sim", "Não"],
         "value": {"valor": "", "texto": ""},
     },
-    "subtema": {
-        "id": 15,
-        "name": "Subtema",
-        "multiple": True,
-        "value": [{"valor": "", "texto": ""}],
-    },
-    "tema": {
-        "id": 14,
-        "name": "Tema",
-        "multiple": True,
-        "value": [{"valor": "", "texto": ""}],
-    },
+    # "subtema": {
+    # "id": 15,
+    # "name": "Subtema",
+    # "multiple": True,
+    # "value": [{"valor": "", "texto": ""}],
+    # },
+    # "tema": {
+    #     "id": 14,
+    #     "name": "Tema",
+    #     "multiple": True,
+    #     "value": [{"valor": "", "texto": ""}],
+    # },
     "tipificacao_da_infracao": {
         "id": 148,
         "name": "Tipificação da infração",
@@ -586,12 +610,28 @@ FIELDS = {
     "unidade_da_frequencia_final": {
         "id": 159,
         "name": "Unidade da frequência final",
-        "value": "MHz",
+        "mandatory": True,
+        "options": [
+            "Hz",
+            "kHz",
+            "MHz",
+            "GHz",
+            "THz",
+        ],
+        "value": "",
     },
     "unidade_da_frequencia_inicial": {
         "id": 157,
         "name": "Unidade da frequência inicial",
-        "value": "MHz",
+        "mandatory": True,
+        "options": [
+            "Hz",
+            "kHz",
+            "MHz",
+            "GHz",
+            "THz",
+        ],
+        "value": "",
     },
     "unidade_de_frequencia": {"id": 84, "name": "Unidade de Frequência", "value": ""},
     "unidade_de_potencia": {"id": 82, "name": "Unidade de Potência", "value": ""},
