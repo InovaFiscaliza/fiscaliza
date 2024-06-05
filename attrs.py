@@ -1,3 +1,10 @@
+from datatypes import (
+    SimpleField,
+    EncodedString,
+    FieldWithOptions,
+    Coordenadas,
+    GerarPlai,
+)
 from constants import MUNICIPIOS, SERVICOS
 
 ALL = {"status": "", "description": "", "start_date": "", "due_date": ""}
@@ -59,23 +66,13 @@ TIPOS_DE_INSPECAO = {
 
 
 FIELDS = {
-    "acao_de_risco_a_vida_criada": {
-        "id": 154,
-        "name": "Ação de risco à vida criada?",
-        "value": "",
-    },
-    "agrupamento": {"id": 213, "name": "Agrupamento", "value": ""},
-    "altura_do_sistema_irradiante": {
-        "id": 131,
-        "name": "Altura do sistema irradiante",
-        "value": "",
-    },
-    # "ano_de_execucao": {"id": 5, "name": "Ano de Execução", "value": ""},
-    # "app_fiscaliza": {"id": 463, "name": "App Fiscaliza", "value": ""},
-    "area_do_pacp": {
-        "id": 416,
-        "name": "Área do PACP",
-        "options": [
+    "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
+    "agrupamento": SimpleField(213, "Agrupamento"),
+    "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante"),
+    "area_do_pacp": FieldWithOptions(
+        416,
+        "Área do PACP",
+        options=[
             "1-Comércio",
             "2-ISP",
             "3-E-commerce",
@@ -83,109 +80,38 @@ FIELDS = {
             "5-Feiras e Eventos",
             "6-Supervisão de Mercados",
         ],
-        "value": {"texto": "", "valor": ""},
-    },
-    "campo_eletrico__pico_vm": {
-        "id": 195,
-        "name": "Campo elétrico - pico (V/m)",
-        "value": "",
-    },
-    "campo_eletrico_rms_vm": {
-        "id": 194,
-        "name": "Campo elétrico RMS (V/m)",
-        "value": "",
-    },
-    # "classe_da_inspecao": {
-    #     "id": 89,
-    #     "name": "Classe da Inspeção",
-    #     "value": {"valor": "", "texto": ""},
-    # },
-    "cnpjcpf_da_entidade": {"id": 141, "name": "CNPJ/CPF da Entidade", "value": ""},
-    "coordenacao_responsavel": {
-        "id": 178,
-        "name": "Coordenação responsável",
-        "value": "",
-    },
-    "coordenadas_estacao": {"id": 718, "name": "Coordenadas Estação", "value": ""},
-    "coordenadas_geograficas": {
-        "id": 717,
-        "name": "Coordenadas Geográficas",
-        "replace_colon": True,
-        "value": {"latitude": "", "longitude": ""},
-    },
-    "copiar_instrumento_da_reserva": {
-        "id": 629,
-        "name": "Copiar instrumento da reserva?",
-        "options": ["0", "1"],
-        "value": "",
-    },
-    "dadospacp": {"id": 415, "name": "DadosPACP", "value": ""},
-    # "data_de_inicio_efetivo": {
-    #     "id": 627,
-    #     "name": "Data de início efetivo",
-    #     "value": "",
-    # },
-    "documento_instaurador_do_pado": {
-        "id": 134,
-        "name": "Documento instaurador do PADO",
-        "value": "",
-    },
-    "endereco_da_inspecao": {"id": 142, "name": "Endereço da Inspeção", "value": ""},
-    "entidade_com_cadastro_stel": {
-        "id": 189,
-        "name": "Entidade com cadastro STEL?",
-        "mandatory": True,
-        "options": ["Sim", "Não"],
-        "value": "",
-    },
-    "entidade_da_inspecao": {
-        "id": 30,
-        "name": "Entidade da Inspeção",
-        "multiple": True,
-        "value": [""],
-    },
-    "entidade_outorgada": {
-        "id": 138,
-        "name": "Entidade outorgada?",
-        "values": {"1": {"mandatory": ["numero_da_estacao"]}, "0": {}},
-        "value": "",
-    },
-    "esta_em_operacao": {
-        "id": 139,
-        "name": "Está em operação?",
-        "options": ["1", "0"],
-        "value": "",
-    },
-    "fiscais": {
-        "id": 26,
-        "name": "Fiscais",
-        "mandatory": True,
-        "multiple": True,
-        "value": [""],
-    },
-    "fiscal_responsavel": {
-        "id": 25,
-        "name": "Fiscal responsável",
-        "mandatory": True,
-        "value": "",
-    },
-    "foi_constatada_interferencia": {
-        "id": 1967,
-        "name": "Foi constatada interferência?",
-        "value": "",
-    },
-    "frequencia_final": {
-        "id": 158,
-        "name": "Frequência final",
-        "mandatory": True,
-        "value": "20",
-    },
-    "frequencia_inicial": {
-        "id": 156,
-        "name": "Frequência inicial",
-        "mandatory": True,
-        "value": "10",
-    },
+        format_value=True,
+    ),
+    "campo_eletrico__pico_vm": SimpleField(195, "Campo elétrico - pico (V/m)"),
+    "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m)"),
+    "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade"),
+    "coordenacao_responsavel": SimpleField(178, "Coordenação responsável"),
+    "coordenadas_estacao": SimpleField(718, "Coordenadas Estação"),
+    "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas"),
+    "copiar_instrumento_da_reserva": FieldWithOptions(
+        629, "Copiar instrumento da reserva?", options=["0", "1"]
+    ),
+    "dadospacp": SimpleField(415, "DadosPACP"),
+    "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO"),
+    "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção"),
+    "entidade_com_cadastro_stel": FieldWithOptions(
+        189, "Entidade com cadastro STEL?", True, options=["Sim", "Não"]
+    ),
+    "entidade_da_inspecao": SimpleField(30, "Entidade da Inspeção", True),
+    "entidade_outorgada": FieldWithOptions(
+        138,
+        "Entidade outorgada?",
+        options=["0", "1"],
+        mapping={"1": ["numero_da_estacao"]},
+    ),
+    "esta_em_operacao": FieldWithOptions(139, "Está em operação?", options=["0", "1"]),
+    "fiscais": SimpleField(26, "Fiscais", True, True),
+    "fiscal_responsavel": SimpleField(25, "Fiscal responsável", True),
+    "foi_constatada_interferencia": FieldWithOptions(
+        1967, "Foi constatada interferência?", options=["0", "1"]
+    ),
+    "frequencia_inicial": SimpleField(156, "Frequência inicial", True),
+    "frequencia_final": SimpleField(158, "Frequência final", True),
     "frequencias": {"id": 180, "name": "Frequência(s)", "value": ""},
     "horas_de_conclusao": {
         "id": 94,
@@ -281,7 +207,7 @@ FIELDS = {
         "name": "Motivo de LAI",
         "value": [""],
     },
-    "numero_da_estacao": {"id": 137, "name": "Número da estação", "value": ""},
+    "numero_da_estacao": SimpleField(137, "Número da estação", True),
     "no_de_homologacao": {"id": 161, "name": "Nº de homologação", "value": ""},
     "no_do_lacre": {"id": 165, "name": "Nº do lacre", "value": ""},
     "no_pcdp": {"id": 112, "name": "Nº PCDP", "value": ""},
