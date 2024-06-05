@@ -34,6 +34,7 @@ class SimpleField:
         return {"id": self.id, "value": self.validate_value(value)}
 
 
+@dataclass
 class EncodedString(SimpleField):
     """This class always format the value string
     The json key is called 'numero'
@@ -43,8 +44,10 @@ class EncodedString(SimpleField):
         return "{" + '"numero"=>"{0}"'.format(value) + "}"
 
 
+@dataclass
 class FieldWithOptions(SimpleField):
     options: list[str]
+    mapping: dict[str, list] = {}
 
     def __call__(self, value: str | list) -> dict[str, str | list]:
         if self.multiple:
