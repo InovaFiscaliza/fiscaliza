@@ -300,8 +300,8 @@ class Issue:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
-        if hasattr(self, "editable_fields"):
-            del self.editable_fields
+        # if hasattr(self, "editable_fields"):
+        #     del self.editable_fields
 
         for key, field in self.conditional_fields().items():
             if key in dados:
@@ -325,7 +325,7 @@ class Issue:
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
-            data["status_id"] = STATUS.get(status)
+            data["status"] = STATUS.get(status)
         if fiscais := data.get("fiscais"):
             if id_fiscais := self._fiscais2ids(fiscais):
                 data["fiscais"] = id_fiscais
@@ -334,29 +334,30 @@ class Issue:
                 data["fiscal_responsavel"] = id_fiscal_responsavel
         return data
 
-    def _check_coordinates(self, dados: dict) -> dict:
-        data = {}
+    def _check_coordinates(self, data: dict) -> dict:
         if (
-            ("latitude_coordenadas" in dados) and ("longitude_coordenadas" in dados)
+            ("latitude_coordenadas" in data) and ("longitude_coordenadas" in data)
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
-            coords = FIELDS["coordenadas_geograficas"]
-            data["coordenadas_geograficas"] = coords(
-                dados["latitude_coordenadas"], dados["longitude_coordenadas"]
+            newkey = "coordenadas_geograficas"
+            self.editable_fields[newkey] = FIELDS[newkey]
+            data[newkey] = (
+                data.pop("latitude_coordenadas"),
+                data.pop("longitude_coordenadas"),
             )
 
-        elif ("latitude_coordenadas" in dados) != ("longitude_coordenadas" in dados):
+        elif ("latitude_coordenadas" in data) != ("longitude_coordenadas" in data):
             raise ValueError(
                 "Tanto 'latitude_coordenadas' quanto 'longitude_coordenadas' devem ser fornecidas juntas."
             )
-        if (
-            ("latitude_da_estacao" in dados) and ("longitude_da_estacao" in dados)
-        ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
-            coords = FIELDS["coordenadas_estacao"]
-            data["coordenadas_estacao"] = coords(
-                dados["latitude_da_estacao"], dados["longitude_da_estacao"]
+        if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
+            newkey = "coordenadas_estacao"
+            self.editable_fields[newkey] = FIELDS[newkey]
+            data[newkey] = (
+                data.pop("latitude_da_estacao"),
+                data.pop("longitude_da_estacao"),
             )
 
-        elif ("latitude_da_estacao" in dados) != ("longitude_da_estacao" in dados):
+        elif ("latitude_da_estacao" in data) != ("longitude_da_estacao" in data):
             raise ValueError(
                 "Tanto 'latitude_da_estacao' quanto 'longitude_da_estacao' devem ser fornecidas juntas."
             )
@@ -368,8 +369,7 @@ class Issue:
         self.update_fields(dados)
         data = {k: v for k, v in dados.items() if k in self.editable_fields}
         data = self._get_id_only_fields(data)
-        data |= self._check_coordinates(data)
-
+        data = self._check_coordinates(data)
         return data
 
     def _parse_value_dict(self, dados: dict) -> dict:
@@ -391,10 +391,11 @@ class Issue:
         data = self._parse_value_dict(dados)
         submitted_fields = {"custom_fields": []}
         # Extract notes and upload
-        for value in data.values():
-            if isinstance(value, AtomicField):
-                submitted_fields[value.name] = value
-            submitted_fields["custom_fields"].append(value)
+        for key, value in data.items():
+            if isinstance(self.editable_fields[key], AtomicField):
+                submitted_fields[self.editable_fields[key].name] = value
+            else:
+                submitted_fields["custom_fields"].append(value)
         return self.client.issue.update(self.id, **submitted_fields)
 
 
