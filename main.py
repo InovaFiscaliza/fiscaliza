@@ -246,7 +246,7 @@ class Issue:
         for k, v in self._attrs.items():
             if k in special_fields:
                 continue
-            elif k not in self._fields:
+            elif k not in FIELDS:
                 k = k.upper()
             attrs[k] = self.extract_string(v)
 
@@ -283,12 +283,11 @@ class Issue:
         return editable_fields
 
     def mandatory_fields(self) -> dict:
-        mandatory = {
+        return {
             k: v
             for k, v in self.editable_fields.items()
             if getattr(v, "mandatory", False)
         }
-        return mandatory | {k: self.attrs[k] for k in self._atomic_fields}
 
     def conditional_fields(self) -> dict:
         return {
@@ -326,7 +325,7 @@ class Issue:
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
-            data["status"] = STATUS.get(status)
+            data["status_id"] = STATUS.get(status)
         if fiscais := data.get("fiscais"):
             if id_fiscais := self._fiscais2ids(fiscais):
                 data["fiscais"] = id_fiscais
