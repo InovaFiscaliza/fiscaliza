@@ -46,7 +46,7 @@ TIPOS_DE_INSPECAO = {
 
 
 FIELDS = {
-    "status_id": AtomicField("status_id"),
+    "status": AtomicField("status_id"),
     "description": AtomicField("description"),
     "start_date": AtomicField("start_date"),
     "due_date": AtomicField("due_date"),
