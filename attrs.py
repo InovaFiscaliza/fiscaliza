@@ -265,7 +265,7 @@ FIELDS = {
         597, "Reserva de instrumentos", True, True, True
     ),
     "sanada_ou_mitigada": FieldWithOptions(
-        159, "Sanada ou mitigada?", mandatory=True, options=["1", "0"]
+        163, "Sanada ou mitigada?", mandatory=True, options=["1", "0"]
     ),
     "servicos_da_inspecao": FieldWithOptions(
         57,
