@@ -334,20 +334,49 @@ class Issue:
                 data["fiscal_responsavel"] = id_fiscal_responsavel
         return data
 
+    def _check_coordinates(self, dados: dict) -> dict:
+        data = {}
+        if (
+            ("latitude_coordenadas" in dados) and ("longitude_coordenadas" in dados)
+        ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
+            coords = FIELDS["coordenadas_geograficas"]
+            data["coordenadas_geograficas"] = coords(
+                dados["latitude_coordenadas"], dados["longitude_coordenadas"]
+            )
+
+        elif ("latitude_coordenadas" in dados) != ("longitude_coordenadas" in dados):
+            raise ValueError(
+                "Tanto 'latitude_coordenadas' quanto 'longitude_coordenadas' devem ser fornecidas juntas."
+            )
+        if (
+            ("latitude_da_estacao" in dados) and ("longitude_da_estacao" in dados)
+        ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
+            coords = FIELDS["coordenadas_estacao"]
+            data["coordenadas_estacao"] = coords(
+                dados["latitude_da_estacao"], dados["longitude_da_estacao"]
+            )
+
+        elif ("latitude_da_estacao" in dados) != ("longitude_da_estacao" in dados):
+            raise ValueError(
+                "Tanto 'latitude_da_estacao' quanto 'longitude_da_estacao' devem ser fornecidas juntas."
+            )
+        return data
+
     def _check_submission(self, dados: dict):
+        # for key in self.mandatory_fields():
+        #     assert key in dados, f"Dado obrigatório: {key}"
         self.update_fields(dados)
         data = {k: v for k, v in dados.items() if k in self.editable_fields}
         data = self._get_id_only_fields(data)
-        # for key in self.mandatory_fields():
-        #     if key not in data:
-        #         raise ValueError(f"Dado obrigatório: {key}")
+        data |= self._check_coordinates(data)
+
         return data
 
     def _parse_value_dict(self, dados: dict) -> dict:
-        data = {}
-        for key, value in self._check_submission(dados).items():
-            data[key] = self.editable_fields[key](value)
-        return data
+        return {
+            k: self.editable_fields[k](v)
+            for k, v in self._check_submission(dados).items()
+        }
 
     def refresh(self) -> None:
         """Refreshes the issue's attributes."""
