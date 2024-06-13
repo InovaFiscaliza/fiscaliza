@@ -11,6 +11,14 @@ STATUS = {
     "Cancelada": 19,
 }
 
+FLOW = {
+    "Rascunho": ["Aguardando Execução"],
+    "Aguardando Execução": ["Em Andamento"],
+    "Em Andamento": ["Aguardando Execução", "Relatando", "Relatada"],
+    "Relatando": ["Aguardando Execução", "Relatada"],
+}
+STATES = {
+
 SERVICOS = {
     "000": "000 - Não Aplicável",
     "001": "001 - COLETIVO - SERVIÇO DE INTERESSE COLETIVO",
