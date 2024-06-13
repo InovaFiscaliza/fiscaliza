@@ -11,8 +11,12 @@ from dotenv import load_dotenv
 from redminelib import Redmine
 from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
+from fastcore.xtras import listify
 
 from constants import URL_HM, URL_PD, STATUS
+from attrs import FIELDS
+from datatypes import AtomicField
+
 
 load_dotenv(override=True)
 
@@ -85,25 +89,14 @@ class Issue:
             include=[
                 "relations",
                 "attachments",
-                # "children",
                 "journals",
-                # "changesets",
-                # "watchers",
                 "allowed_statuses",
             ],
         )
         self._ascii2utf = {}
-        self._special_fields = set()
-        self.editable_fields = {}
-        self.init()
-
-    def init(self):
-        _ = self.attrs
-        self.editable_fields["gerar_relatorio"] = "0"
-        self.editable_fields["html"] = ""
 
     @staticmethod
-    def _format_json_string(field: str) -> str:
+    def __format_json_string(field: str) -> str:
         """Recebe uma string formatada como json e retorna a mesma string formatada como json"""
         string = field.replace("'", '"').replace("=>", ": ")
         try:
@@ -119,7 +112,7 @@ class Issue:
                 valor = field.get("name", field)
             return valor
         if isinstance(field, str):
-            json_obj = Issue._format_json_string(field)
+            json_obj = Issue.__format_json_string(field)
             if isinstance(json_obj, str):
                 return json_obj
             return Issue.extract_string(json_obj)
@@ -128,59 +121,9 @@ class Issue:
         return field
 
     @property
-    def _atomic_fields(self):
-        return {
-            "description": "description",
-            "status": "status_id",
-            "start_date": "start_date",
-            "due_date": "due_date",
-        }
-
-    @property
-    def _composite_fields(self):
-        return {
-            "notes": "notes",
-            "custom_fields": "custom_fields",
-            "uploads": "uploads",
-        }
-
-    @property
-    def _fields(self):
-        return self._atomic_fields | self._composite_fields
-
-    @property
     def type(self) -> str:
         if tracker := self._attrs.get("tracker"):
             return self._utf2ascii(tracker.get("name", ""))
-
-    @cached_property
-    def _attrs(self) -> dict:
-        _ = list(self._issue)
-        self._issue.project.refresh()  # Prevent partial attrs return
-        try:
-            return dict(list(self._issue))
-        except Exception as e:
-            raise Exception(
-                f"Não foi possível obter os atributos da issue {self.id}"
-            ) from e
-
-    @cached_property
-    def custom_fields(self) -> dict:
-        custom_fields = {}
-        for field in self._attrs.get("custom_fields", []):
-            name = self._utf2ascii(field["name"])
-            if value := field.get("value"):
-                if isinstance(value, str):
-                    if "=>" in value:
-                        # name = name.upper()
-                        self._ascii2utf[name] = field["name"]
-                        self._special_fields.add(name)
-            custom_fields[name] = field
-            if name not in self._special_fields:
-                if (value := self.extract_string(value)) is None:
-                    value = ""
-                self.editable_fields[name] = value
-        return custom_fields
 
     @cached_property
     def relations(self) -> dict:
@@ -229,46 +172,6 @@ class Issue:
     def ids2names(self) -> dict:
         return {v: k for k, v in self.names2id.items()}
 
-    @cached_property
-    def attrs(self) -> dict:
-        """Retrieves the attributes of an issue as a dictionary."""
-        special_fields = ["relations", "attachments", "custom_fields", "journals"]
-        attrs = {}
-        for k, v in self._attrs.items():
-            if k in special_fields:
-                continue
-            elif k not in self._fields:
-                k = k.upper()
-            else:
-                self.editable_fields[k] = self.extract_string(v)
-            attrs[k] = v
-        attrs["custom_fields"] = self.custom_fields
-        return attrs
-
-    @cached_property
-    def details(self) -> dict:
-        """Retrieves the details of an issue as a dictionary.
-
-        Returns:
-            dict: A dictionary containing the details of the issue, including its attachments, custom fields, journals, and other relevant information.
-        """
-        attrs = self.attrs.copy()
-        attrs.update(
-            {k: v.get("value", "") for k, v in attrs.pop("custom_fields").items()}
-        )
-        attrs = {k: self.extract_string(v) for k, v in attrs.items()}
-        attrs["ANEXOS"] = [
-            file["content_url"] for file in self._attrs.get("attachments", [])
-        ]
-        attrs["RELACOES"] = self._format_relations()
-        attrs["ATUALIZACAO"] = self.update_on
-        attrs["MEMBROS"] = list(self._issue_members().values())
-        attrs["fiscal_responsavel"] = self.ids2names.get(
-            attrs.get("fiscal_responsavel"), ""
-        )
-        attrs["fiscais"] = [self.ids2names.get(f, "") for f in attrs.get("fiscais", [])]
-        return attrs
-
     def _utf2ascii(self, s: str) -> str:
         """Receives a string and returns the same in ASCII format without spaces"""
         decoded_string = unidecode(re.sub(UTFCHARS, "", s).replace(" ", "_")).lower()
@@ -308,61 +211,235 @@ class Issue:
                 id_fiscais.append(id_fiscal)
         return id_fiscais
 
-    def _check_data(self, dados: dict) -> dict:
-        data = dados.copy()
-        if status := dados.get("status"):
+    @cached_property
+    def _attrs(self) -> dict:
+        _ = list(self._issue)
+        self._issue.project.refresh()  # Prevent partial attrs return
+        try:
+            return dict(list(self._issue))
+        except Exception as e:
+            raise Exception(
+                f"Não foi possível obter os atributos da issue {self.id}"
+            ) from e
+
+    @cached_property
+    def custom_fields(self) -> dict:
+        custom_fields = {}
+        for field in self._attrs.get("custom_fields", []):
+            name = self._utf2ascii(field["name"])
+            if name not in FIELDS:
+                name = name.upper()
+                self._ascii2utf[name] = field["name"]
+            elif value := field.get("value"):
+                if isinstance(value, str):
+                    if "=>" in value:
+                        name = name.upper()
+                        self._ascii2utf[name] = field["name"]
+            custom_fields[name] = field
+        return custom_fields
+
+    @cached_property
+    def attrs(self) -> dict:
+        """Retrieves the attributes of an issue as a dictionary."""
+        special_fields = ["relations", "attachments", "custom_fields", "journals"]
+        attrs = {}
+        for k, v in self._attrs.items():
+            if k in special_fields:
+                continue
+            elif k not in self._fields:
+                k = k.upper()
+            attrs[k] = self.extract_string(v)
+
+        attrs.update(
+            {
+                k: self.extract_string(v.get("value", ""))
+                for k, v in self.custom_fields.items()
+            }
+        )
+        attrs["ANEXOS"] = [
+            file["content_url"] for file in self._attrs.get("attachments", [])
+        ]
+        attrs["RELACOES"] = self._format_relations()
+        attrs["ATUALIZACAO"] = self.update_on
+        attrs["MEMBROS"] = list(self._issue_members().values())
+        attrs["fiscal_responsavel"] = self.ids2names.get(
+            attrs.get("fiscal_responsavel"), ""
+        )
+        attrs["fiscais"] = [self.ids2names.get(f, "") for f in attrs.get("fiscais", [])]
+        return {k: attrs[k] for k in sorted(attrs)}
+
+    @cached_property
+    def info_fields(self) -> dict:
+        return {k: v for k, v in self.attrs.items() if k.isupper()}
+
+    @cached_property
+    def editable_fields(self) -> dict:
+        """Retrieves the editable fields of an issue as a dictionary."""
+        editable_fields = {}
+        for key, field in FIELDS.items():
+            if key in self.attrs:
+                setattr(field, "value", self.attrs[key])
+                editable_fields[key] = field
+        return editable_fields
+
+    def mandatory_fields(self) -> dict:
+        mandatory = {
+            k: v
+            for k, v in self.editable_fields.items()
+            if getattr(v, "mandatory", False)
+        }
+        return mandatory | {k: self.attrs[k] for k in self._atomic_fields}
+
+    def conditional_fields(self) -> dict:
+        return {
+            k: v
+            for k, v in self.editable_fields.items()
+            if getattr(v, "mapping", False)
+        }
+
+    def update_fields(self, dados: dict) -> dict:
+        """
+        Check if the data to be submitted to the Fiscaliza server is complete and valid.
+        """
+        if hasattr(self, "editable_fields"):
+            del self.editable_fields
+
+        for key, field in self.conditional_fields().items():
+            if key in dados:
+                if field.options:
+                    for option in listify(dados[key]):
+                        assert (
+                            option in field.options
+                        ), f"Opção inválida para o campo {key}: {option}"
+
+                        if new_fields := field.mapping.get(option):
+                            # Since editable_fields commes from the .attrs, I need to clean fields based on conditional fields
+                            # previously filled
+                            for opt, values in field.mapping.items():
+                                if opt != option:
+                                    self.editable_fields = {
+                                        k: v
+                                        for k, v in self.editable_fields.items()
+                                        if k not in values
+                                    }
+                            self.editable_fields |= {k: FIELDS[k] for k in new_fields}
+
+    def _get_id_only_fields(self, data: dict) -> dict:
+        if status := data.get("status"):
             data["status"] = STATUS.get(status)
-        if fiscais := dados.get("fiscais"):
+        if fiscais := data.get("fiscais"):
             if id_fiscais := self._fiscais2ids(fiscais):
                 data["fiscais"] = id_fiscais
-        if fiscal_responsavel := dados.get("fiscal_responsavel"):
+        if fiscal_responsavel := data.get("fiscal_responsavel"):
             if id_fiscal_responsavel := self.names2id.get(fiscal_responsavel):
                 data["fiscal_responsavel"] = id_fiscal_responsavel
         return data
 
-    # def refresh(self) -> None:
-    #     """Refreshes the issue's attributes."""
-    #     # for attr in self.__dict__:
-    #     #     if isinstance(getattr(self.__class__, attr, None), cached_property):
-    #     #         cached_attrs = getattr(self, attr)
-    #     #         del cached_attrs  # Clear cache for each attribute
-    #     self = Issue(self.client, self.id)
-    #     self.init()
+    def _check_submission(self, dados: dict):
+        self.update_fields(dados)
+        data = {k: v for k, v in dados.items() if k in self.editable_fields}
+        data = self._get_id_only_fields(data)
+        # for key in self.mandatory_fields():
+        #     if key not in data:
+        #         raise ValueError(f"Dado obrigatório: {key}")
+        return data
+
+    def _parse_value_dict(self, dados: dict) -> dict:
+        data = {}
+        for key, value in self._check_submission(dados).items():
+            data[key] = self.editable_fields[key](value)
+        return data
+
+    def refresh(self) -> None:
+        """Refreshes the issue's attributes."""
+        for attr in self.__dict__:
+            if isinstance(getattr(self.__class__, attr, None), cached_property):
+                cached = getattr(self, attr)  # Clear cache for each attribute
+                del cached
+        self.init()
 
     def update(self, dados: dict) -> bool:
         """Updates an issue with the given data."""
-        data = self._check_data(dados)
+        data = self._parse_value_dict(dados)
         submitted_fields = {"custom_fields": []}
-        for k, v in self._atomic_fields.items():
-            if k in data:
-                submitted_fields[v] = data.pop(k)
         # Extract notes and upload
-        for k, v in data.items():
-            if value := self.custom_fields.get(k):
-                value = {"id": value["id"], "value": v}
-                submitted_fields["custom_fields"].append(value)
-        print(submitted_fields)
+        for value in data.values():
+            if isinstance(value, AtomicField):
+                submitted_fields[value.name] = value
+            submitted_fields["custom_fields"].append(value)
         return self.client.issue.update(self.id, **submitted_fields)
 
 
 def test_detalhar_issue(issue: str, teste: bool = True):
-    from pprint import pprint
-
     fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"], teste)
     issue_obj = Issue(fiscaliza.client, issue)
-    # pprint(issue_obj._attrs)
     # pprint(issue_obj.attrs)
-    pprint(issue_obj.details)
-    print(80 * "=")
-    pprint(issue_obj.editable_fields)
-
-    # pprint(Issue.extract_string(issue_obj.attrs["project"]).lower())
-
-    json.dump(
-        issue_obj.details,
-        (Path.cwd() / f"{issue}.json").open("w"),
-        indent=2,
-        ensure_ascii=False,
+    dados = {
+        "agrupamento": "10",
+        "altura_do_sistema_irradiante": "10",
+        "ano_de_execucao": 2025,
+        "app_fiscaliza": "1",
+        "classe_da_inspecao": "Tributária",
+        "coordenacao_responsavel": "FI2",
+        "coordenadas_geograficas": "",
+        "data_de_inicio_efetivo": "01/05/2024",
+        "description": "[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências "
+        "relacionados às aplicações críticas (como, por exemplo, "
+        "radionavegação e radiocomunicação aeronáutica e canais de "
+        "emergência) na forma a ser estabelecida no Plano de Ação de "
+        "Fiscalização.\r\n",
+        "documento_instaurador_do_pado": "",
+        "due_date": "30/06/2024",
+        "entidade_da_inspecao": [],
+        "entidade_outorgada": "",
+        "esta_em_operacao": "",
+        "fiscais": ["Ronaldo da Silva Alves Batista"],
+        "fiscal_responsavel": "Ronaldo da Silva Alves Batista",
+        "frequencias": "",
+        "gerar_relatorio": "0",
+        "horas_de_conclusao": "",
+        "horas_de_deslocamento": "",
+        "horas_de_execucao": "",
+        "horas_de_preparacao": "",
+        "houve_interferencia": "",
+        "houve_obice": "",
+        "html": "",
+        "irregularidade": [],
+        "latitude_coordenadas": "",
+        "longitude_coordenadas": "",
+        "no_pcdp": "",
+        "no_sav": "",
+        "observacao_tecnica_amostral": "",
+        "potencia_medida": "",
+        "precisa_reservar_instrumentos": "",
+        "procedimentos": [],
+        "servicos_da_inspecao": [],
+        "situacao_constatada": "",
+        "situacao_de_risco_a_vida": "",
+        "start_date": "2024-03-01",
+        "status": "Rascunho",
+        "subtema": ["Radiomonitoração Terrestre"],
+        "tema": ["Uso do Espectro"],
+        "tipo_de_inspecao": '{"valor":"Outorga - Aspectos Técnicos","texto":"Outorga - Aspectos Técnicos"}',
+        "total_de_horas": 0.0,
+        "ufmunicipio": ['{"valor":"SP/Jundiaí","texto":"SP/Jundiaí"}'],
+        "unidade_de_frequencia": "",
+        "unidade_de_potencia": "",
+        "uso_de_produto_homologado": "",
+        "utilizou_algum_instrumento": "",
+        "utilizou_apoio_policial": "",
+        "utilizou_tecnicas_amostrais": "",
+    }
+    print(
+        issue_obj.client.issue.update(
+            issue,
+            custom_fields=[
+                {
+                    "id": 426,
+                    "value": '{"criar_processo"=>"1","tipo_processo"=>"100000539","coord_fi"=>"FI4"}',
+                }
+            ],
+        )
     )
 
 
