@@ -136,14 +136,21 @@ class Coordenadas:
             + "}"
         )
 
-    def __call__(self, latitude: str, longitude: str) -> dict[str, str]:
-        if not isinstance(latitude, str) or not isinstance(longitude, str):
-            raise ValueError("The latitude and longitude must be a string")
-        self.value = {
+    def __call__(self, coords) -> dict[str, str]:
+        latitude, longitude = coords[0], coords[1]
+        self.value = (latitude, longitude)
+        return {
             "id": self.id,
             "value": self.format_value_string(latitude, longitude),
         }
-        return self.value
+
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"(value: {self.value})"
+        if self.mandatory:
+            string += " | <mandatory>"
+        return string
 
 
 @dataclass
