@@ -71,7 +71,7 @@ FIELDS = {
     "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade"),
     "coordenacao_responsavel": SimpleField(178, "Coordenação responsável"),
     "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
-    "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas"),
+    "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["0", "1"]
     ),
