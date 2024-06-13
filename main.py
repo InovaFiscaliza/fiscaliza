@@ -300,8 +300,8 @@ class Issue:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
-        # if hasattr(self, "editable_fields"):
-        #     del self.editable_fields
+        if hasattr(self, "editable_fields"):
+            del self.editable_fields
 
         for key, field in self.conditional_fields().items():
             if key in dados:
@@ -340,6 +340,8 @@ class Issue:
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
             self.editable_fields[newkey] = FIELDS[newkey]
+            self.editable_fields.pop("latitude_coordenadas")
+            self.editable_fields.pop("longitude_coordenadas")
             data[newkey] = (
                 data.pop("latitude_coordenadas"),
                 data.pop("longitude_coordenadas"),
@@ -352,6 +354,8 @@ class Issue:
         if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
             newkey = "coordenadas_estacao"
             self.editable_fields[newkey] = FIELDS[newkey]
+            self.editable_fields.pop("latitude_da_estacao")
+            self.editable_fields.pop("longitude_da_estacao")
             data[newkey] = (
                 data.pop("latitude_da_estacao"),
                 data.pop("longitude_da_estacao"),
@@ -364,12 +368,12 @@ class Issue:
         return data
 
     def _check_submission(self, dados: dict):
-        # for key in self.mandatory_fields():
-        #     assert key in dados, f"Dado obrigatório: {key}"
         self.update_fields(dados)
         data = {k: v for k, v in dados.items() if k in self.editable_fields}
         data = self._get_id_only_fields(data)
         data = self._check_coordinates(data)
+        for key in self.mandatory_fields():
+            assert key in data, f"Dado obrigatório: {key}"
         return data
 
     def _parse_value_dict(self, dados: dict) -> dict:
