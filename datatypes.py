@@ -1,5 +1,26 @@
 from dataclasses import dataclass
 from itertools import product
+from typing import Any
+
+from fastcore.xtras import listify
+
+
+class AtomicField(str):
+    def __init__(self, name: str) -> None:
+        super().__init__()
+        self.name = name
+        self.mandatory: bool = True
+
+    def __call__(self, value):
+        self.value = value
+        return value
+
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"(value: {self.value})"
+        string += " | <mandatory>"
+        return string
 
 
 @dataclass
@@ -13,25 +34,34 @@ class SimpleField:
     def format_value_string(self, value: str) -> str:
         if self.format_value:
             return "{" + '"valor":"{0}","texto":"{0}"'.format(value) + "}"
+        try:
+            value = str(value)
+        except TypeError as e:
+            raise ValueError(
+                f"The value: {value} cannot be converted to a string"
+            ) from e
+
         return value
 
     def validate_value(self, value: str | list) -> str | list:
         if self.multiple:
-            values = []
-            if not isinstance(value, list):
-                raise ValueError("The value must be a list")
-            for v in value:
-                if not isinstance(v, str):
-                    raise ValueError(f"The value must be a list of strings: {v}")
-                values.append(self.format_value_string(v))
-            return values
+            return [self.format_value_string(v) for v in listify(value)]
         else:
-            if not isinstance(value, str):
-                raise ValueError("The value must be a string")
             return self.format_value_string(value)
 
     def __call__(self, value: str | list) -> dict[str, str | list]:
+        self.value = value
         return {"id": self.id, "value": self.validate_value(value)}
+
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"(value: {self.value})"
+        if self.mandatory:
+            string += " | <mandatory>"
+        if self.multiple:
+            string += ", <multiple>"
+        return string
 
 
 @dataclass
@@ -43,21 +73,54 @@ class EncodedString(SimpleField):
     def format_value_string(self, value: str) -> str:
         return "{" + '"numero"=>"{0}"'.format(value) + "}"
 
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"({self.value})"
+        if self.mandatory:
+            string += " | <mandatory>"
+        if self.multiple:
+            string += ", <multiple>"
+        return string
+
 
 @dataclass
 class FieldWithOptions(SimpleField):
-    options: list[str]
-    mapping: dict[str, list] = {}
+    options: list[str] = None
+    mapping: dict[str, list] = None
 
     def __call__(self, value: str | list) -> dict[str, str | list]:
         if self.multiple:
+            value = [str(v) for v in listify(value)]
             for v in value:
-                if v not in self.options:
+                if (
+                    self.options is not None and v not in self.options
+                ):  # TODO: Corrigir gambiarra na classe Issue ( campo Fiscais ) e eliminar primeira condição
                     raise ValueError(f"The value {v} must be one of the valid options")
+            if isinstance(self.options, dict):
+                value = [self.options[v] for v in value]
         else:
-            if value not in self.options:
+            value = str(value)
+            if self.options is not None and value not in self.options:
                 raise ValueError(f"The value {value} must be one of the valid options")
+            if isinstance(self.options, dict):
+                value = self.options[value]
+        self.value = value
         return {"id": self.id, "value": self.validate_value(value)}
+
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"(value: {self.value})"
+        if self.mandatory:
+            string += " | <mandatory>"
+        if self.multiple:
+            string += ", <multiple>"
+        if self.options:
+            string += ", <options>"
+        if self.mapping is not None:
+            string += ", ⚠️conditional"
+        return string
 
 
 @dataclass
@@ -76,7 +139,11 @@ class Coordenadas:
     def __call__(self, latitude: str, longitude: str) -> dict[str, str]:
         if not isinstance(latitude, str) or not isinstance(longitude, str):
             raise ValueError("The latitude and longitude must be a string")
-        return {"id": self.id, "value": self.format_value_string(latitude, longitude)}
+        self.value = {
+            "id": self.id,
+            "value": self.format_value_string(latitude, longitude),
+        }
+        return self.value
 
 
 @dataclass
@@ -118,4 +185,5 @@ class GerarPlai:
 
     def __call__(self, tipo_processo: str = "", coord_fi: str = "") -> dict[str, str]:
         value = self.validate_values(tipo_processo, coord_fi)
-        return {"id": self.id, "value": value}
+        self.value = {"id": self.id, "value": value}
+        return self.value
