@@ -367,8 +367,40 @@ class Issue:
             )
         return data
 
+    def _validar_relatorio(self, dados):
+        """Valida se o arquivo do relatório existe e está legível"""
+        if dados.get("gerar_relatorio") == "1":
+            self.editable_fields["gerar_relatorio"] = FIELDS["gerar_relatorio"]
+            if (html_path := dados.get("html_path")) is None:
+                raise ValueError(
+                    "Foi solicitado a criação de um relatório no entanto o caminho para o arquivo html não foi fornecido"
+                )
+            html = Path(html_path)
+            if not html.is_file():
+                raise ValueError(f"Arquivo {html_path} não existe ou não é um arquivo")
+            try:
+                html_text = html.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                html_text = html.read_text(encoding="cp1252")
+            dados["html"] = html_text
+            self.editable_fields["html"] = FIELDS["html"]
+            dados["relatorio_de_atividades"] = ""
+            self.editable_fields["relatorio_de_atividades"] = FIELDS[
+                "relatorio_de_atividades"
+            ]
+        else:
+            self.editable_fields["gerar_relatorio"] = FIELDS["gerar_relatorio"]
+            dados["gerar_relatorio"] = "0"
+        if (relatorio := dados.get("relatorio_de_atividades")) is not None:
+            dados["relatorio_de_atividades"] = relatorio
+            self.editable_fields["relatorio_de_atividades"] = FIELDS[
+                "relatorio_de_atividades"
+            ]
+        return dados
+
     def _check_submission(self, dados: dict):
         self.update_fields(dados)
+        data = self._validar_relatorio(dados)
         data = {k: v for k, v in dados.items() if k in self.editable_fields}
         data = self._get_id_only_fields(data)
         data = self._check_coordinates(data)
