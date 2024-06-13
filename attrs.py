@@ -8,19 +8,6 @@ from datatypes import (
 )
 from constants import MUNICIPIOS, SERVICOS
 
-ALL = {"status": "", "description": "", "start_date": "", "due_date": ""}
-
-SPECIAL = [
-    "latitude_coordenadas",
-    "longitude_coordenadas",
-    "latitude_da_estacao",
-    "longitude_da_estacao",
-    "gerar_plai",
-]
-
-
-HIDDEN = ["gerar_plai", "gerar_relatorio", "Html"]
-
 TIPOS_DE_INSPECAO = {
     "Técnica": [
         "agrupamento",
@@ -105,7 +92,7 @@ FIELDS = {
         541,
         "Gerar Relatório",
         options=["0", "1"],
-        mapping={"1": ["Html"]},
+        mapping={"1": ["html"]},
     ),
     "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True),
     "horas_de_deslocamento": SimpleField(92, "Horas de deslocamento", True),
@@ -121,6 +108,7 @@ FIELDS = {
     "houve_obice": FieldWithOptions(
         136, "Houve óbice?", mandatory=True, options=["0", "1"]
     ),
+    "html": SimpleField(543, "Html", True),
     "identificada_a_origem": FieldWithOptions(
         162,
         "Identificada a origem?",
@@ -261,6 +249,7 @@ FIELDS = {
     "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões"),
     "qtd_identificadas": SimpleField(731, "Qtd. Identificadas"),
     "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas"),
+    "relatorio_de_atividades": EncodedString(544, "Relatório de atividades"),
     "reserva_de_instrumentos": SimpleField(
         597, "Reserva de instrumentos", True, True, True
     ),
