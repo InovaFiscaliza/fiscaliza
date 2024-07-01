@@ -274,6 +274,8 @@ class Issue:
         for key, field in FIELDS.items():
             if key in self.attrs:
                 setattr(field, "value", self.attrs[key])
+                if key in ["fiscais", "fiscal_responsavel"]:
+                    setattr(field, "options", self.attrs["MEMBROS"])
                 editable_fields[key] = field
         return editable_fields
 
