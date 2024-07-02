@@ -104,11 +104,11 @@ class Issue:
 
     @staticmethod
     def extract_string(field: str) -> str | list:
-        """Recebe uma string formatada como json e retorna somente o valor 'value' da string"""
+        """Recebe uma string formatada como json e extrai os valores das chaves de acordo com o tipo de campo"""
         if isinstance(field, dict):
             if not (valor := field.get("valor")):
                 valor = field.get("name", field)
-            return valor
+            return str(valor)
         elif isinstance(field, str):
             json_obj = Issue.__format_json_string(field)
             if isinstance(json_obj, str):
@@ -120,7 +120,7 @@ class Issue:
                 return fields[0]
             return fields
         else:
-            return field
+            return str(field)
 
     @property
     def type(self) -> str:
