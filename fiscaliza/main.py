@@ -271,7 +271,9 @@ class Issue:
     def editable_fields(self) -> dict:
         """Retrieves the editable fields of an issue as a dictionary."""
         editable_fields = {}
-        for key, field in FIELDS.items():
+        keys_by_id = sorted(FIELDS.keys(), key=lambda x: getattr(FIELDS[x], "id", 0))
+        fields = {k: FIELDS[k] for k in keys_by_id}
+        for key, field in fields.items():
             if key in self.attrs:
                 setattr(field, "value", self.attrs[key])
                 if key in ["fiscais", "fiscal_responsavel"]:
@@ -424,6 +426,8 @@ class Issue:
     def _parse_value_dict(self, dados: dict) -> dict:
         data = self._check_submission(dados)
         editable_fields = copy.deepcopy(self.editable_fields)
+        for key in ["fiscais", "fiscal_responsavel"]:
+            setattr(editable_fields[key], "options", None)
         data = {k: editable_fields[k](v) for k, v in data.items()}
         submitted_fields = {"custom_fields": []}
         if uploads := self._check_uploads(dados):
