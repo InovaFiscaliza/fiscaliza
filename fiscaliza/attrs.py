@@ -12,7 +12,7 @@ from fiscaliza.datatypes import (
     Coordenadas,
     GerarPlai,
 )
-from .constants import MUNICIPIOS, SERVICOS
+from fiscaliza.constants import MUNICIPIOS, SERVICOS
 
 
 # %% ../nbs/03_attrs.ipynb 3
@@ -40,7 +40,9 @@ FIELDS = {
     "campo_eletrico__pico_vm": SimpleField(195, "Campo elétrico - pico (V/m)", True),
     "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m)", True),
     "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade"),
-    "coordenacao_responsavel": SimpleField(178, "Coordenação responsável"),
+    "coordenacao_responsavel": FieldWithOptions(
+        178, "Coordenação responsável", options=["FI", "FI1", "FI2", "FI3"]
+    ),
     "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
     "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
     "copiar_instrumento_da_reserva": FieldWithOptions(

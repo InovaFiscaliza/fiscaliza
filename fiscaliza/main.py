@@ -19,9 +19,9 @@ from redminelib import Redmine
 from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
 
-from .attrs import FIELDS
-from .constants import FLOW, STATES, STATUS, URL_HM, URL_PD
-from .datatypes import AtomicField
+from fiscaliza.attrs import FIELDS
+from fiscaliza.constants import FLOW, STATES, STATUS, URL_HM, URL_PD
+from fiscaliza.datatypes import AtomicField
 
 # %% ../nbs/00_main.ipynb 4
 load_dotenv(override=True)
