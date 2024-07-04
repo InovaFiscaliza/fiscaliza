@@ -17,10 +17,10 @@ from fiscaliza.constants import MUNICIPIOS, SERVICOS
 
 # %% ../nbs/03_attrs.ipynb 3
 FIELDS = {
-    "status": AtomicField("status_id", mandatory=False),
-    "description": AtomicField("description"),
-    "start_date": AtomicField("start_date"),
-    "due_date": AtomicField("due_date"),
+    "status": AtomicField("Situação", "status_id", mandatory=False),
+    "description": AtomicField("Descrição", "description"),
+    "start_date": AtomicField("Data de início", "start_date"),
+    "due_date": AtomicField("Data limite", "due_date"),
     "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
     "agrupamento": SimpleField(213, "Agrupamento"),
     "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante"),
