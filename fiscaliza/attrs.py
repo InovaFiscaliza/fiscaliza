@@ -410,7 +410,6 @@ FIELDS = {
             "Gestão da Fiscalização: Processo de Guarda",
         ],
     ),
-    "total_de_horas": SimpleField(1789, "Total de horas"),
     "ufmunicipio": FieldWithOptions(
         31,
         "UF/Município",
