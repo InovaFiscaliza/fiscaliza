@@ -20,6 +20,7 @@ from fastcore.xtras import listify
 @dataclass
 class AtomicField:
     name: str
+    keyword: str
     mandatory: bool = True
 
     def __call__(self, value):
