@@ -201,10 +201,8 @@ class Issue:
         return {}
 
     def _fiscais2ids(self, fiscais: list) -> list:
-        if not isinstance(fiscais, list):
-            fiscais = [fiscais]
         id_fiscais = []
-        for fiscal in fiscais:
+        for fiscal in listify(fiscais):
             if id_fiscal := self.names2id().get(fiscal):
                 id_fiscais.append(id_fiscal)
         return id_fiscais
@@ -260,10 +258,10 @@ class Issue:
         attrs["ATUALIZACAO"] = self.update_on()
         attrs["MEMBROS"] = list(self._issue_members().values())
         attrs["fiscal_responsavel"] = self.ids2names().get(
-            attrs.get("fiscal_responsavel"), ""
+            int(attrs.get("fiscal_responsavel")), ""
         )
         attrs["fiscais"] = [
-            self.ids2names().get(f, "") for f in listify(attrs.get("fiscais", []))
+            self.ids2names().get(int(f), "") for f in listify(attrs.get("fiscais", []))
         ]
         return {k: attrs[k] for k in sorted(attrs)}
 

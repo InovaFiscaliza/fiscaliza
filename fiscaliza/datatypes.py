@@ -109,9 +109,7 @@ class FieldWithOptions(SimpleField):
         if self.multiple:
             value = [str(v) for v in listify(value)]
             for v in value:
-                if (
-                    self.options is not None and v not in self.options
-                ):  # TODO: Corrigir gambiarra na classe Issue ( campo Fiscais ) e eliminar primeira condição
+                if self.options is not None and v not in self.options:
                     raise ValueError(
                         f"The value {v} must be one of the valid options: {self.options} for field {self.name}"
                     )
@@ -139,7 +137,7 @@ class FieldWithOptions(SimpleField):
         if self.options:
             string += ", <options>"
         if self.mapping is not None:
-            string += ", ⚠️conditional"
+            string += ", conditional"
         return string
 
 
