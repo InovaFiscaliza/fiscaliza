@@ -434,7 +434,7 @@ class Issue:
             submitted_fields["uploads"] = uploads
         for key, value in data.items():
             if isinstance(editable_fields[key], AtomicField):
-                submitted_fields[editable_fields[key].name] = value
+                submitted_fields[editable_fields[key].keyword] = value
             else:
                 submitted_fields["custom_fields"].append(value)
         return submitted_fields
