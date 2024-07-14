@@ -120,7 +120,7 @@ class Issue:
                 return fields[0]
             return fields
         else:
-            return str(field)
+            return ""
 
     @property
     def type(self) -> str:
@@ -257,9 +257,8 @@ class Issue:
         attrs["ACAO"] = self._extract_acao()
         attrs["ATUALIZACAO"] = self.update_on()
         attrs["MEMBROS"] = list(self._issue_members().values())
-        attrs["fiscal_responsavel"] = self.ids2names().get(
-            int(attrs.get("fiscal_responsavel")), ""
-        )
+        if fiscal := attrs.get("fiscal_responsavel"):
+            attrs["fiscal_responsavel"] = self.ids2names().get(int(fiscal), "")
         attrs["fiscais"] = [
             self.ids2names().get(int(f), "") for f in listify(attrs.get("fiscais", []))
         ]
