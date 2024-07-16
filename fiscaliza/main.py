@@ -120,7 +120,7 @@ class Issue:
                 return fields[0]
             return fields
         else:
-            return ""
+            return field
 
     @property
     def type(self) -> str:
