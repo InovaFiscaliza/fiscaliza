@@ -103,26 +103,26 @@ class Issue:
             return string
 
     @staticmethod
-    def extract_value(field: str) -> str | list:
+    def extract_value(field: str | int | dict | list) -> str | int | list:
         """Recebe uma string formatada como json e extrai os valores das chaves de acordo com o tipo de campo"""
-        if isinstance(field, dict):
+        if isinstance(field, str):
+            json_obj = Issue.__format_json_string(field)
+            if isinstance(json_obj, (str, int, float)):
+                return json_obj
+            return Issue.extract_value(json_obj)
+
+        elif isinstance(field, dict):
             if not (valor := field.get("valor")):
                 valor = field.get("name", field)
             return str(valor)
-        elif isinstance(field, str):
-            json_obj = Issue.__format_json_string(field)
-            if isinstance(json_obj, str):
-                return json_obj
-            return Issue.extract_value(json_obj)
+
         elif isinstance(field, list):
             return [Issue.extract_value(f) for f in field]
-            # if len(fields) == 1:
-            #     return fields[0]
-            # return fields
-        elif isinstance(field, int) or field is None:
+
+        elif isinstance(field, (int, float)) or field is None:
             return field
+
         else:
-            return
             raise TypeError(
                 f"O tipo de campo {type(field)} não é suportado. "
                 f"Por favor, reporte o erro para o desenvolvedor."
@@ -239,6 +239,32 @@ class Issue:
             custom_fields[name] = field
         return custom_fields
 
+    @staticmethod
+    def extract_coords(attrs: dict) -> dict:
+        if coords := attrs.pop("COORDENADAS_GEOGRAFICAS", None):
+            coords = Issue.__format_json_string(coords)
+            lat, long = coords.get("latitude"), coords.get("longitude")
+            try:
+                lat, long = float(lat), float(long)
+            except ValueError:
+                pass
+            attrs |= {
+                "latitude_coordenadas": lat,
+                "longitude_coordenadas": lat,
+            }
+        if coords := attrs.pop("COORDENADAS_ESTACAO", None):
+            coords = Issue.__format_json_string(coords)
+            lat, long = coords.get("latitude"), coords.get("longitude")
+            try:
+                lat, long = float(lat), float(long)
+            except ValueError:
+                pass
+            attrs |= {
+                "latitude_da_estacao": lat,
+                "longitude_da_estacao": long,
+            }
+        return attrs
+
     @cached_property
     def attrs(self) -> dict:
         """Retrieves the attributes of an issue as a dictionary."""
@@ -253,7 +279,7 @@ class Issue:
 
         attrs.update(
             {
-                k: self.extract_value(v.get("value", ""))
+                k: self.extract_value(v.get("value"))
                 for k, v in self.custom_fields().items()
             }
         )
@@ -268,6 +294,7 @@ class Issue:
         attrs["fiscais"] = [
             self.ids2names().get(int(f), "") for f in listify(attrs.get("fiscais", []))
         ]
+        attrs = self.extract_coords(attrs)
         return {k: attrs[k] for k in sorted(attrs)}
 
     @cached_property
@@ -278,14 +305,14 @@ class Issue:
         fields = {k: FIELDS[k] for k in keys_by_id}
         for key, field in fields.items():
             if key in self.attrs:
-                if key in ["fiscais", "fiscal_responsavel"]:
-                    setattr(field, "options", self.attrs["MEMBROS"])
                 if hasattr(field, "options"):
                     if field.multiple:
                         self.attrs[key] = [str(k) for k in self.attrs[key]]
                     else:
                         self.attrs[key] = str(self.attrs[key])
                 setattr(field, "value", self.attrs[key])
+                if key in ["fiscais", "fiscal_responsavel"]:
+                    setattr(field, "options", self.attrs["MEMBROS"])
                 editable_fields[key] = field
         return editable_fields
 
