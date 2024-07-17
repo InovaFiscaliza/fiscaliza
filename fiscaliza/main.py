@@ -154,7 +154,7 @@ class Issue:
         date = datetime.strptime(
             journal["created_on"], "%Y-%m-%dT%H:%M:%SZ"
         ) - timedelta(hours=3)
-        return f"Atualizado por {user} em {datetime.strftime(date, '%d/%m/%Y')} às {date.time()}"
+        return f"Atualizada por {user} em {datetime.strftime(date, '%d/%m/%Y')} às {date.time()}"
 
     @cached_property
     def project_members(self) -> list:
