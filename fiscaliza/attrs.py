@@ -16,6 +16,12 @@ from fiscaliza.constants import MUNICIPIOS, SERVICOS
 
 
 # %% ../nbs/03_attrs.ipynb 3
+SPECIAL_FIELDS = {
+    "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
+    "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
+    "gerar_plai": GerarPlai(426, "Gerar PLAI"),
+}
+
 FIELDS = {
     "status": AtomicField("Situação", "status_id", mandatory=False),
     "description": AtomicField("Descrição", "description"),
@@ -43,8 +49,6 @@ FIELDS = {
     "coordenacao_responsavel": FieldWithOptions(
         178, "Coordenação responsável", options=["FI", "FI1", "FI2", "FI3"]
     ),
-    "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
-    "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["0", "1"]
     ),
@@ -73,7 +77,6 @@ FIELDS = {
     "frequencia_inicial": SimpleField(156, "Frequência inicial", True),
     "frequencia_final": SimpleField(158, "Frequência final", True),
     "frequencias": SimpleField(180, "Frequência(s)"),
-    "gerar_plai": GerarPlai(426, "Gerar PLAI"),
     "gerar_relatorio": FieldWithOptions(
         541,
         "Gerar Relatório",
