@@ -19,7 +19,7 @@ from redminelib import Redmine
 from requests.exceptions import ConnectionError, SSLError
 from unidecode import unidecode
 
-from fiscaliza.attrs import FIELDS
+from fiscaliza.attrs import FIELDS, SPECIAL_FIELDS
 from fiscaliza.constants import FLOW, STATES, STATUS, URL_HM, URL_PD
 from fiscaliza.datatypes import AtomicField
 
@@ -103,7 +103,7 @@ class Issue:
             return string
 
     @staticmethod
-    def extract_string(field: str) -> str | list:
+    def extract_value(field: str) -> str | list:
         """Recebe uma string formatada como json e extrai os valores das chaves de acordo com o tipo de campo"""
         if isinstance(field, dict):
             if not (valor := field.get("valor")):
@@ -113,14 +113,20 @@ class Issue:
             json_obj = Issue.__format_json_string(field)
             if isinstance(json_obj, str):
                 return json_obj
-            return Issue.extract_string(json_obj)
+            return Issue.extract_value(json_obj)
         elif isinstance(field, list):
-            fields = [Issue.extract_string(f) for f in field]
-            if len(fields) == 1:
-                return fields[0]
-            return fields
-        else:
+            return [Issue.extract_value(f) for f in field]
+            # if len(fields) == 1:
+            #     return fields[0]
+            # return fields
+        elif isinstance(field, int) or field is None:
             return field
+        else:
+            return
+            raise TypeError(
+                f"O tipo de campo {type(field)} não é suportado. "
+                f"Por favor, reporte o erro para o desenvolvedor."
+            )
 
     @property
     def type(self) -> str:
@@ -152,7 +158,7 @@ class Issue:
 
     @cached_property
     def project_members(self) -> list:
-        project_id = Issue.extract_string(self._attrs["project"]).lower()
+        project_id = Issue.extract_value(self._attrs["project"]).lower()
         return [
             dict(member)
             for member in self.client.project_membership.filter(
@@ -180,7 +186,7 @@ class Issue:
         return {
             member["user"]["id"]: member["user"]["name"]
             for member in self.project_members
-            if role in Issue.extract_string(member["roles"]) and "user" in member
+            if role in Issue.extract_value(member["roles"]) and "user" in member
         }
 
     def _extract_acao(self) -> dict:
@@ -194,7 +200,7 @@ class Issue:
             if (type := getattr(v, "type", "")) == "acao_de_inspecao":
                 return {
                     "type": type,
-                    "status": Issue.extract_string(v._attrs.get("status")),
+                    "status": Issue.extract_value(v._attrs.get("status")),
                     "name": v._attrs.get("subject"),
                     "description": v._attrs.get("description"),
                 }
@@ -243,11 +249,11 @@ class Issue:
                 continue
             elif k not in FIELDS:
                 k = k.upper()
-            attrs[k] = self.extract_string(v)
+            attrs[k] = self.extract_value(v)
 
         attrs.update(
             {
-                k: self.extract_string(v.get("value", ""))
+                k: self.extract_value(v.get("value", ""))
                 for k, v in self.custom_fields().items()
             }
         )
@@ -272,9 +278,14 @@ class Issue:
         fields = {k: FIELDS[k] for k in keys_by_id}
         for key, field in fields.items():
             if key in self.attrs:
-                setattr(field, "value", self.attrs[key])
                 if key in ["fiscais", "fiscal_responsavel"]:
                     setattr(field, "options", self.attrs["MEMBROS"])
+                if hasattr(field, "options"):
+                    if field.multiple:
+                        self.attrs[key] = [str(k) for k in self.attrs[key]]
+                    else:
+                        self.attrs[key] = str(self.attrs[key])
+                setattr(field, "value", self.attrs[key])
                 editable_fields[key] = field
         return editable_fields
 
@@ -335,7 +346,7 @@ class Issue:
             ("latitude_coordenadas" in data) and ("longitude_coordenadas" in data)
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
-            self.editable_fields[newkey] = FIELDS[newkey]
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
             self.editable_fields.pop("latitude_coordenadas")
             self.editable_fields.pop("longitude_coordenadas")
             data[newkey] = (
