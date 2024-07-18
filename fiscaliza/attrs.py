@@ -58,7 +58,7 @@ FIELDS = {
     "entidade_com_cadastro_stel": FieldWithOptions(
         189, "Entidade com cadastro STEL?", mandatory=True, options=["Sim", "Não"]
     ),
-    "entidade_da_inspecao": SimpleField(30, "Entidade da Inspeção", multiple=True),
+    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção", multiple=True),
     "entidade_outorgada": FieldWithOptions(
         138,
         "Entidade outorgada?",
