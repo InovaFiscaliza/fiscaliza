@@ -85,10 +85,10 @@ class Issue:
         self._issue = self.client.issue.get(
             issue_id,
             include=[
+                "children",
                 "relations",
                 "attachments",
                 "journals",
-                "allowed_statuses",
             ],
         )
         self._ascii2utf = {}
@@ -265,6 +265,16 @@ class Issue:
             }
         return attrs
 
+    @staticmethod
+    def format_number_field(attrs: dict) -> dict:
+        """
+        Formats empty values in a number field to 0
+        """
+        for k in attrs:
+            if "horas_" in k and attrs[k] == "":
+                attrs[k] = 0
+        return attrs
+
     @cached_property
     def attrs(self) -> dict:
         """Retrieves the attributes of an issue as a dictionary."""
@@ -295,6 +305,7 @@ class Issue:
             self.ids2names().get(int(f), "") for f in listify(attrs.get("fiscais", []))
         ]
         attrs = self.extract_coords(attrs)
+        attrs = self.format_number_field(attrs)
         return {k: attrs[k] for k in sorted(attrs)}
 
     @cached_property
