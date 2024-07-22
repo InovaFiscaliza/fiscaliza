@@ -52,9 +52,8 @@ FIELDS = {
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["0", "1"]
     ),
-    "dadospacp": SimpleField(415, "DadosPACP"),
     "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO"),
-    "endereco_da_inspecao": FieldWithOptions(142, "Endereço da Inspeção", True),
+    "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção", True),
     "entidade_com_cadastro_stel": FieldWithOptions(
         189, "Entidade com cadastro STEL?", mandatory=True, options=["Sim", "Não"]
     ),
