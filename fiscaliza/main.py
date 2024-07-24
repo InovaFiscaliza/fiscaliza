@@ -299,6 +299,10 @@ class Issue:
         attrs["ACAO"] = self._extract_acao()
         attrs["ATUALIZACAO"] = self.update_on()
         attrs["MEMBROS"] = list(self._issue_members().values())
+        attrs["NO_FISCALIZA_ISSUE"] = {
+            "numero": self.id,
+            "link_acesso": f"{self.client.url}/issues/{self.id}",
+        }
         if fiscal := attrs.get("fiscal_responsavel"):
             attrs["fiscal_responsavel"] = self.ids2names().get(int(fiscal), "")
         attrs["fiscais"] = [
