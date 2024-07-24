@@ -49,6 +49,9 @@ FIELDS = {
     "coordenacao_responsavel": FieldWithOptions(
         178, "Coordenação responsável", options=["FI", "FI1", "FI2", "FI3"]
     ),
+    "coord_fi_plai": FieldWithOptions(
+        426, "Coordenação FI PLAI", options=["FI", "FI1", "FI2", "FI3"]
+    ),
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["0", "1"]
     ),
@@ -76,6 +79,12 @@ FIELDS = {
     "frequencia_inicial": SimpleField(156, "Frequência inicial", True),
     "frequencia_final": SimpleField(158, "Frequência final", True),
     "frequencias": SimpleField(180, "Frequência(s)"),
+    "gerar_plai": FieldWithOptions(
+        426,
+        "Gerar Relatório",
+        options=["0", "1"],
+        mapping={"1": ["tipo_do_processo_plai", "coord_fi_plai"]},
+    ),
     "gerar_relatorio": FieldWithOptions(
         541,
         "Gerar Relatório",
@@ -369,7 +378,6 @@ FIELDS = {
             ],
             "Uso do Espectro - Monitoração": [
                 "acao_de_risco_a_vida_criada",
-                "coordenadas_geograficas",
                 "frequencia_final",
                 "frequencia_inicial",
                 "latitude_coordenadas",
