@@ -312,6 +312,39 @@ class Issue:
         attrs = self.format_number_field(attrs)
         return {k: attrs[k] for k in sorted(attrs)}
 
+    @staticmethod
+    def _append_irregularity_options(
+        tipo_de_inspecao: str, editable_fields: dict
+    ) -> dict:
+        """
+        Appends the options of the 'irregularidade' field to the editable_fields dictionary.
+        """
+        if editable_fields.get("irregularidade"):
+            match tipo_de_inspecao:
+                case "Certificação":
+                    options = [
+                        "Comercialização de produtos",
+                        "Utilização de produtos",
+                    ]
+                case "Outorga - Aspectos não Técnicos":
+                    options = [
+                        "Conteúdo",
+                        "Outros aspectos não técnicos",
+                        "Recursos de acessibilidade",
+                    ]
+                case "Outorga - Aspectos Técnicos":
+                    options = [
+                        "Frequência diversa da autorizada",
+                        "Local da estação diverso do autorizado",
+                        "Outras irregularidades técnicas (especificar)",
+                        "Potência diversa da autorizada",
+                    ]
+                case __:
+                    options = []
+
+            editable_fields["irregularidade"].options = options
+        return editable_fields
+
     @cached_property
     def editable_fields(self) -> dict:
         """Retrieves the editable fields of an issue as a dictionary."""
@@ -329,6 +362,10 @@ class Issue:
                 if key in ["fiscais", "fiscal_responsavel"]:
                     setattr(field, "options", self.attrs["MEMBROS"])
                 editable_fields[key] = field
+        if tipo_de_inspecao := self.attrs.get("tipo_de_inspecao"):
+            editable_fields = self._append_irregularity_options(
+                tipo_de_inspecao, editable_fields
+            )
         return editable_fields
 
     def mandatory_fields(self) -> dict:
@@ -374,6 +411,11 @@ class Issue:
                 }
 
                 self.editable_fields |= {k: FIELDS[k] for k in new_fields}
+
+        if tipo_de_inspecao := dados.get("tipo_de_inspecao"):
+            self.editable_fields = self._append_irregularity_options(
+                tipo_de_inspecao, self.editable_fields
+            )
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
