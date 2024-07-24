@@ -230,12 +230,6 @@ class Issue:
             name = self._utf2ascii(field["name"])
             if name not in FIELDS:
                 name = name.upper()
-                self._ascii2utf[name] = field["name"]
-            elif value := field.get("value"):
-                if isinstance(value, str):
-                    if "=>" in value:
-                        name = name.upper()
-                        self._ascii2utf[name] = field["name"]
             custom_fields[name] = field
         return custom_fields
 
