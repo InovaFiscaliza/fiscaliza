@@ -273,6 +273,8 @@ class Issue:
         for k in attrs:
             if "horas_" in k and attrs[k] == "":
                 attrs[k] = 0
+            if attrs[k] is None:
+                attrs[k] = ""
         return attrs
 
     @cached_property
