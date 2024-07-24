@@ -388,8 +388,8 @@ class Issue:
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
             self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
-            self.editable_fields.pop("latitude_coordenadas")
-            self.editable_fields.pop("longitude_coordenadas")
+            self.editable_fields.pop("latitude_coordenadas", None)
+            self.editable_fields.pop("longitude_coordenadas", None)
             data[newkey] = (
                 data.pop("latitude_coordenadas"),
                 data.pop("longitude_coordenadas"),
@@ -402,8 +402,8 @@ class Issue:
         if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
             newkey = "coordenadas_estacao"
             self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
-            self.editable_fields.pop("latitude_da_estacao")
-            self.editable_fields.pop("longitude_da_estacao")
+            self.editable_fields.pop("latitude_da_estacao", None)
+            self.editable_fields.pop("longitude_da_estacao", None)
             data[newkey] = (
                 data.pop("latitude_da_estacao"),
                 data.pop("longitude_da_estacao"),
@@ -416,23 +416,17 @@ class Issue:
 
         newkey = "gerar_plai"
 
-        if data.get(newkey, "0") == "1":
-            if (
-                tipo_processo_plai := self.editable_fields.pop(
-                    "tipo_processo_plai", None
-                )
-            ) and (
-                coords_fi_plai := self.editable_fields.pop("coordenadas_fi_plai", None)
-            ):
-                self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
-                data[newkey] = (
-                    tipo_processo_plai,
-                    coords_fi_plai,
-                )
-            else:
+        if newkey in data and data[newkey] == "1":
+            tipo_processo_plai = data.pop("tipo_do_processo_plai", None)
+            coords_fi_plai = data.pop("coord_fi_plai", None)
+            self.editable_fields.pop("tipo_do_processo_plai", None)
+            self.editable_fields.pop("coord_fi_plai", None)
+            if not all([tipo_processo_plai, coords_fi_plai]):
                 raise ValueError(
-                    "Tanto 'tipo_processo_plai' quanto 'coordenadas_fi_plai' devem ser fornecidas para gerar_plai == '1'"
+                    "Para gerar o PLAI é necessário fornecer o tipo do processo e as coordenação da FI"
                 )
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
+            data[newkey] = (tipo_processo_plai, coords_fi_plai)
 
         return data
 
@@ -488,9 +482,9 @@ class Issue:
         data = copy.deepcopy(dados)
         self.update_fields(data)
         data = self._validar_relatorio(data)
+        data = self._parse_special_fields(data)
         data = {k: v for k, v in data.items() if k in self.editable_fields}
         data = self._get_id_only_fields(data)
-        data = self._parse_special_fields(data)
         return data
 
     def _parse_value_dict(self, dados: dict) -> dict:

@@ -198,11 +198,7 @@ class GerarPlai:
             raise ValueError("coord_fi is invalid")
         return value
 
-    def validate_values(self, args: tuple) -> str:
-        if len(args) == 2:
-            tipo_processo, coord_fi = args
-        else:
-            raise ValueError("tipo_processo_plai and coord_fi_plai are required")
+    def validate_values(self, tipo_processo: str = "", coord_fi: str = "") -> str:
         if tipo_processo == "" or coord_fi == "":
             return ""
         tipo_processo = self.validate_tipo_processo(tipo_processo)
@@ -215,7 +211,12 @@ class GerarPlai:
             + "}"
         )
 
-    def __call__(self, tipo_processo: str = "", coord_fi: str = "") -> dict[str, str]:
+    def __call__(self, args: tuple) -> dict[str, str]:
+        if len(args) == 2:
+            tipo_processo, coord_fi = args
+        else:
+            raise ValueError("tipo_de_processo_plai and coord_fi_plai are required")
+
         value = self.validate_values(tipo_processo, coord_fi)
         self.value = {"id": self.id, "value": value}
         return self.value

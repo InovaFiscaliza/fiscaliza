@@ -81,7 +81,7 @@ FIELDS = {
     "frequencias": SimpleField(180, "Frequência(s)"),
     "gerar_plai": FieldWithOptions(
         426,
-        "Gerar Relatório",
+        "Gerar Plai",
         options=["0", "1"],
         mapping={"1": ["tipo_do_processo_plai", "coord_fi_plai"]},
     ),
