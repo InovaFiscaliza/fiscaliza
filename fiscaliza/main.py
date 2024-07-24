@@ -345,28 +345,31 @@ class Issue:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
-        if hasattr(self, "editable_fields"):
-            del self.editable_fields
 
         for key, field in self.conditional_fields().items():
             if key in dados:
+                if hasattr(self, "editable_fields"):
+                    del self.editable_fields
+                new_fields = set()
+                all_fields = {
+                    item for values in field.mapping.values() for item in values
+                }
                 for option in listify(dados[key]):
                     if field.options:
                         assert (
                             option in field.options
                         ), f"Opção inválida para o campo {key}: {option}"
 
-                    # Since editable_fields commes from the .attrs, I need to clean fields based on conditional fields
-                    # previously filled
-                    for opt, values in field.mapping.items():
-                        if opt != option:
-                            self.editable_fields = {
-                                k: v
-                                for k, v in self.editable_fields.items()
-                                if k not in values
-                            }
-                    if new_fields := field.mapping.get(option):
-                        self.editable_fields |= {k: FIELDS[k] for k in new_fields}
+                    if fields := field.mapping.get(option):
+                        new_fields.update(fields)
+
+                self.editable_fields = {
+                    k: v
+                    for k, v in self.editable_fields.items()
+                    if k not in all_fields.difference(new_fields)
+                }
+
+                self.editable_fields |= {k: FIELDS[k] for k in new_fields}
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
