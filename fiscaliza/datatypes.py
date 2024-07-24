@@ -22,6 +22,7 @@ class AtomicField:
     name: str
     keyword: str
     mandatory: bool = True
+    type: str = "string"
 
     def __call__(self, value):
         self.value = value
@@ -197,7 +198,11 @@ class GerarPlai:
             raise ValueError("coord_fi is invalid")
         return value
 
-    def validate_values(self, tipo_processo: str, coord_fi: str) -> str:
+    def validate_values(self, args: tuple) -> str:
+        if len(args) == 2:
+            tipo_processo, coord_fi = args
+        else:
+            raise ValueError("tipo_processo_plai and coord_fi_plai are required")
         if tipo_processo == "" or coord_fi == "":
             return ""
         tipo_processo = self.validate_tipo_processo(tipo_processo)
