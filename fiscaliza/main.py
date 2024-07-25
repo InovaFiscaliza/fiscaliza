@@ -228,8 +228,8 @@ class Issue:
         custom_fields = {}
         for field in self._attrs.get("custom_fields", []):
             name = self._utf2ascii(field["name"])
-            if name not in FIELDS:
-                name = name.upper()
+            # if name not in FIELDS:
+            #     name = name.upper()
             custom_fields[name] = field
         return custom_fields
 
@@ -279,8 +279,8 @@ class Issue:
         for k, v in self._attrs.items():
             if k in special_fields:
                 continue
-            elif k not in FIELDS:
-                k = k.upper()
+            # elif k not in FIELDS:
+            #     k = k.upper()
             attrs[k] = self.extract_value(v)
 
         attrs.update(
@@ -289,13 +289,13 @@ class Issue:
                 for k, v in self.custom_fields().items()
             }
         )
-        attrs["ANEXOS"] = [
+        attrs["anexos"] = [
             file["content_url"] for file in self._attrs.get("attachments", [])
         ]
-        attrs["ACAO"] = self._extract_acao()
-        attrs["ATUALIZACAO"] = self.update_on()
-        attrs["MEMBROS"] = list(self._issue_members().values())
-        attrs["NO_FISCALIZA_ISSUE"] = {
+        attrs["acao"] = self._extract_acao()
+        attrs["atualizacao"] = self.update_on()
+        attrs["membros"] = list(self._issue_members().values())
+        attrs["no_fiscaliza_issue"] = {
             "numero": self.id,
             "link_acesso": f"{self.client.url}/issues/{self.id}",
         }
