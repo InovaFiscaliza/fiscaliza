@@ -408,10 +408,13 @@ class Issue:
 
                 self.editable_fields |= {k: FIELDS[k] for k in new_fields}
 
-        if tipo_de_inspecao := dados.get("tipo_de_inspecao"):
-            self.editable_fields = self._append_irregularity_options(
-                tipo_de_inspecao, self.editable_fields
-            )
+        for key, value in dados.items():
+            if key in self.editable_fields:
+                self.editable_fields[key](value)
+                if key == "tipo_de_inspecao":
+                    self.editable_fields = self._append_irregularity_options(
+                        value, self.editable_fields
+                    )
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
