@@ -38,7 +38,7 @@ class SimpleField:
     mandatory: bool = False
     multiple: bool = False
     format_value: bool = False
-    value: str | int | list | None = None
+    value: str | int | list = ""
 
     def format_value_string(self, value: str) -> str:
         if self.format_value:

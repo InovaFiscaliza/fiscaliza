@@ -350,8 +350,10 @@ class Issue:
                     else:
                         self.attrs[key] = str(self.attrs[key])
                 setattr(field, "value", self.attrs[key])
-                if key in ["fiscais", "fiscal_responsavel"]:
+                if key == "fiscais":
                     setattr(field, "options", self.attrs["membros"])
+                elif key == "fiscal_responsavel":
+                    setattr(field, "options", [""] + self.attrs["membros"])
                 editable_fields[key] = field
         if tipo_de_inspecao := self.attrs.get("tipo_de_inspecao"):
             editable_fields = self._append_irregularity_options(

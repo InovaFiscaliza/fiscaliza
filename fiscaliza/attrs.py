@@ -34,6 +34,7 @@ FIELDS = {
         416,
         "Área do PACP",
         options=[
+            "",
             "1-Comércio",
             "2-ISP",
             "3-E-commerce",
@@ -47,34 +48,34 @@ FIELDS = {
     "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m)", True),
     "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade"),
     "coordenacao_responsavel": FieldWithOptions(
-        178, "Coordenação responsável", options=["FI", "FI1", "FI2", "FI3"]
+        178, "Coordenação responsável", options=["", "FI", "FI1", "FI2", "FI3"]
     ),
     "coord_fi_plai": FieldWithOptions(
-        426, "Coordenação FI PLAI", options=["FI", "FI1", "FI2", "FI3"]
+        426, "Coordenação FI PLAI", options=["", "FI", "FI1", "FI2", "FI3"]
     ),
     "copiar_instrumento_da_reserva": FieldWithOptions(
-        629, "Copiar instrumento da reserva?", options=["0", "1"]
+        629, "Copiar instrumento da reserva?", options=["", "0", "1"]
     ),
     "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO"),
     "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção", True),
     "entidade_com_cadastro_stel": FieldWithOptions(
-        189, "Entidade com cadastro STEL?", mandatory=True, options=["Sim", "Não"]
+        189, "Entidade com cadastro STEL?", mandatory=True, options=["", "Sim", "Não"]
     ),
     "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção", multiple=True),
     "entidade_outorgada": FieldWithOptions(
         138,
         "Entidade outorgada?",
         mandatory=True,
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["numero_da_estacao"]},
     ),
     "esta_em_operacao": FieldWithOptions(
-        139, "Está em operação?", mandatory=True, options=["0", "1"]
+        139, "Está em operação?", mandatory=True, options=["", "0", "1"]
     ),
     "fiscais": FieldWithOptions(26, "Fiscais", mandatory=True, multiple=True),
     "fiscal_responsavel": FieldWithOptions(25, "Fiscal responsável", mandatory=True),
     "foi_constatada_interferencia": FieldWithOptions(
-        1967, "Foi constatada interferência?", mandatory=True, options=["0", "1"]
+        1967, "Foi constatada interferência?", mandatory=True, options=["", "0", "1"]
     ),
     "frequencia_inicial": SimpleField(156, "Frequência inicial", True),
     "frequencia_final": SimpleField(158, "Frequência final", True),
@@ -82,13 +83,13 @@ FIELDS = {
     "gerar_plai": FieldWithOptions(
         426,
         "Gerar Plai",
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["tipo_do_processo_plai", "coord_fi_plai"]},
     ),
     "gerar_relatorio": FieldWithOptions(
         541,
         "Gerar Relatório",
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["html"]},
     ),
     "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True),
@@ -99,18 +100,18 @@ FIELDS = {
         149,
         "Houve interferência?",
         mandatory=True,
-        options=["Sim", "Não"],
+        options=["", "Sim", "Não"],
         mapping={"Sim": ["identificada_a_origem"]},
     ),
     "houve_obice": FieldWithOptions(
-        136, "Houve óbice?", mandatory=True, options=["0", "1"]
+        136, "Houve óbice?", mandatory=True, options=["", "0", "1"]
     ),
     "html": SimpleField(543, "Html", True),
     "identificada_a_origem": FieldWithOptions(
         162,
         "Identificada a origem?",
         mandatory=True,
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["sanada_ou_mitigada"]},
     ),
     "identificacao_da_nao_outorgada": SimpleField(
@@ -164,7 +165,7 @@ FIELDS = {
         160,
         "PAI instaurado pela Anatel?",
         True,
-        options=["Não", "Sim"],
+        options=["", "Não", "Sim"],
         mapping={"Sim": ["numero_do_pai"]},
     ),
     "potencia_medida": SimpleField(81, "Potência medida"),
@@ -172,7 +173,7 @@ FIELDS = {
         596,
         "Precisa reservar instrumentos?",
         mandatory=True,
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["reserva_de_instrumentos"]},
     ),
     "procedimentos": FieldWithOptions(
@@ -238,17 +239,17 @@ FIELDS = {
         },
     ),
     "qnt_produt_lacradosapreend": SimpleField(
-        143, "Qnt. produt. lacrados/apreend.", True
+        143, "Qnt. produt. lacrados/apreend.", True, value=0
     ),
-    "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões"),
-    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas"),
-    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas"),
+    "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões", value=0),
+    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas", value=0),
+    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas", value=0),
     "relatorio_de_atividades": EncodedString(544, "Relatório de atividades"),
     "reserva_de_instrumentos": SimpleField(
         597, "Reserva de instrumentos", True, True, True
     ),
     "sanada_ou_mitigada": FieldWithOptions(
-        163, "Sanada ou mitigada?", mandatory=True, options=["1", "0"]
+        163, "Sanada ou mitigada?", mandatory=True, options=["", "1", "0"]
     ),
     "servicos_da_inspecao": FieldWithOptions(
         57,
@@ -262,13 +263,13 @@ FIELDS = {
         62,
         "Situação constatada",
         mandatory=True,
-        options=["Regular", "Irregular", "Inconclusivo", "Não analisado"],
+        options=["", "Regular", "Irregular", "Inconclusivo", "Não analisado"],
     ),
     "situacao_de_risco_a_vida": FieldWithOptions(
         150,
         "Situação de risco à vida?",
         mandatory=True,
-        options=["Sim", "Não"],
+        options=["", "Sim", "Não"],
     ),
     "tipificacao_da_infracao": SimpleField(148, "Tipificação da infração"),
     "tipo_de_inspecao": FieldWithOptions(
@@ -276,6 +277,7 @@ FIELDS = {
         "Tipo de inspeção",
         mandatory=True,
         options=[
+            "",
             "Bloqueio Administrativo",
             "Certificação",
             "Medição de CEMRF (RNI)",
@@ -406,6 +408,7 @@ FIELDS = {
         426,
         "Tipo do Processo PLAI",
         options=[
+            "",
             "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
             "Gestão da Fiscalização: Processo de Guarda",
         ],
@@ -422,13 +425,13 @@ FIELDS = {
         159,
         "Unidade da frequência final",
         mandatory=True,
-        options=["Hz", "kHz", "MHz", "GHz", "THz"],
+        options=["", "Hz", "kHz", "MHz", "GHz", "THz"],
     ),
     "unidade_da_frequencia_inicial": FieldWithOptions(
         157,
         "Unidade da frequência inicial",
         mandatory=True,
-        options=["Hz", "kHz", "MHz", "GHz", "THz"],
+        options=["", "Hz", "kHz", "MHz", "GHz", "THz"],
     ),
     "unidade_de_frequencia": SimpleField(84, "Unidade de Frequência"),
     "unidade_de_potencia": SimpleField(82, "Unidade de Potência"),
@@ -436,26 +439,26 @@ FIELDS = {
         132,
         "Uso de produto homologado?",
         mandatory=True,
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["no_de_homologacao"]},
     ),
     "utilizou_algum_instrumento": FieldWithOptions(
         598,
         "Utilizou algum instrumento?",
         mandatory=True,
-        options=["0", "1"],
+        options=["", "0", "1"],
         mapping={"1": ["instrumentos_utilizados", "copiar_instrumento_da_reserva"]},
     ),
     "utilizou_apoio_policial": FieldWithOptions(
         75,
         "Utilizou apoio policial?",
         mandatory=True,
-        options=["Nenhum", "Polícia Civil", "Polícia Militar", "Polícia Federal"],
+        options=["", "Nenhum", "Polícia Civil", "Polícia Militar", "Polícia Federal"],
     ),
     "utilizou_tecnicas_amostrais": FieldWithOptions(
         692,
         "Utilizou técnicas amostrais?",
         mandatory=True,
-        options=["Usou técnicas amostrais", "Não usou técnicas amostrais"],
+        options=["", "Usou técnicas amostrais", "Não usou técnicas amostrais"],
     ),
 }
