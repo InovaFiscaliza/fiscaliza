@@ -116,7 +116,7 @@ FIELDS = {
     "identificacao_da_nao_outorgada": SimpleField(
         250, "Identificação da não Outorgada"
     ),
-    "instrumentos_utilizados": SimpleField(599, "Instrumentos Utilizados", True),
+    "instrumentos_utilizados": FieldWithOptions(599, "Instrumentos Utilizados", True),
     "irregularidade": FieldWithOptions(
         73,
         "Irregularidade",
