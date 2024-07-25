@@ -28,11 +28,11 @@ FIELDS = {
     "start_date": AtomicField("Data de início", "start_date"),
     "due_date": AtomicField("Data limite", "due_date"),
     "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
-    "agrupamento": SimpleField(213, "Agrupamento"),
+    "agrupamento": SimpleField(213, "Agrupamento:"),
     "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante:"),
     "area_do_pacp": FieldWithOptions(
         416,
-        "Área do PACP",
+        "Área do PACP:",
         options=[
             "",
             "1-Comércio",
@@ -115,12 +115,12 @@ FIELDS = {
         mapping={"1": ["sanada_ou_mitigada"]},
     ),
     "identificacao_da_nao_outorgada": SimpleField(
-        250, "Identificação da não Outorgada"
+        250, "Identificação da Não Outorgada:"
     ),
     "instrumentos_utilizados": FieldWithOptions(599, "Instrumentos Utilizados", True),
     "irregularidade": FieldWithOptions(
         73,
-        "Irregularidade",
+        "Irregularidade:",
         multiple=True,
         value=[],
         options=[],
@@ -169,7 +169,7 @@ FIELDS = {
         options=["", "Não", "Sim"],
         mapping={"Sim": ["numero_do_pai"]},
     ),
-    "potencia_medida": SimpleField(81, "Potência medida"),
+    "potencia_medida": SimpleField(81, "Potência:"),
     "precisa_reservar_instrumentos": FieldWithOptions(
         596,
         "Precisa reservar instrumentos?",
@@ -242,7 +242,7 @@ FIELDS = {
     "qnt_produt_lacradosapreend": SimpleField(
         143, "Qtd. produtos lacrados ou apreendidos:", True, value=0
     ),
-    "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões:", value=0),
+    "qtd_de_emissoes": SimpleField(69, "Qtd. Emissões:", value=0),
     "qtd_identificadas": SimpleField(731, "Qtd. Identificadas:", value=0),
     "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas:", value=0),
     "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:"),
@@ -272,7 +272,7 @@ FIELDS = {
         mandatory=True,
         options=["", "Sim", "Não"],
     ),
-    "tipificacao_da_infracao": SimpleField(148, "Tipificação da infração"),
+    "tipificacao_da_infracao": FieldsWithOptions(148, "Tipificação da infração:", options=["", "art. 163 da LGT – uso de RF", "art.  131 da LGT – exploração de serviço", "Outro"]),
     "tipo_de_inspecao": FieldWithOptions(
         2,
         "Tipo de inspeção:",
@@ -404,7 +404,7 @@ FIELDS = {
             ],
         },
     ),
-    "tipo_de_medicao": SimpleField(193, "Tipo de medição"),
+    "tipo_de_medicao": FieldWithOptions(193, "Tipo de medição:", options=["", "Móvel", "Fixa", "Portátil"]),
     "tipo_do_processo_plai": FieldWithOptions(
         426,
         "Tipo do PLAI:",
@@ -416,7 +416,7 @@ FIELDS = {
     ),
     "ufmunicipio": FieldWithOptions(
         31,
-        "UF/Município",
+        "UF/Município:",
         mandatory=True,
         multiple=True,
         options=MUNICIPIOS,
@@ -424,18 +424,18 @@ FIELDS = {
     ),
     "unidade_da_frequencia_final": FieldWithOptions(
         159,
-        "Unidade da frequência final",
+        "Unidade (Frequência final):",
         mandatory=True,
         options=["", "Hz", "kHz", "MHz", "GHz", "THz"],
     ),
     "unidade_da_frequencia_inicial": FieldWithOptions(
         157,
-        "Unidade da frequência inicial",
+        "Unidade (Frequência inicial):",
         mandatory=True,
         options=["", "Hz", "kHz", "MHz", "GHz", "THz"],
     ),
-    "unidade_de_frequencia": SimpleField(84, "Unidade de Frequência"),
-    "unidade_de_potencia": SimpleField(82, "Unidade de Potência"),
+    "unidade_de_frequencia": SimpleField(84, "Unidade (Frequência):"),
+    "unidade_de_potencia": SimpleField(82, "Unidade (Potência):"),
     "uso_de_produto_homologado": FieldWithOptions(
         132,
         "Uso de produto homologado?",
