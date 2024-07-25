@@ -61,10 +61,10 @@ FIELDS = {
     "entidade_com_cadastro_stel": FieldWithOptions(
         189, "Entidade com cadastro STEL?", mandatory=True, options=["", "Sim", "Não"]
     ),
-    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção:", multiple=True),
+    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção:", multiple=True, options=[]),
     "entidade_outorgada": FieldWithOptions(
         138,
-        "Entidade outorgada?",
+        "Entidade Outorgada?",
         mandatory=True,
         options=["", "0", "1"],
         mapping={"1": ["numero_da_estacao"]},
@@ -117,12 +117,11 @@ FIELDS = {
     "identificacao_da_nao_outorgada": SimpleField(
         250, "Identificação da Não Outorgada:"
     ),
-    "instrumentos_utilizados": FieldWithOptions(599, "Instrumentos Utilizados", True),
+    "instrumentos_utilizados": FieldWithOptions(599, "Instrumentos Utilizados", True, True, options=[]),
     "irregularidade": FieldWithOptions(
         73,
         "Irregularidade:",
         multiple=True,
-        value=[],
         options=[],
         format_value=True,
     ),
@@ -272,7 +271,7 @@ FIELDS = {
         mandatory=True,
         options=["", "Sim", "Não"],
     ),
-    "tipificacao_da_infracao": FieldsWithOptions(148, "Tipificação da infração:", options=["", "art. 163 da LGT – uso de RF", "art.  131 da LGT – exploração de serviço", "Outro"]),
+    "tipificacao_da_infracao": FieldWithOptions(148, "Tipificação da infração:", options=["", "art. 163 da LGT – uso de RF", "art.  131 da LGT – exploração de serviço", "Outro"]),
     "tipo_de_inspecao": FieldWithOptions(
         2,
         "Tipo de inspeção:",
