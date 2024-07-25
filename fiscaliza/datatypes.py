@@ -45,6 +45,7 @@ class SimpleField:
     mandatory: bool = False
     multiple: bool = False
     format_value: bool = False
+    value: str | int | list | None = None
 
     def format_value_string(self, value: str) -> str:
         if self.format_value:
@@ -148,6 +149,7 @@ class Coordenadas:
     id: int
     name: str
     mandatory: bool = False
+    value: tuple[str | float] | None = None
 
     def format_value_string(self, latitude: str, longitude: str) -> str:
         return (
@@ -179,6 +181,7 @@ class GerarPlai:
     id: int
     name: str
     mandatory: bool = False
+    value: tuple | None = None
     TIPO_DE_PROCESSO = [
         "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
         "Gestão da Fiscalização: Processo de Guarda",
@@ -199,10 +202,9 @@ class GerarPlai:
         return value
 
     def validate_values(self, tipo_processo: str = "", coord_fi: str = "") -> str:
-        if tipo_processo == "" or coord_fi == "":
-            return ""
         tipo_processo = self.validate_tipo_processo(tipo_processo)
         coord_fi = self.validate_coord_fi(coord_fi)
+        self.value = (tipo_processo, coord_fi)
         return (
             "{"
             + '"criar_processo"=>"1","tipo_processo"=>"{0}","coord_fi"=>"{1}"'.format(
@@ -218,5 +220,12 @@ class GerarPlai:
             raise ValueError("tipo_de_processo_plai and coord_fi_plai are required")
 
         value = self.validate_values(tipo_processo, coord_fi)
-        self.value = {"id": self.id, "value": value}
-        return self.value
+        return {"id": self.id, "value": value}
+
+    def __repr__(self) -> str:
+        string = ""
+        if hasattr(self, "value"):
+            string = f"(value: {self.value})"
+        if self.mandatory:
+            string += " | <mandatory>"
+        return string
