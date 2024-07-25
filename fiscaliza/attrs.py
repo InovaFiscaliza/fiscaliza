@@ -29,7 +29,7 @@ FIELDS = {
     "due_date": AtomicField("Data limite", "due_date"),
     "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
     "agrupamento": SimpleField(213, "Agrupamento"),
-    "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante"),
+    "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante:"),
     "area_do_pacp": FieldWithOptions(
         416,
         "Área do PACP",
@@ -44,24 +44,24 @@ FIELDS = {
         ],
         format_value=True,
     ),
-    "campo_eletrico__pico_vm": SimpleField(195, "Campo elétrico - pico (V/m)", True),
-    "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m)", True),
-    "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade"),
+    "campo_eletrico__pico_vm": SimpleField(195, "Campo elétrico pico (V/m):", True),
+    "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m):", True),
+    "cnpjcpf_da_entidade": SimpleField(141, "CNPJ/CPF da Entidade:"),
     "coordenacao_responsavel": FieldWithOptions(
-        178, "Coordenação responsável", options=["", "FI", "FI1", "FI2", "FI3"]
+        178, "Coordenação responsável:", options=["", "FI", "FI1", "FI2", "FI3"]
     ),
     "coord_fi_plai": FieldWithOptions(
-        426, "Coordenação FI PLAI", options=["", "FI", "FI1", "FI2", "FI3"]
+        426, "Coordenação PLAI:", options=["", "FI", "FI1", "FI2", "FI3"]
     ),
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["", "0", "1"]
     ),
-    "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO"),
-    "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção", True),
+    "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO:"),
+    "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção:", True),
     "entidade_com_cadastro_stel": FieldWithOptions(
         189, "Entidade com cadastro STEL?", mandatory=True, options=["", "Sim", "Não"]
     ),
-    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção", multiple=True),
+    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção:", multiple=True),
     "entidade_outorgada": FieldWithOptions(
         138,
         "Entidade outorgada?",
@@ -72,14 +72,14 @@ FIELDS = {
     "esta_em_operacao": FieldWithOptions(
         139, "Está em operação?", mandatory=True, options=["", "0", "1"]
     ),
-    "fiscais": FieldWithOptions(26, "Fiscais", mandatory=True, multiple=True),
-    "fiscal_responsavel": FieldWithOptions(25, "Fiscal responsável", mandatory=True),
+    "fiscais": FieldWithOptions(26, "Fiscais:", mandatory=True, multiple=True),
+    "fiscal_responsavel": FieldWithOptions(25, "Fiscal responsável:", mandatory=True),
     "foi_constatada_interferencia": FieldWithOptions(
         1967, "Foi constatada interferência?", mandatory=True, options=["", "0", "1"]
     ),
-    "frequencia_inicial": SimpleField(156, "Frequência inicial", True),
-    "frequencia_final": SimpleField(158, "Frequência final", True),
-    "frequencias": SimpleField(180, "Frequência(s)"),
+    "frequencia_inicial": SimpleField(156, "Frequência inicial:", True),
+    "frequencia_final": SimpleField(158, "Frequência final:", True),
+    "frequencias": SimpleField(180, "Frequência(s):"),
     "gerar_plai": FieldWithOptions(
         426,
         "Gerar Plai",
@@ -122,17 +122,18 @@ FIELDS = {
         73,
         "Irregularidade",
         multiple=True,
+        value=[],
         options=[],
         format_value=True,
     ),
     "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
-    "latitude_coordenadas": SimpleField(170, "Latitude (coordenadas)", True),
-    "latitude_da_estacao": SimpleField(191, "Latitude da estação", True),
-    "longitude_coordenadas": SimpleField(171, "Longitude (coordenadas)", True),
-    "longitude_da_estacao": SimpleField(192, "Longitude da estação", True),
+    "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
+    "latitude_da_estacao": SimpleField(191, "Latitude da estação:", True),
+    "longitude_coordenadas": SimpleField(171, "Longitude (º):", True),
+    "longitude_da_estacao": SimpleField(192, "Longitude da estação:", True),
     "motivo_de_lai": FieldWithOptions(
         164,
-        "Motivo de LAI",
+        "Motivo de LAI:",
         mandatory=True,
         multiple=True,
         options=[
@@ -144,23 +145,23 @@ FIELDS = {
             "Necessidade de assegurar o planejamento, o gerenciamento e a coordenação do uso de espectro de radiofrequências (justificar)",
         ],
     ),
-    "numero_da_estacao": SimpleField(137, "Número da estação", True),
-    "numero_do_pai": SimpleField(211, "Número do Pai"),
-    "no_de_homologacao": SimpleField(161, "Nº de homologação"),
+    "numero_da_estacao": SimpleField(137, "Número da estação:", True),
+    "numero_do_pai": SimpleField(211, "Número do PAI:"),
+    "no_de_homologacao": SimpleField(161, "Nº de Homologação:"),
     "no_do_lacre": SimpleField(165, "Nº do lacre", True),
-    "no_pcdp": SimpleField(112, "Nº PCDP"),
-    "no_sav": SimpleField(111, "Nº SAV"),
-    "no_sei_do_aviso_lai": EncodedString(427, "Nº SEI do Aviso LAI", True),
-    "no_sei_do_plaiguarda": EncodedString(426, "Nº SEI do PLAI/Guarda"),
-    "no_sei_processo_fiscalizacao": EncodedString(422, "Nº SEI Processo Fiscalização"),
+    "no_pcdp": SimpleField(112, "Nº PCDP:"),
+    "no_sav": SimpleField(111, "Nº SAV:"),
+    "no_sei_do_aviso_lai": EncodedString(427, "Nº SEI Referendo (Aviso LAI):", True),
+    "no_sei_do_plaiguarda": EncodedString(426, "Nº SEI PLAI:"),
+    "no_sei_processo_fiscalizacao": EncodedString(422, "Nº SEI PFIS:"),
     "no_sei_relatorio_monitoramento": SimpleField(
-        544, "Nº SEI Relatório Monitoramento"
+        544, "Nº SEI Relatório:"
     ),
-    "nome_da_entidade": SimpleField(140, "Nome da Entidade", True),
+    "nome_da_entidade": SimpleField(140, "Nome da Entidade:", True),
     "observacao_tecnica_amostral": SimpleField(
-        693, "Observação (técnica amostral)", True
+        693, "Observação (técnica amostral):", True
     ),
-    "observacoes": SimpleField(1973, "Observações"),
+    "observacoes": SimpleField(1973, "Observações:"),
     "pai_instaurado_pela_anatel": FieldWithOptions(
         160,
         "PAI instaurado pela Anatel?",
@@ -178,7 +179,7 @@ FIELDS = {
     ),
     "procedimentos": FieldWithOptions(
         71,
-        "Procedimentos",
+        "Procedimentos:",
         mandatory=True,
         multiple=True,
         options=[
@@ -239,21 +240,21 @@ FIELDS = {
         },
     ),
     "qnt_produt_lacradosapreend": SimpleField(
-        143, "Qnt. produt. lacrados/apreend.", True, value=0
+        143, "Qtd. produtos lacrados ou apreendidos:", True, value=0
     ),
-    "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões", value=0),
-    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas", value=0),
-    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas", value=0),
-    "relatorio_de_atividades": EncodedString(544, "Relatório de atividades"),
+    "qtd_de_emissoes": SimpleField(69, "Qtd. de Emissões:", value=0),
+    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas:", value=0),
+    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas:", value=0),
+    "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:"),
     "reserva_de_instrumentos": SimpleField(
-        597, "Reserva de instrumentos", True, True, True
+        597, "Reserva de instrumentos:", True, True, True
     ),
     "sanada_ou_mitigada": FieldWithOptions(
         163, "Sanada ou mitigada?", mandatory=True, options=["", "1", "0"]
     ),
     "servicos_da_inspecao": FieldWithOptions(
         57,
-        "Serviços da Inspeção",
+        "Serviços da Inspeção:",
         mandatory=True,
         multiple=True,
         options=list(SERVICOS.values()),
@@ -261,7 +262,7 @@ FIELDS = {
     ),
     "situacao_constatada": FieldWithOptions(
         62,
-        "Situação constatada",
+        "Situação constatada:",
         mandatory=True,
         options=["", "Regular", "Irregular", "Inconclusivo", "Não analisado"],
     ),
@@ -274,7 +275,7 @@ FIELDS = {
     "tipificacao_da_infracao": SimpleField(148, "Tipificação da infração"),
     "tipo_de_inspecao": FieldWithOptions(
         2,
-        "Tipo de inspeção",
+        "Tipo de inspeção:",
         mandatory=True,
         options=[
             "",
@@ -406,7 +407,7 @@ FIELDS = {
     "tipo_de_medicao": SimpleField(193, "Tipo de medição"),
     "tipo_do_processo_plai": FieldWithOptions(
         426,
-        "Tipo do Processo PLAI",
+        "Tipo do PLAI:",
         options=[
             "",
             "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
