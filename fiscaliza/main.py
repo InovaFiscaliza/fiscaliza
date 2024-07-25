@@ -225,17 +225,14 @@ class Issue:
             ) from e
 
     def custom_fields(self) -> dict:
-        custom_fields = {}
-        for field in self._attrs.get("custom_fields", []):
-            name = self._utf2ascii(field["name"])
-            # if name not in FIELDS:
-            #     name = name.upper()
-            custom_fields[name] = field
-        return custom_fields
+        return {
+            self._utf2ascii(field["name"]): field
+            for field in self._attrs.get("custom_fields", [])
+        }
 
     @staticmethod
     def extract_coords(attrs: dict) -> dict:
-        if coords := attrs.pop("COORDENADAS_GEOGRAFICAS", None):
+        if coords := attrs.pop("coordenadas_geograficas", None):
             coords = Issue.__format_json_string(coords)
             lat, long = coords.get("latitude"), coords.get("longitude")
             try:
@@ -244,9 +241,9 @@ class Issue:
                 pass
             attrs |= {
                 "latitude_coordenadas": lat,
-                "longitude_coordenadas": lat,
+                "longitude_coordenadas": long,
             }
-        if coords := attrs.pop("COORDENADAS_ESTACAO", None):
+        if coords := attrs.pop("coordenadas_estacao", None):
             coords = Issue.__format_json_string(coords)
             lat, long = coords.get("latitude"), coords.get("longitude")
             try:
@@ -279,8 +276,6 @@ class Issue:
         for k, v in self._attrs.items():
             if k in special_fields:
                 continue
-            # elif k not in FIELDS:
-            #     k = k.upper()
             attrs[k] = self.extract_value(v)
 
         attrs.update(
@@ -356,7 +351,7 @@ class Issue:
                         self.attrs[key] = str(self.attrs[key])
                 setattr(field, "value", self.attrs[key])
                 if key in ["fiscais", "fiscal_responsavel"]:
-                    setattr(field, "options", self.attrs["MEMBROS"])
+                    setattr(field, "options", self.attrs["membros"])
                 editable_fields[key] = field
         if tipo_de_inspecao := self.attrs.get("tipo_de_inspecao"):
             editable_fields = self._append_irregularity_options(
