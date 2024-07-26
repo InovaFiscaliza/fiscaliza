@@ -135,8 +135,8 @@ class FieldWithOptions(SimpleField):
     @property
     def dtype(self):
         if self.multiple:
-            return "list"
-        return "string"
+            self._dtype = "list"
+        return self._dtype
 
     def __call__(self, value: str | list) -> dict[str, str | list]:
         if self.multiple:
