@@ -61,7 +61,9 @@ FIELDS = {
     "entidade_com_cadastro_stel": FieldWithOptions(
         189, "Entidade com cadastro STEL?", mandatory=True, options=["", "Sim", "Não"]
     ),
-    "entidade_da_inspecao": FieldWithOptions(30, "Entidade da Inspeção:", multiple=True, options=[]),
+    "entidade_da_inspecao": FieldWithOptions(
+        30, "Entidade da Inspeção:", multiple=True, options=[]
+    ),
     "entidade_outorgada": FieldWithOptions(
         138,
         "Entidade Outorgada?",
@@ -93,7 +95,9 @@ FIELDS = {
         mapping={"1": ["html"]},
     ),
     "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, dtype="int"),
-    "horas_de_deslocamento": SimpleField(92, "Horas de deslocamento", True, dtype="int"),
+    "horas_de_deslocamento": SimpleField(
+        92, "Horas de deslocamento", True, dtype="int"
+    ),
     "horas_de_execucao": SimpleField(93, "Horas de Execução", True, dtype="int"),
     "horas_de_preparacao": SimpleField(91, "Horas de Preparação", True, dtype="int"),
     "houve_interferencia": FieldWithOptions(
@@ -117,12 +121,14 @@ FIELDS = {
     "identificacao_da_nao_outorgada": SimpleField(
         250, "Identificação da Não Outorgada:"
     ),
-    "instrumentos_utilizados": FieldWithOptions(599, "Instrumentos Utilizados", True, True, options=[]),
+    "instrumentos_utilizados": FieldWithOptions(
+        599, "Instrumentos Utilizados", True, True, options=[]
+    ),
     "irregularidade": FieldWithOptions(
         73,
         "Irregularidade:",
         multiple=True,
-        options=[],
+        options=[],  # Preechido dinamicamente dentro da classe Issue
         format_value=True,
     ),
     "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
@@ -153,9 +159,7 @@ FIELDS = {
     "no_sei_do_aviso_lai": EncodedString(427, "Nº SEI Referendo (Aviso LAI):", True),
     "no_sei_do_plaiguarda": EncodedString(426, "Nº SEI PLAI:"),
     "no_sei_processo_fiscalizacao": EncodedString(422, "Nº SEI PFIS:"),
-    "no_sei_relatorio_monitoramento": SimpleField(
-        544, "Nº SEI Relatório:"
-    ),
+    "no_sei_relatorio_monitoramento": SimpleField(544, "Nº SEI Relatório:"),
     "nome_da_entidade": SimpleField(140, "Nome da Entidade:", True),
     "observacao_tecnica_amostral": SimpleField(
         693, "Observação (técnica amostral):", True
@@ -244,7 +248,7 @@ FIELDS = {
     "qtd_de_emissoes": SimpleField(69, "Qtd. Emissões:", dtype="int"),
     "qtd_identificadas": SimpleField(731, "Qtd. Identificadas:", dtype="int"),
     "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas:", dtype="int"),
-    "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:", dtype="int"),    
+    "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:", dtype="int"),
     "reserva_de_instrumentos": SimpleField(
         597, "Reserva de instrumentos:", True, True, True
     ),
@@ -271,7 +275,16 @@ FIELDS = {
         mandatory=True,
         options=["", "Sim", "Não"],
     ),
-    "tipificacao_da_infracao": FieldWithOptions(148, "Tipificação da infração:", options=["", "art. 163 da LGT – uso de RF", "art.  131 da LGT – exploração de serviço", "Outro"]),
+    "tipificacao_da_infracao": FieldWithOptions(
+        148,
+        "Tipificação da infração:",
+        options=[
+            "",
+            "art. 163 da LGT – uso de RF",
+            "art.  131 da LGT – exploração de serviço",
+            "Outro",
+        ],
+    ),
     "tipo_de_inspecao": FieldWithOptions(
         2,
         "Tipo de inspeção:",
@@ -403,7 +416,9 @@ FIELDS = {
             ],
         },
     ),
-    "tipo_de_medicao": FieldWithOptions(193, "Tipo de medição:", options=["", "Móvel", "Fixa", "Portátil"]),
+    "tipo_de_medicao": FieldWithOptions(
+        193, "Tipo de medição:", options=["", "Móvel", "Fixa", "Portátil"]
+    ),
     "tipo_do_processo_plai": FieldWithOptions(
         426,
         "Tipo do PLAI:",
