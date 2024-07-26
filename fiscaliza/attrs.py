@@ -94,12 +94,12 @@ FIELDS = {
         options=["", "0", "1"],
         mapping={"1": ["html"]},
     ),
-    "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, dtype="int"),
+    "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, _dtype="int"),
     "horas_de_deslocamento": SimpleField(
-        92, "Horas de deslocamento", True, dtype="int"
+        92, "Horas de deslocamento", True, _dtype="int"
     ),
-    "horas_de_execucao": SimpleField(93, "Horas de Execução", True, dtype="int"),
-    "horas_de_preparacao": SimpleField(91, "Horas de Preparação", True, dtype="int"),
+    "horas_de_execucao": SimpleField(93, "Horas de Execução", True, _dtype="int"),
+    "horas_de_preparacao": SimpleField(91, "Horas de Preparação", True, _dtype="int"),
     "houve_interferencia": FieldWithOptions(
         149,
         "Houve interferência?",
@@ -243,12 +243,12 @@ FIELDS = {
         },
     ),
     "qnt_produt_lacradosapreend": SimpleField(
-        143, "Qtd. produtos lacrados ou apreendidos:", True, dtype="int"
+        143, "Qtd. produtos lacrados ou apreendidos:", True, _dtype="int"
     ),
-    "qtd_de_emissoes": SimpleField(69, "Qtd. Emissões:", dtype="int"),
-    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas:", dtype="int"),
-    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas:", dtype="int"),
-    "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:", dtype="int"),
+    "qtd_de_emissoes": SimpleField(69, "Qtd. Emissões:", _dtype="int"),
+    "qtd_identificadas": SimpleField(731, "Qtd. Identificadas:", _dtype="int"),
+    "qtd_licenciadas": SimpleField(730, "Qtd. Licenciadas:", _dtype="int"),
+    "relatorio_de_atividades": EncodedString(544, "Nº SEI Relatório:", _dtype="int"),
     "reserva_de_instrumentos": SimpleField(
         597, "Reserva de instrumentos:", True, True, True
     ),
