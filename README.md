@@ -56,10 +56,12 @@ issue.attrs
       'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n'},
      'agrupamento': '',
      'allowed_statuses': '',
-     'anexos': [],
+     'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json'],
      'ano_de_execucao': 2024,
      'app_fiscaliza': 0,
-     'atualizacao': 'Atualizada por Eric Magalhães Delgado em 18/04/2024 às 09:38:03',
+     'assigned_to': 'Eric Magalhães Delgado',
+     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:05:36',
      'author': 'Eric Magalhães Delgado',
      'changesets': '',
      'children': '',
@@ -67,19 +69,20 @@ issue.attrs
      'closed_on': '',
      'coordenacao_responsavel': 'FI2',
      'created_on': '2024-04-18T12:38:03Z',
-     'data_de_inicio_efetivo': '',
+     'data_de_inicio_efetivo': '2024-07-25',
      'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
      'done_ratio': 0,
-     'due_date': '2024-11-30',
+     'due_date': '2024-05-30',
      'entidade_da_inspecao': [],
      'estimated_hours': '',
-     'fiscais': [],
-     'fiscal_responsavel': '',
-     'horas_de_conclusao': 0,
-     'horas_de_deslocamento': 0,
-     'horas_de_execucao': 0,
-     'horas_de_preparacao': 0,
+     'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
+     'fiscal_responsavel': 'Eric Magalhães Delgado',
+     'horas_de_conclusao': 2,
+     'horas_de_deslocamento': 3,
+     'horas_de_execucao': 29,
+     'horas_de_preparacao': 1,
      'id': 124182,
+     'irregularidade': [],
      'is_private': False,
      'membros': ['Gilmar Ferreira do Nascimento',
       'Luis Fernando Camelier de Queiroz',
@@ -106,39 +109,43 @@ issue.attrs
      'no_fiscaliza_issue': {'numero': '124182',
       'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
      'no_pcdp': '',
-     'no_sav': '',
+     'no_sav': 'Teste de Quebra\n de linha',
      'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}",
-     'observacao_tecnica_amostral': '',
-     'precisa_reservar_instrumentos': '',
+     'numero_do_pai': 123456,
+     'observacao_tecnica_amostral': 'Simulação com o HTZ',
+     'pai_instaurado_pela_anatel': 'Sim',
+     'precisa_reservar_instrumentos': 0,
      'priority': 'Normal',
-     'procedimentos': [],
+     'procedimentos': ['Análise/coleta de Dados'],
      'project': 'GR08',
-     'servicos_da_inspecao': [],
+     'servicos_da_inspecao': ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA',
+      '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO'],
+     'situacao_constatada': 'Irregular',
      'spent_hours': 0.0,
      'start_date': '2024-03-01',
-     'status': 'Rascunho',
+     'status': 'Relatando',
      'subject': 'INSP_GR08_2024_0147',
      'subtema': ['Radiomonitoração Terrestre'],
      'tema': ['Uso do Espectro'],
      'time_entries': '',
-     'tipo_de_inspecao': '',
-     'total_de_horas': 0.0,
+     'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
+     'total_de_horas': 35.0,
      'total_estimated_hours': '',
      'total_spent_hours': 0.0,
      'tracker': 'Atividade de Inspeção',
-     'ufmunicipio': [],
-     'updated_on': '2024-04-18T12:40:22Z',
-     'utilizou_algum_instrumento': '',
-     'utilizou_tecnicas_amostrais': '',
+     'ufmunicipio': ['MG/Bocaina de Minas', 'AL/União dos Palmares'],
+     'updated_on': '2024-07-25T08:05:36Z',
+     'utilizou_algum_instrumento': 0,
+     'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
      'watchers': ''}
 
-O atributo acima retorna um dicionário com as informações da Inspeção.
-As chaves em letra MAIÚSCULA são dados somente informativos e não podem
-ser editados diretamente pela API, alguns deles são retornados pelo
-Redmine mas não possuem uso na Instância do Fiscaliza na Anatel. Um
-exemplo desses é o atributo `CHILDREN`, sempre vazio.
+O atributo acima retorna um dicionário com atributos atuais da Inspeção
+no Fiscaliza. Existem campos editáveis através da API ou da interface
+Web e outros meramente informativos, além de alguns campos presentes no
+`Redmine` mas sem uso na instância Fiscaliza da Anatel. Um exemplo
+desses é o atributo `children`, sempre vazio.
 
-## Dados editáveis
+## Campos editáveis
 
 Os dados que são editáveis, tanto pela API quanto pela interface web
 aparecem em `minúsculo` no dicionário. Para estes dados temos um outro
@@ -178,17 +185,20 @@ Nesse caso as chaves são os nomes dos campos e os valores são os objetos
 que modelam o campo. Ao mostrar ou imprimir o dicionário, como mostrado
 acima, é impresso o valor atual do campo entre parênteses.
 
-    'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | <mandatory>, <options>, ⚠️conditional
+    'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | <mandatory>, <options>, conditional
 
 Separado pela barra vertical são mostrados alguns atributos do campo:
 
-- `<mandatory>` indica que o campo é obrigatório;
-- `<multiple>` indica que o campo aceita mais de um valor. Deve ser
-  fornecido uma lista
-- `<options>` indica que o campo aceita valores pré-definidos;
-- `⚠️conditional` indica que o campo é condicional e para dado valor
-  preenchido neste campo, ficam disponíveis outros campos, estes podem
-  ser obrigatórios e inclusive condicionais
+- `<mandatory>` Atributo booleano indicando se o campo é obrigatório;
+- `<multiple>` Atributo booleano. `False`: Campo de valor único. `True`
+  Campo aceita mais de um valor e por conseguinte deve ser fornecido uma
+  lista em vez de um valor atômico ( `int`, `float`, `str` );
+- `<options>` Atributo do tipo lista. Quando presente sinaliza que o
+  campo é restrito e só aceita valores pré-definidos;
+- `conditional` Esse não é um atributo, somente um sinalizador indicando
+  que o campo é condicional e para dado valor preenchido neste campo,
+  ficam disponíveis outros campos, estes podem ser obrigatórios e
+  inclusive condicionais.
 
 O valor em si do campo é guardado no atributo `value`, acessado através
 da notação de ponto
@@ -197,7 +207,9 @@ da notação de ponto
 issue.editable_fields['tipo_de_inspecao'].value
 ```
 
-    ''
+    'Outorga - Aspectos não Técnicos'
+
+### Campos Obrigatórios e Condicionais
 
 Os dois métodos a seguir filtram, dentre os campos editáveis, os campos
 obrigatório e condicionais:
@@ -209,39 +221,43 @@ issue.mandatory_fields()
     {'description': (value: [PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.
      ) | <mandatory>,
      'start_date': (value: 2024-03-01) | <mandatory>,
-     'due_date': (value: 2024-11-30) | <mandatory>,
-     'tipo_de_inspecao': (value: ) | <mandatory>, <options>, conditional,
-     'fiscal_responsavel': (value: ) | <mandatory>, <options>,
-     'fiscais': (value: []) | <mandatory>, <multiple>, <options>,
-     'ufmunicipio': (value: []) | <mandatory>, <multiple>, <options>,
-     'servicos_da_inspecao': (value: []) | <mandatory>, <multiple>, <options>,
-     'procedimentos': (value: []) | <mandatory>, <multiple>, <options>, conditional,
-     'horas_de_preparacao': (value: 0) | <mandatory>,
-     'horas_de_deslocamento': (value: 0) | <mandatory>,
-     'horas_de_execucao': (value: 0) | <mandatory>,
-     'horas_de_conclusao': (value: 0) | <mandatory>,
-     'precisa_reservar_instrumentos': (value: ) | <mandatory>, <options>, conditional,
-     'utilizou_algum_instrumento': (value: ) | <mandatory>, <options>, conditional,
-     'utilizou_tecnicas_amostrais': (value: ) | <mandatory>, <options>,
-     'observacao_tecnica_amostral': (value: ) | <mandatory>}
+     'due_date': (value: 2024-05-30) | <mandatory>,
+     'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | <mandatory>, <options>, conditional,
+     'fiscal_responsavel': (value: Eric Magalhães Delgado) | <mandatory>, <options>,
+     'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | <mandatory>, <multiple>, <options>,
+     'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | <mandatory>, <multiple>, <options>,
+     'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | <mandatory>, <multiple>, <options>,
+     'situacao_constatada': (value: Irregular) | <mandatory>, <options>,
+     'procedimentos': (value: ['Análise/coleta de Dados']) | <mandatory>, <multiple>, <options>, conditional,
+     'horas_de_preparacao': (value: 1) | <mandatory>,
+     'horas_de_deslocamento': (value: 3) | <mandatory>,
+     'horas_de_execucao': (value: 29) | <mandatory>,
+     'horas_de_conclusao': (value: 2) | <mandatory>,
+     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
+     'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
+     'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional,
+     'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | <mandatory>, <options>,
+     'observacao_tecnica_amostral': (value: Simulação com o HTZ) | <mandatory>}
 
 ``` python
 issue.conditional_fields()
 ```
 
-    {'tipo_de_inspecao': (value: ) | <mandatory>, <options>, conditional,
-     'procedimentos': (value: []) | <mandatory>, <multiple>, <options>, conditional,
-     'precisa_reservar_instrumentos': (value: ) | <mandatory>, <options>, conditional,
-     'utilizou_algum_instrumento': (value: ) | <mandatory>, <options>, conditional}
+    {'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | <mandatory>, <options>, conditional,
+     'procedimentos': (value: ['Análise/coleta de Dados']) | <mandatory>, <multiple>, <options>, conditional,
+     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
+     'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
+     'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional}
 
-O conjunto de valores para os campos com opções pré-definidas estão
-relacionados no atributo `.options`
+> O conjunto de valores para os campos com opções pré-definidas estão
+> relacionados no atributo `.options`
 
 ``` python
 issue.editable_fields['tipo_de_inspecao'].options
 ```
 
-    ['Bloqueio Administrativo',
+    ['',
+     'Bloqueio Administrativo',
      'Certificação',
      'Medição de CEMRF (RNI)',
      'Outorga - Aspectos não Técnicos',
@@ -285,7 +301,7 @@ issue.editable_fields['procedimentos'].options
      'Devolução de Produto(s)',
      'Outros']
 
-## Atualizando informações da Inspeção
+## Atualizando os campos editáveis da Inspeção
 
 Dada a existência de campos condicionais, para obtermos todos os campos
 editáveis para dado tipo de inspeção, é preciso fornecer um dicionário
@@ -315,31 +331,36 @@ atributo `editable_fields`
 issue.editable_fields
 ```
 
-    {'status': (value: Rascunho),
+    {'status': (value: Relatando),
      'description': (value: [PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.
      ) | <mandatory>,
      'start_date': (value: 2024-03-01) | <mandatory>,
-     'due_date': (value: 2024-11-30) | <mandatory>,
+     'due_date': (value: 2024-05-30) | <mandatory>,
      'tipo_de_inspecao': (value: Certificação) | <mandatory>, <options>, conditional,
-     'fiscal_responsavel': (value: ) | <mandatory>, <options>,
-     'fiscais': (value: []) | <mandatory>, <multiple>, <options>,
+     'fiscal_responsavel': (value: Eric Magalhães Delgado) | <mandatory>, <options>,
+     'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | <mandatory>, <multiple>, <options>,
      'entidade_da_inspecao': (value: []), <multiple>,
-     'ufmunicipio': (value: []) | <mandatory>, <multiple>, <options>,
-     'servicos_da_inspecao': (value: []) | <mandatory>, <multiple>, <options>,
+     'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | <mandatory>, <multiple>, <options>,
+     'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | <mandatory>, <multiple>, <options>,
+     'situacao_constatada': (value: Irregular) | <mandatory>, <options>,
      'procedimentos': (value: ['Lacração']) | <mandatory>, <multiple>, <options>, conditional,
-     'horas_de_preparacao': (value: 0) | <mandatory>,
-     'horas_de_deslocamento': (value: 0) | <mandatory>,
-     'horas_de_execucao': (value: 0) | <mandatory>,
-     'horas_de_conclusao': (value: 0) | <mandatory>,
-     'no_sav': (value: ),
+     'irregularidade': (value: []), <multiple>, <options>,
+     'horas_de_preparacao': (value: 1) | <mandatory>,
+     'horas_de_deslocamento': (value: 3) | <mandatory>,
+     'horas_de_execucao': (value: 29) | <mandatory>,
+     'horas_de_conclusao': (value: 2) | <mandatory>,
+     'no_sav': (value: Teste de Quebra
+      de linha),
      'no_pcdp': (value: ),
+     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
      'coordenacao_responsavel': (value: FI2), <options>,
+     'numero_do_pai': (value: 123456),
      'agrupamento': (value: ),
      'no_sei_processo_fiscalizacao': ({'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}),
      'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
      'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional,
-     'utilizou_tecnicas_amostrais': (value: ) | <mandatory>, <options>,
-     'observacao_tecnica_amostral': (value: ) | <mandatory>}
+     'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | <mandatory>, <options>,
+     'observacao_tecnica_amostral': (value: Simulação com o HTZ) | <mandatory>}
 
 Caso o conjunto de dados já seja conhecido para dado tipo de inspeção,
 basta passar o dicionário diretamente para o método `update`.
@@ -377,10 +398,10 @@ dados = {
     "gerar_plai": randint(0, 1),
     "tipo_do_processo_plai": random.choice(FIELDS["tipo_do_processo_plai"].options),
     "coord_fi_plai": random.choice(FIELDS["coord_fi_plai"].options),
-    "html_path": r"C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.html",
+    "html_path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.html",
     "uploads": [
         {
-            "path": r"C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json",
+            "path": "/mnt/c/Users/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json",
             "filename": "Info.json",
         }
     ],
@@ -402,7 +423,7 @@ dados = {
     "observacao_tecnica_amostral": "Simulação com o HTZ",
     "pai_instaurado_pela_anatel": random.choice(["Sim", "Não"]),
     "precisa_reservar_instrumentos": "0",  #
-    "procedimentos": random.choices(FIELDS['procedimentos'].options, k=2),  #
+    "procedimentos": random.choices(FIELDS["procedimentos"].options, k=2),  #
     "qnt_produt_lacradosapreend": "0",
     "reserva_de_instrumentos": "0",
     "no_sav": "Teste de Quebra\n de linha",
@@ -419,7 +440,9 @@ dados = {
     "uso_de_produto_homologado": random.choice(["0", "1"]),
     "utilizou_algum_instrumento": "0",
     "utilizou_apoio_policial": random.choice(FIELDS["utilizou_apoio_policial"].options),
-    "utilizou_tecnicas_amostrais": random.choice(FIELDS["utilizou_tecnicas_amostrais"].options), 
+    "utilizou_tecnicas_amostrais": random.choice(
+        FIELDS["utilizou_tecnicas_amostrais"].options
+    ),
     "description": "[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n",
     "start_date": "2024-03-01",
     "due_date": "2024-05-30",
@@ -432,9 +455,36 @@ dados = {
 issue.update(dados)
 ```
 
-    Atualizado para o status Aguardando Execução
-    Atualizado para o status Em andamento
-    Atualizado para o status Relatando
+    ValueError: Arquivo C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json não existe ou não é um arquivo
+    [0;31m---------------------------------------------------------------------------[0m
+    [0;31mValueError[0m                                Traceback (most recent call last)
+    Cell [0;32mIn[18], line 1[0m
+    [0;32m----> 1[0m [43missue[49m[38;5;241;43m.[39;49m[43mupdate[49m[43m([49m[43mdados[49m[43m)[49m
+
+    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:577[0m, in [0;36mIssue.update[0;34m(self, dados)[0m
+    [1;32m    575[0m     [38;5;28mself[39m[38;5;241m.[39mclient[38;5;241m.[39missue[38;5;241m.[39mupdate([38;5;28mself[39m[38;5;241m.[39mid, status_id[38;5;241m=[39mstatus_id, [38;5;241m*[39m[38;5;241m*[39mdata)
+    [1;32m    576[0m [38;5;28;01melse[39;00m:
+    [0;32m--> 577[0m     data [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_parse_value_dict[49m[43m([49m[43mdados[49m[43m)[49m
+    [1;32m    578[0m     [38;5;28mself[39m[38;5;241m.[39mclient[38;5;241m.[39missue[38;5;241m.[39mupdate([38;5;28mself[39m[38;5;241m.[39mid, status_id[38;5;241m=[39mstatus_id, [38;5;241m*[39m[38;5;241m*[39mdata)
+    [1;32m    579[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mAtualizado para o status [39m[38;5;132;01m{[39;00mnew_status[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:539[0m, in [0;36mIssue._parse_value_dict[0;34m(self, dados)[0m
+    [1;32m    537[0m data [38;5;241m=[39m {k: editable_fields[k](v) [38;5;28;01mfor[39;00m k, v [38;5;129;01min[39;00m data[38;5;241m.[39mitems()}
+    [1;32m    538[0m submitted_fields [38;5;241m=[39m {[38;5;124m"[39m[38;5;124mcustom_fields[39m[38;5;124m"[39m: []}
+    [0;32m--> 539[0m [38;5;28;01mif[39;00m uploads [38;5;241m:=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_check_uploads[49m[43m([49m[43mdados[49m[43m)[49m:
+    [1;32m    540[0m     submitted_fields[[38;5;124m"[39m[38;5;124muploads[39m[38;5;124m"[39m] [38;5;241m=[39m uploads
+    [1;32m    541[0m [38;5;28;01mfor[39;00m key, value [38;5;129;01min[39;00m data[38;5;241m.[39mitems():
+
+    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:517[0m, in [0;36mIssue._check_uploads[0;34m(self, dados)[0m
+    [1;32m    515[0m         [38;5;28;01mif[39;00m (path [38;5;241m:=[39m file[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mpath[39m[38;5;124m"[39m)) [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+    [1;32m    516[0m             [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m Path(path)[38;5;241m.[39mis_file():
+    [0;32m--> 517[0m                 [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
+    [1;32m    518[0m                     [38;5;124mf[39m[38;5;124m"[39m[38;5;124mArquivo [39m[38;5;132;01m{[39;00mpath[38;5;132;01m}[39;00m[38;5;124m não existe ou não é um arquivo[39m[38;5;124m"[39m
+    [1;32m    519[0m                 )
+    [1;32m    520[0m             uploads[38;5;241m.[39mappend(file)
+    [1;32m    521[0m [38;5;28;01mreturn[39;00m uploads
+
+    [0;31mValueError[0m: Arquivo C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json não existe ou não é um arquivo
 
 ## Gerar Relatório de Atividades
 

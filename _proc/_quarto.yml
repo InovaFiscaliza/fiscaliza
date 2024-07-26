@@ -16,6 +16,5 @@ website:
     search: true
   sidebar:
     style: floating
-    background: "dark"
 
 metadata-files: [nbdev.yml, sidebar.yml]
