@@ -22,7 +22,10 @@ class AtomicField:
     name: str
     keyword: str
     mandatory: bool = True
-    type: str = "string"
+
+    @property
+    def dtype(self):
+        return "string"
 
     def __call__(self, value):
         self.value = value
