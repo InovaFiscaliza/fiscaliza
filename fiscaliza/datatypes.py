@@ -48,10 +48,15 @@ class SimpleField:
     mandatory: bool = False
     multiple: bool = False
     format_value: bool = False
+    _dtype: str = "string"
 
     @property
     def dtype(self):
-        return "string"
+        return self._dtype
+
+    @dtype.setter
+    def dtype(self, value):
+        self._dtype = value
 
     @property
     def value(self):
