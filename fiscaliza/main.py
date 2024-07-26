@@ -40,7 +40,6 @@ class Fiscaliza:
         self.key = key
         self.url = URL_HM if teste else URL_PD
         self.client = self.authenticate()
-        self.issues = {}
 
     def authenticate(self):
         try:
@@ -70,11 +69,7 @@ class Fiscaliza:
         return fiscaliza
 
     def get_issue(self, issue: str) -> dict:
-        if issue_obj := self.issues.get(issue):
-            return issue_obj
-        issue_obj = Issue(self.client, issue)
-        self.issues[issue] = issue_obj
-        return issue_obj
+        return Issue(self.client, issue)
 
 
 # %% ../nbs/00_main.ipynb 6
