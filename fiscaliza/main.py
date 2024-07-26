@@ -377,12 +377,13 @@ class Issue:
 
         for key, field in self.conditional_fields().items():
             if key in dados:
-                if hasattr(self, "editable_fields"):
-                    del self.editable_fields
+                # if hasattr(self, "editable_fields"):
+                #     del self.editable_fields
                 new_fields = set()
                 all_fields = {
                     item for values in field.mapping.values() for item in values
                 }
+
                 for option in listify(dados[key]):
                     if field.options:
                         assert (
