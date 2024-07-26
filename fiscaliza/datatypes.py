@@ -13,6 +13,8 @@ __all__ = [
 # %% ../nbs/02_datatypes.ipynb 2
 from dataclasses import dataclass
 from itertools import product
+from functools import cached_property
+
 from fastcore.xtras import listify
 
 
@@ -58,7 +60,7 @@ class SimpleField:
     def dtype(self, value):
         self._dtype = value
 
-    @property
+    @cached_property
     def value(self):
         match self.dtype:
             case "string":
