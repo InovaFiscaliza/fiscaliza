@@ -68,7 +68,7 @@ class Fiscaliza:
             ) from e
         return fiscaliza
 
-    def get_issue(self, issue_id: str | int) -> Issue:
+    def get_issue(self, issue_id: str | int):
         issue = Issue(self.client, issue_id)
         issue.project.refresh()
         return issue
