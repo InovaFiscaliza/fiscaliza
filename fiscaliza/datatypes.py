@@ -196,7 +196,15 @@ class Coordenadas:
     id: int
     name: str
     mandatory: bool = False
-    value: tuple[str | float] | None = None
+
+    def init(self):
+        if hasattr(self, "value"):
+            del self.value
+        return self
+
+    @cached_property
+    def value(self):
+        return None
 
     def format_value_string(self, latitude: str, longitude: str) -> str:
         return (
@@ -228,7 +236,6 @@ class GerarPlai:
     id: int
     name: str
     mandatory: bool = False
-    value: tuple | None = None
     TIPO_DE_PROCESSO = [
         "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
         "Gestão da Fiscalização: Processo de Guarda",
@@ -236,6 +243,15 @@ class GerarPlai:
     COORD_FI = ["FI1", "FI2"]
     CODES = ["100000539", "100000618"]
     options = list(product(TIPO_DE_PROCESSO, COORD_FI))
+
+    def init(self):
+        if hasattr(self, "value"):
+            del self.value
+        return self
+
+    @cached_property
+    def value(self):
+        return "0"
 
     def validate_tipo_processo(self, value: str) -> str:
         options = dict(zip(self.TIPO_DE_PROCESSO, self.CODES))
