@@ -70,7 +70,7 @@ class Fiscaliza:
 
     def get_issue(self, issue_id: str | int):
         issue = Issue(self.client, issue_id)
-        issue.project.refresh()
+        issue._issue.project.refresh()
         return issue
 
 
