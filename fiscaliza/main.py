@@ -69,9 +69,7 @@ class Fiscaliza:
         return fiscaliza
 
     def get_issue(self, issue_id: str | int):
-        issue = Issue(self.client, issue_id)
-        issue._issue.project.refresh()
-        return issue
+        return Issue(self.client, issue_id)
 
 
 # %% ../nbs/00_main.ipynb 6
@@ -427,7 +425,7 @@ class Issue:
             ("latitude_coordenadas" in data) and ("longitude_coordenadas" in data)
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
             self.editable_fields.pop("latitude_coordenadas", None)
             self.editable_fields.pop("longitude_coordenadas", None)
             data[newkey] = (
@@ -441,7 +439,7 @@ class Issue:
             )
         if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
             newkey = "coordenadas_estacao"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
             self.editable_fields.pop("latitude_da_estacao", None)
             self.editable_fields.pop("longitude_da_estacao", None)
             data[newkey] = (
@@ -465,7 +463,7 @@ class Issue:
                 raise ValueError(
                     "Para gerar o PLAI é necessário fornecer o tipo do processo e as coordenação da FI"
                 )
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
             data[newkey] = (tipo_processo_plai, coords_fi_plai)
 
         return data
