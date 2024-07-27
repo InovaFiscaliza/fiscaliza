@@ -8,7 +8,7 @@ from fiscaliza.attrs import FIELDS
 
 load_dotenv(override=True)
 
-issue_id = "124182"
+issue_id = "124191"
 fiscaliza = Fiscaliza(os.environ["USERNAME"], os.environ["PASSWORD"], teste=True)
 issue = fiscaliza.get_issue(issue_id)
 
@@ -20,7 +20,7 @@ dados = {
     "coordenacao_responsavel": "FI2",
     "cnpjcpf_da_entidade": "27865757000102",
     "entidade_com_cadastro_stel": "Não",
-    "entidade_outorgada": randint(0, 1),
+    "entidade_outorgada": random.choice(["0", "1"]),
     "esta_em_operacao": randint(0, 1),
     "numero_da_estacao": "1493671",
     "fiscais": ["Eric Magalhães Delgado", "Ronaldo da Silva Alves Batista"],
@@ -28,8 +28,8 @@ dados = {
     "foi_constatada_interferencia": randint(0, 1),
     "frequencia_inicial": randint(70, 110),
     "frequencia_final": randint(110, 117),
-    "gerar_relatorio": "0",
-    "gerar_plai": randint(0, 1),
+    "gerar_relatorio": "1",
+    "gerar_plai": 1,
     "tipo_do_processo_plai": random.choice(FIELDS["tipo_do_processo_plai"].options),
     "coord_fi_plai": random.choice(FIELDS["coord_fi_plai"].options),
     "html_path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.html",
@@ -84,4 +84,6 @@ dados = {
     "due_date": "2024-05-30",
 }
 
-issue.update(dados)
+for tipo in FIELDS["tipo_de_inspecao"].options[1:]:
+    dados["tipo_de_inspecao"] = tipo
+    issue.update(dados)
