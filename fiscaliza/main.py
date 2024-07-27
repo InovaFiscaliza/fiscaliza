@@ -68,8 +68,10 @@ class Fiscaliza:
             ) from e
         return fiscaliza
 
-    def get_issue(self, issue: str) -> dict:
-        return Issue(self.client, issue)
+    def get_issue(self, issue_id: str | int) -> Issue:
+        issue = Issue(self.client, issue_id)
+        issue.project.refresh()
+        return issue
 
 
 # %% ../nbs/00_main.ipynb 6
