@@ -27,7 +27,9 @@ FIELDS = {
     "description": AtomicField("Descrição", "description"),
     "start_date": AtomicField("Data de início", "start_date"),
     "due_date": AtomicField("Data limite", "due_date"),
-    "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
+    "acao_de_risco_a_vida_criada": FieldWithOptions(
+        154, "Ação de risco à vida criada?", options=["", "Sim", "Não"]
+    ),
     "agrupamento": SimpleField(213, "Agrupamento:"),
     "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante:"),
     "area_do_pacp": FieldWithOptions(
