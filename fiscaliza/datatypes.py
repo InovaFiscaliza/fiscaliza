@@ -25,9 +25,18 @@ class AtomicField:
     keyword: str
     mandatory: bool = True
 
+    def init(self):
+        if hasattr(self, "value"):
+            del self.value
+        return self
+
     @property
     def dtype(self):
         return "string"
+
+    @cached_property
+    def value(self):
+        return ""
 
     def __call__(self, value):
         self.value = value
@@ -51,6 +60,11 @@ class SimpleField:
     multiple: bool = False
     format_value: bool = False
     _dtype: str = "string"
+
+    def init(self):
+        if hasattr(self, "value"):
+            del self.value
+        return self
 
     @property
     def dtype(self):

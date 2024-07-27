@@ -338,7 +338,7 @@ class Issue:
         """Retrieves the editable fields of an issue as a dictionary."""
         editable_fields = {}
         keys_by_id = sorted(FIELDS.keys(), key=lambda x: getattr(FIELDS[x], "id", 0))
-        fields = {k: FIELDS[k] for k in keys_by_id}
+        fields = {k: FIELDS[k].init() for k in keys_by_id}
         for key, field in fields.items():
             if key in self.attrs:
                 if hasattr(field, "options"):
@@ -376,11 +376,11 @@ class Issue:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
+        if hasattr(self, "editable_fields"):
+            del self.editable_fields
 
         for key, field in self.conditional_fields().items():
             if key in dados:
-                # if hasattr(self, "editable_fields"):
-                #     del self.editable_fields
                 new_fields = set()
                 all_fields = {
                     item for values in field.mapping.values() for item in values
@@ -401,7 +401,7 @@ class Issue:
                     if k not in all_fields.difference(new_fields)
                 }
 
-                self.editable_fields |= {k: FIELDS[k] for k in new_fields}
+                self.editable_fields |= {k: FIELDS[k].init() for k in new_fields}
 
         for key, value in dados.items():
             if key in self.editable_fields:
