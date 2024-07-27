@@ -144,7 +144,7 @@ class FieldWithOptions(SimpleField):
         if self.multiple:
             value = [str(v) for v in listify(value)]
             for v in value:
-                if self.options is not None and v not in self.options:
+                if self.options and v not in self.options:
                     raise ValueError(
                         f"The value {v} must be one of the valid options: {self.options} for field {self.name}"
                     )
