@@ -27,9 +27,7 @@ FIELDS = {
     "description": AtomicField("Descrição", "description"),
     "start_date": AtomicField("Data de início", "start_date"),
     "due_date": AtomicField("Data limite", "due_date"),
-    "acao_de_risco_a_vida_criada": FieldWithOptions(
-        154, "Ação de risco à vida criada?", options=["", "Sim", "Não"]
-    ),
+    "acao_de_risco_a_vida_criada": SimpleField(154, "Ação de risco à vida criada?"),
     "agrupamento": SimpleField(213, "Agrupamento:"),
     "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante:"),
     "area_do_pacp": FieldWithOptions(
@@ -44,7 +42,6 @@ FIELDS = {
             "5-Feiras e Eventos",
             "6-Supervisão de Mercados",
         ],
-        format_value=True,
     ),
     "campo_eletrico__pico_vm": SimpleField(195, "Campo elétrico pico (V/m):", True),
     "campo_eletrico_rms_vm": SimpleField(194, "Campo elétrico RMS (V/m):", True),
@@ -159,6 +156,7 @@ FIELDS = {
     "no_pcdp": SimpleField(112, "Nº PCDP:"),
     "no_sav": SimpleField(111, "Nº SAV:"),
     "no_sei_do_aviso_lai": EncodedString(427, "Nº SEI Referendo (Aviso LAI):", True),
+    "no_sei_do_oficio_ao_mctic": EncodedString(428, "Nº SEI do Ofício ao MCTIC:"),
     "no_sei_do_plaiguarda": EncodedString(426, "Nº SEI PLAI:"),
     "no_sei_processo_fiscalizacao": EncodedString(422, "Nº SEI PFIS:"),
     "no_sei_relatorio_monitoramento": SimpleField(544, "Nº SEI Relatório:"),

@@ -68,8 +68,8 @@ class Fiscaliza:
             ) from e
         return fiscaliza
 
-    def get_issue(self, issue_id: str | int):
-        return Issue(self.client, issue_id)
+    def get_issue(self, issue: str) -> dict:
+        return Issue(self.client, issue)
 
 
 # %% ../nbs/00_main.ipynb 6
@@ -336,7 +336,7 @@ class Issue:
         """Retrieves the editable fields of an issue as a dictionary."""
         editable_fields = {}
         keys_by_id = sorted(FIELDS.keys(), key=lambda x: getattr(FIELDS[x], "id", 0))
-        fields = {k: FIELDS[k].init() for k in keys_by_id}
+        fields = {k: FIELDS[k] for k in keys_by_id}
         for key, field in fields.items():
             if key in self.attrs:
                 if hasattr(field, "options"):
@@ -374,16 +374,15 @@ class Issue:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
-        if hasattr(self, "editable_fields"):
-            del self.editable_fields
 
         for key, field in self.conditional_fields().items():
             if key in dados:
+                if hasattr(self, "editable_fields"):
+                    del self.editable_fields
                 new_fields = set()
                 all_fields = {
                     item for values in field.mapping.values() for item in values
                 }
-
                 for option in listify(dados[key]):
                     if field.options:
                         assert (
@@ -399,7 +398,7 @@ class Issue:
                     if k not in all_fields.difference(new_fields)
                 }
 
-                self.editable_fields |= {k: FIELDS[k].init() for k in new_fields}
+                self.editable_fields |= {k: FIELDS[k] for k in new_fields}
 
         for key, value in dados.items():
             if key in self.editable_fields:
@@ -425,7 +424,7 @@ class Issue:
             ("latitude_coordenadas" in data) and ("longitude_coordenadas" in data)
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
             self.editable_fields.pop("latitude_coordenadas", None)
             self.editable_fields.pop("longitude_coordenadas", None)
             data[newkey] = (
@@ -439,7 +438,7 @@ class Issue:
             )
         if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
             newkey = "coordenadas_estacao"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
             self.editable_fields.pop("latitude_da_estacao", None)
             self.editable_fields.pop("longitude_da_estacao", None)
             data[newkey] = (
@@ -463,7 +462,7 @@ class Issue:
                 raise ValueError(
                     "Para gerar o PLAI é necessário fornecer o tipo do processo e as coordenação da FI"
                 )
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey]
             data[newkey] = (tipo_processo_plai, coords_fi_plai)
 
         return data
