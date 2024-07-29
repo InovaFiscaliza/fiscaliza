@@ -320,6 +320,7 @@ FIELDS = {
                 "irregularidade",
                 "latitude_coordenadas",
                 "longitude_coordenadas",
+                "no_sei_relatorio_monitoramento",
                 "observacao_tecnica_amostral",
                 "qnt_produt_lacradosapreend",
                 "situacao_constatada",
