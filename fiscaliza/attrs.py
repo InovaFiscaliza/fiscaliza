@@ -161,7 +161,7 @@ FIELDS = {
     "no_sei_do_oficio_ao_mctic": EncodedString(428, "Nº SEI do Ofício ao MCTIC:"),
     "no_sei_do_plaiguarda": EncodedString(426, "Nº SEI PLAI:"),
     "no_sei_processo_fiscalizacao": EncodedString(422, "Nº SEI PFIS:"),
-    "no_sei_relatorio_monitoramento": SimpleField(544, "Nº SEI Relatório:"),
+    "no_sei_relatorio_de_atividades": SimpleField(544, "Nº SEI Relatório:"),
     "nome_da_entidade": SimpleField(140, "Nome da Entidade:", True),
     "observacao_tecnica_amostral": SimpleField(
         693, "Observação (técnica amostral):", True
@@ -320,7 +320,7 @@ FIELDS = {
                 "irregularidade",
                 "latitude_coordenadas",
                 "longitude_coordenadas",
-                "no_sei_relatorio_monitoramento",
+                "no_sei_relatorio_de_atividades",
                 "observacao_tecnica_amostral",
                 "qnt_produt_lacradosapreend",
                 "situacao_constatada",
@@ -390,7 +390,7 @@ FIELDS = {
                 "frequencia_inicial",
                 "latitude_coordenadas",
                 "longitude_coordenadas",
-                "no_sei_relatorio_monitoramento",
+                "no_sei_relatorio_de_atividades",
                 "qtd_de_emissoes",
                 "qtd_identificadas",
                 "qtd_licenciadas",
