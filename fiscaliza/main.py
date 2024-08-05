@@ -563,7 +563,7 @@ class Issue:
         """Updates an issue with the given data."""
         self.refresh()
         status = self.editable_fields["status"].value
-        messages = []
+        message = ""
         for new_status in FLOW[status]:
             status_id = STATUS[new_status]
             if subset := STATES.get(new_status):
@@ -573,9 +573,7 @@ class Issue:
             else:
                 data = self._parse_value_dict(dados)
                 self.client.issue.update(self.id, status_id=status_id, **data)
-            messages.append(
-                f'A <i>issue</i> nº {self.id} foi atualizada. O seu estado atual é "{new_status}".'
-            )
+            message = f'A <i>Inspeção</i> nº {self.id} foi atualizada. O seu estado atual é "{new_status}".'
             self.refresh()
 
-        return "\n".join(messages)
+        return message
