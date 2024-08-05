@@ -240,7 +240,7 @@ class GerarPlai:
         "Gestão da Fiscalização: Lacração, Apreensão e Interrupção",
         "Gestão da Fiscalização: Processo de Guarda",
     ]
-    COORD_FI = ["FI1", "FI2"]
+    COORD_FI = ["FI", "FI1", "FI2", "FI3"]
     CODES = ["100000539", "100000618"]
     options = list(product(TIPO_DE_PROCESSO, COORD_FI))
 
