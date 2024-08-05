@@ -60,7 +60,14 @@ FIELDS = {
     "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO:"),
     "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção:", True),
     "entidade_com_cadastro_stel": FieldWithOptions(
-        189, "Entidade com cadastro STEL?", mandatory=True, options=["", "Sim", "Não"]
+        189,
+        "Entidade com cadastro STEL?",
+        mandatory=True,
+        options=["", "Sim", "Não"],
+        mapping={
+            "Sim": ["entidade_da_inspecao"],
+            "Não": ["nome_da_entidade", "cnpjcpf_da_entidade"],
+        },
     ),
     "entidade_da_inspecao": FieldWithOptions(
         30, "Entidade da Inspeção:", multiple=True, options=[]
