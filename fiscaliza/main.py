@@ -335,24 +335,26 @@ class Issue:
             editable_fields["irregularidade"].options = options
         return editable_fields
 
-    @staticmethod
-    def _cast_and_set(field, value):
-        try:
-            match field.dtype:
-                case "string":
-                    value = str(value)
-                case "int":
-                    value = int(value)
-                case "float":
-                    value = float(value)
-                case "list":
-                    value = listify(value)
-                case _:
-                    print(f"Unknown dtype {field.dtype}, casting skipped...")
-        except ValueError as e:
-            print(f"Error casting value {value} to dtype {field.dtype}: {e}")
-
-        setattr(field, "value", value)
+    # @staticmethod
+    # def _cast_and_set(field, value):
+    #     try:
+    #         match field.dtype:
+    #             case "string":
+    #                 value = str(value)
+    #             case "int":
+    #                 value = int(value)
+    #             case "float":
+    #                 value = float(value)
+    #             case "list":
+    #                 value = listify(value)
+    #             case _:
+    #                 print(f"Unknown dtype {field.dtype}, casting skipped...")
+    #     except ValueError as e:
+    #         print(
+    #             f"Error casting {field.name} value {value} to dtype {field.dtype}: {e}"
+    #         )
+    #     setattr(field, "value", value)
+    #     return field
 
     @cached_property
     def editable_fields(self) -> dict:
@@ -367,7 +369,7 @@ class Issue:
                         self.attrs[key] = [str(k) for k in self.attrs[key]]
                     else:
                         self.attrs[key] = str(self.attrs[key])
-                self._cast_and_set(field, self.attrs[key])
+                setattr(field, "value", self.attrs[key])
                 if key == "fiscais":
                     setattr(field, "options", self.attrs["membros"])
                 elif key == "fiscal_responsavel":
@@ -451,7 +453,9 @@ class Issue:
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
         insert, delete = Issue._update_options_for_each_conditional(dados)
-        editable_fields.update(insert)
+        for key, value in insert.items():
+            if key not in editable_fields:
+                editable_fields[key] = value
         for key in delete:
             if key in editable_fields:
                 del editable_fields[key]
