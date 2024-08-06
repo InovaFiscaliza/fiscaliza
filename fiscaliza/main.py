@@ -28,6 +28,10 @@ load_dotenv(override=True)
 
 UTFCHARS = re.compile(r"[!\"#$%&'\(\)*+\,\-\.\/:;<=>\?@\[\\\]\^`_\{\|\}~]")
 
+CONDITIONAL_FIELDS = {
+    k: v.reset(v) for k, v in FIELDS.items() if getattr(v, "mapping", False)
+}
+
 
 # %% ../nbs/00_main.ipynb 5
 class Fiscaliza:
@@ -336,7 +340,7 @@ class Issue:
         """Retrieves the editable fields of an issue as a dictionary."""
         editable_fields = {}
         keys_by_id = sorted(FIELDS.keys(), key=lambda x: getattr(FIELDS[x], "id", 0))
-        fields = {k: FIELDS[k].init() for k in keys_by_id}
+        fields = {k: FIELDS[k].reset(FIELDS[k]) for k in keys_by_id}
         for key, field in fields.items():
             if key in self.attrs:
                 if hasattr(field, "options"):
@@ -363,51 +367,85 @@ class Issue:
             if getattr(v, "mandatory", False)
         }
 
-    def conditional_fields(self) -> dict:
-        return {
-            k: v
-            for k, v in self.editable_fields.items()
-            if getattr(v, "mapping", False)
-        }
+    @staticmethod
+    def _fields_derived_from_select_conditional(key, value) -> dict:
+        """
+        Fill in the fields resulted from values on other fields.
+        """
+        dependent_fields = {}
+        if field := CONDITIONAL_FIELDS.get(key):
+            for val in listify(
+                value
+            ):  # abusing use of empty defaults from dict.get to avoid if clauses
+                val = str(val)
+                if field.options:
+                    assert (
+                        val in field.options
+                    ), f"Opção inválida para o campo {key}: {val}"
+                for new_key in field.mapping.get(val, []):
+                    if new_key not in dependent_fields:
+                        dependent_fields[new_key] = FIELDS[new_key].reset(
+                            FIELDS[new_key]
+                        )
+
+        return dependent_fields
+
+    @staticmethod
+    def _keys_unrelated_from_select_conditional(key, value) -> dict:
+        """
+        Fill in the fields resulted from values on other fields.
+        """
+        unrelated_fields = set()
+        if field := CONDITIONAL_FIELDS.get(key):
+            for val in listify(
+                value
+            ):  # abusing use of empty defaults from dict.get to avoid if clauses
+                val = str(val)
+                if field.options:
+                    assert (
+                        val in field.options
+                    ), f"Opção inválida para o campo {key}: {val}"
+                for options in field.mapping.values():
+                    for option in options:
+                        if option not in field.mapping.get(val, []):
+                            unrelated_fields.add(option)
+        return unrelated_fields
+
+    @staticmethod
+    def _update_options_for_each_conditional(dados: dict) -> tuple[dict, set]:
+        dependent_fields = {}
+        unrelated_keys = set()
+        for key, value in dados.items():
+            dependent_fields |= Issue._fields_derived_from_select_conditional(
+                key, value
+            )
+            unrelated_keys.difference_update(dependent_fields)
+            unrelated_keys.update(
+                Issue._keys_unrelated_from_select_conditional(key, value)
+            )
+        return dependent_fields, unrelated_keys
+
+    @staticmethod
+    def _update_fields(dados: dict, editable_fields: dict) -> dict:
+        """
+        Check if the data to be submitted to the Fiscaliza server is complete and valid.
+        """
+        insert, delete = Issue._update_options_for_each_conditional(dados)
+        editable_fields.update(insert)
+        for key in delete:
+            if key in editable_fields:
+                del editable_fields[key]
+        return editable_fields
 
     def update_fields(self, dados: dict) -> dict:
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
-        if hasattr(self, "editable_fields"):
-            del self.editable_fields
-
-        for key, field in self.conditional_fields().items():
-            if key in dados:
-                new_fields = set()
-                all_fields = {
-                    item for values in field.mapping.values() for item in values
-                }
-
-                for option in listify(dados[key]):
-                    if field.options:
-                        assert (
-                            option in field.options
-                        ), f"Opção inválida para o campo {key}: {option}"
-
-                    if fields := field.mapping.get(option):
-                        new_fields.update(fields)
-
-                self.editable_fields = {
-                    k: v
-                    for k, v in self.editable_fields.items()
-                    if k not in all_fields.difference(new_fields)
-                }
-
-                self.editable_fields |= {k: FIELDS[k].init() for k in new_fields}
+        self.editable_fields = self._update_fields(dados, self.editable_fields)
 
         for key, value in dados.items():
             if key in self.editable_fields:
                 self.editable_fields[key](value)
-                if key == "tipo_de_inspecao":
-                    self.editable_fields = self._append_irregularity_options(
-                        value, self.editable_fields
-                    )
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
@@ -425,7 +463,9 @@ class Issue:
             ("latitude_coordenadas" in data) and ("longitude_coordenadas" in data)
         ):  # Don't use numeric data that could be zero in clauses, that why the 'in' is here and not := dados.get(...)
             newkey = "coordenadas_geograficas"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].reset(
+                SPECIAL_FIELDS[newkey]
+            )
             self.editable_fields.pop("latitude_coordenadas", None)
             self.editable_fields.pop("longitude_coordenadas", None)
             data[newkey] = (
@@ -439,7 +479,9 @@ class Issue:
             )
         if ("latitude_da_estacao" in data) and ("longitude_da_estacao" in data):
             newkey = "coordenadas_estacao"
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].reset(
+                SPECIAL_FIELDS[newkey]
+            )
             self.editable_fields.pop("latitude_da_estacao", None)
             self.editable_fields.pop("longitude_da_estacao", None)
             data[newkey] = (
@@ -463,7 +505,9 @@ class Issue:
                 raise ValueError(
                     "Para gerar o PLAI é necessário fornecer o tipo do processo e as coordenação da FI"
                 )
-            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].init()
+            self.editable_fields[newkey] = SPECIAL_FIELDS[newkey].reset(
+                SPECIAL_FIELDS[newkey]
+            )
             data[newkey] = (tipo_processo_plai, coords_fi_plai)
 
         return data
