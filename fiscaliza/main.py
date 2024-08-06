@@ -341,8 +341,8 @@ class Issue:
         editable_fields = {}
         keys_by_id = sorted(FIELDS.keys(), key=lambda x: getattr(FIELDS[x], "id", 0))
         fields = {k: FIELDS[k].reset(FIELDS[k]) for k in keys_by_id}
-        for key, field in fields.items():
-            if key in self.attrs:
+        for key in self.attrs:
+            if field := fields.get(key):
                 if hasattr(field, "options"):
                     if field.multiple:
                         self.attrs[key] = [str(k) for k in self.attrs[key]]
@@ -358,7 +358,8 @@ class Issue:
             editable_fields = self._append_irregularity_options(
                 tipo_de_inspecao, editable_fields
             )
-        return editable_fields
+
+        return self._update_fields(self.attrs, editable_fields)
 
     def mandatory_fields(self) -> dict:
         return {
