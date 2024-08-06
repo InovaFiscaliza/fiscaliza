@@ -335,6 +335,25 @@ class Issue:
             editable_fields["irregularidade"].options = options
         return editable_fields
 
+    @staticmethod
+    def _cast_and_set(field, value):
+        try:
+            match field.dtype:
+                case "string":
+                    value = str(value)
+                case "int":
+                    value = int(value)
+                case "float":
+                    value = float(value)
+                case "list":
+                    value = listify(value)
+                case _:
+                    print(f"Unknown dtype {field.dtype}, casting skipped...")
+        except ValueError as e:
+            print(f"Error casting value {value} to dtype {field.dtype}: {e}")
+
+        setattr(field, "value", value)
+
     @cached_property
     def editable_fields(self) -> dict:
         """Retrieves the editable fields of an issue as a dictionary."""
@@ -348,7 +367,7 @@ class Issue:
                         self.attrs[key] = [str(k) for k in self.attrs[key]]
                     else:
                         self.attrs[key] = str(self.attrs[key])
-                setattr(field, "value", self.attrs[key])
+                self._cast_and_set(field, self.attrs[key])
                 if key == "fiscais":
                     setattr(field, "options", self.attrs["membros"])
                 elif key == "fiscal_responsavel":
