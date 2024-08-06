@@ -25,10 +25,12 @@ class AtomicField:
     keyword: str
     mandatory: bool = True
 
-    def reset(self):
-        if hasattr(self, "value"):
-            del self.value
-        return self.copy()
+    @classmethod
+    def reset(cls, instance):
+        new_instance = cls(
+            **{k: v for k, v in instance.__dict__.items() if k != "value"}
+        )
+        return new_instance
 
     @property
     def dtype(self):
@@ -61,10 +63,12 @@ class SimpleField:
     format_value: bool = False
     _dtype: str = "string"
 
-    def reset(self):
-        if hasattr(self, "value"):
-            del self.value
-        return self.copy()
+    @classmethod
+    def reset(cls, instance):
+        new_instance = cls(
+            **{k: v for k, v in instance.__dict__.items() if k != "value"}
+        )
+        return new_instance
 
     @property
     def dtype(self):
@@ -82,7 +86,7 @@ class SimpleField:
             case "int":
                 return 0
             case "float":
-                return ""
+                return 0.0
             case "list":
                 return []
             case _:
@@ -111,9 +115,7 @@ class SimpleField:
         return {"id": self.id, "value": self.validate_value(value)}
 
     def __repr__(self) -> str:
-        string = ""
-        if hasattr(self, "value"):
-            string = f"(value: {self.value})"
+        string = f'(value: {getattr(self, "value", "")})'
         if self.mandatory:
             string += " | <mandatory>"
         if self.multiple:
@@ -132,14 +134,7 @@ class EncodedString(SimpleField):
         return "{" + '"numero"=>"{0}"'.format(value) + "}"
 
     def __repr__(self) -> str:
-        string = ""
-        if hasattr(self, "value"):
-            string = f"({self.value})"
-        if self.mandatory:
-            string += " | <mandatory>"
-        if self.multiple:
-            string += ", <multiple>"
-        return string
+        return super().__repr__()
 
 
 # %% ../nbs/02_datatypes.ipynb 6
@@ -197,10 +192,12 @@ class Coordenadas:
     name: str
     mandatory: bool = False
 
-    def reset(self):
-        if hasattr(self, "value"):
-            del self.value
-        return self.copy()
+    @classmethod
+    def reset(cls, instance):
+        new_instance = cls(
+            **{k: v for k, v in instance.__dict__.items() if k != "value"}
+        )
+        return new_instance
 
     @cached_property
     def value(self):
@@ -244,10 +241,12 @@ class GerarPlai:
     CODES = ["100000539", "100000618"]
     options = list(product(TIPO_DE_PROCESSO, COORD_FI))
 
-    def reset(self):
-        if hasattr(self, "value"):
-            del self.value
-        return self.copy()
+    @classmethod
+    def reset(cls, instance):
+        new_instance = cls(
+            **{k: v for k, v in instance.__dict__.items() if k != "value"}
+        )
+        return new_instance
 
     @cached_property
     def value(self):
