@@ -25,10 +25,10 @@ class AtomicField:
     keyword: str
     mandatory: bool = True
 
-    def init(self):
+    def reset(self):
         if hasattr(self, "value"):
             del self.value
-        return self
+        return self.copy()
 
     @property
     def dtype(self):
@@ -61,10 +61,10 @@ class SimpleField:
     format_value: bool = False
     _dtype: str = "string"
 
-    def init(self):
+    def reset(self):
         if hasattr(self, "value"):
             del self.value
-        return self
+        return self.copy()
 
     @property
     def dtype(self):
@@ -197,10 +197,10 @@ class Coordenadas:
     name: str
     mandatory: bool = False
 
-    def init(self):
+    def reset(self):
         if hasattr(self, "value"):
             del self.value
-        return self
+        return self.copy()
 
     @cached_property
     def value(self):
@@ -244,10 +244,10 @@ class GerarPlai:
     CODES = ["100000539", "100000618"]
     options = list(product(TIPO_DE_PROCESSO, COORD_FI))
 
-    def init(self):
+    def reset(self):
         if hasattr(self, "value"):
             del self.value
-        return self
+        return self.copy()
 
     @cached_property
     def value(self):
