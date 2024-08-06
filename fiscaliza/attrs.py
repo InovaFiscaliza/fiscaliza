@@ -87,8 +87,8 @@ FIELDS = {
     "foi_constatada_interferencia": FieldWithOptions(
         1967, "Foi constatada interferência?", mandatory=True, options=["", "0", "1"]
     ),
-    "frequencia_inicial": SimpleField(156, "Frequência inicial:", True),
-    "frequencia_final": SimpleField(158, "Frequência final:", True),
+    "frequencia_inicial": SimpleField(156, "Frequência inicial:", True, _dtype="float"),
+    "frequencia_final": SimpleField(158, "Frequência final:", True, _dtype="float"),
     "frequencias": SimpleField(180, "Frequência(s):"),
     "gerar_plai": FieldWithOptions(
         426,
@@ -102,12 +102,12 @@ FIELDS = {
         options=["", "0", "1"],
         mapping={"1": ["html"]},
     ),
-    "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, _dtype="int"),
+    "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, _dtype="float"),
     "horas_de_deslocamento": SimpleField(
-        92, "Horas de deslocamento", True, _dtype="int"
+        92, "Horas de deslocamento", True, _dtype="float"
     ),
-    "horas_de_execucao": SimpleField(93, "Horas de Execução", True, _dtype="int"),
-    "horas_de_preparacao": SimpleField(91, "Horas de Preparação", True, _dtype="int"),
+    "horas_de_execucao": SimpleField(93, "Horas de Execução", True, _dtype="float"),
+    "horas_de_preparacao": SimpleField(91, "Horas de Preparação", True, _dtype="float"),
     "houve_interferencia": FieldWithOptions(
         149,
         "Houve interferência?",
@@ -140,10 +140,14 @@ FIELDS = {
         format_value=True,
     ),
     "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
-    "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
-    "latitude_da_estacao": SimpleField(191, "Latitude da estação:", True),
-    "longitude_coordenadas": SimpleField(171, "Longitude (º):", True),
-    "longitude_da_estacao": SimpleField(192, "Longitude da estação:", True),
+    "latitude_coordenadas": SimpleField(170, "Latitude (º):", True, _dtype="float"),
+    "latitude_da_estacao": SimpleField(
+        191, "Latitude da estação:", True, _dtype="float"
+    ),
+    "longitude_coordenadas": SimpleField(171, "Longitude (º):", True, _dtype="float"),
+    "longitude_da_estacao": SimpleField(
+        192, "Longitude da estação:", True, _dtype="float"
+    ),
     "motivo_de_lai": FieldWithOptions(
         164,
         "Motivo de LAI:",
