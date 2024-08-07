@@ -309,7 +309,9 @@ class Issue:
         """
         Appends the options of the 'irregularidade' field to the editable_fields dictionary.
         """
-        if editable_fields.get("irregularidade"):
+        if (
+            "irregularidade" in editable_fields
+        ):  # checking only the existence of the key, because it can be an empty list
             match tipo_de_inspecao:
                 case "Certificação":
                     options = [
@@ -329,6 +331,8 @@ class Issue:
                         "Outras irregularidades técnicas (especificar)",
                         "Potência diversa da autorizada",
                     ]
+                case "Uso do Espectro - Não Outorgado":
+                    options = ["Entidade não outorgada"]
                 case __:
                     options = []
 
@@ -648,7 +652,7 @@ class Issue:
             else:
                 data = self._parse_value_dict(dados)
                 self.client.issue.update(self.id, status_id=status_id, **data)
-            message = f'A <i>Inspeção</i> nº {self.id} foi atualizada. O seu estado atual é "{new_status}".'
+            message = f'A Inspeção nº {self.id} foi atualizada. O seu estado atual é "{new_status}".'
             self.refresh()
 
         return message

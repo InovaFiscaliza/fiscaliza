@@ -161,7 +161,7 @@ class FieldWithOptions(SimpleField):
                 value = [self.options[v] for v in value]
         else:
             value = str(value)
-            if self.options is not None and value not in self.options:
+            if self.options and value not in self.options:
                 raise ValueError(
                     f"The value {value} must be one of the valid options: {self.options} for field {self.name}"
                 )

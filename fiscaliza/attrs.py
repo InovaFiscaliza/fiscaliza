@@ -353,6 +353,7 @@ FIELDS = {
             "Medição de CEMRF (RNI)": [
                 "campo_eletrico__pico_vm",
                 "campo_eletrico_rms_vm",
+                "entidade_da_inspecao",
                 "entidade_outorgada",
                 "frequencia_final",
                 "frequencia_inicial",
@@ -368,6 +369,7 @@ FIELDS = {
                 "utilizou_tecnicas_amostrais",
             ],
             "Outorga - Aspectos não Técnicos": [
+                "entidade_da_inspecao",
                 "irregularidade",
                 "observacao_tecnica_amostral",
                 "pai_instaurado_pela_anatel",
@@ -378,6 +380,7 @@ FIELDS = {
             "Outorga - Aspectos Técnicos": [
                 "altura_do_sistema_irradiante",
                 "documento_instaurador_do_pado",
+                "entidade_da_inspecao",
                 "entidade_outorgada",
                 "esta_em_operacao",
                 "frequencias",
@@ -398,6 +401,7 @@ FIELDS = {
                 "utilizou_tecnicas_amostrais",
             ],
             "Uso do Espectro - Interferência": [
+                "entidade_da_inspecao",
                 "foi_constatada_interferencia",
                 "observacao_tecnica_amostral",
                 "observacoes",
@@ -405,6 +409,7 @@ FIELDS = {
             ],
             "Uso do Espectro - Monitoração": [
                 "acao_de_risco_a_vida_criada",
+                "entidade_da_inspecao",
                 "frequencia_final",
                 "frequencia_inicial",
                 "latitude_coordenadas",
