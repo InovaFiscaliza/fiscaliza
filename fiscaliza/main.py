@@ -389,6 +389,13 @@ class Issue:
             if getattr(v, "mandatory", False)
         }
 
+    def conditional_fields(self) -> dict:
+        return {
+            k: v
+            for k, v in self.editable_fields.items()
+            if getattr(v, "mapping", False)
+        }
+
     @staticmethod
     def _fields_derived_from_select_conditional(key, value) -> dict:
         """
