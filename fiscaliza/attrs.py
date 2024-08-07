@@ -19,7 +19,7 @@ from fiscaliza.constants import MUNICIPIOS, SERVICOS
 SPECIAL_FIELDS = {
     "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
     "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
-    "gerar_plai": GerarPlai(426, "Gerar PLAI"),
+    "gerar_plai": GerarPlai(426, "Gerar PLAI?"),
 }
 
 FIELDS = {
@@ -28,7 +28,13 @@ FIELDS = {
     "start_date": AtomicField("Data de início", "start_date"),
     "due_date": AtomicField("Data limite", "due_date"),
     "acao_de_risco_a_vida_criada": FieldWithOptions(
-        154, "Ação de risco à vida criada?", options=["", "Sim", "Não"]
+        154,
+        "Ação de risco à vida criada?",
+        options=["", "Sim", "Não"],
+        mapping={"Sim": ["acao_de_risco_a_vida"]},
+    ),
+    "acao_de_risco_a_vida": FieldWithOptions(
+        155, "Ação de risco à vida", multiple=True, format_value=True, options=[]
     ),
     "agrupamento": SimpleField(213, "Agrupamento:"),
     "altura_do_sistema_irradiante": SimpleField(131, "Altura do sistema irradiante:"),
@@ -92,7 +98,7 @@ FIELDS = {
     "frequencias": SimpleField(180, "Frequência(s):"),
     "gerar_plai": FieldWithOptions(
         426,
-        "Gerar Plai?",
+        "Gerar PLAI?",
         options=["", "0", "1"],
         mapping={"1": ["tipo_do_processo_plai", "coord_fi_plai"]},
     ),
