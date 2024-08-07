@@ -96,8 +96,14 @@ class Issue:
     def __format_json_string(field: str) -> str:
         """Recebe uma string formatada como json e retorna a mesma string formatada como json"""
         string = field.replace("'", '"').replace("=>", ": ")
+
+        def force_strings(obj):
+            if isinstance(obj, dict):
+                return {k: str(v) for k, v in obj.items()}
+            return obj
+
         try:
-            return json.loads(string)
+            return json.loads(string, object_hook=force_strings)
         except (json.JSONDecodeError, TypeError):
             return string
 
