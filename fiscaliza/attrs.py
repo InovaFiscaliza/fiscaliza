@@ -250,21 +250,21 @@ FIELDS = {
                 "no_do_lacre",
                 "motivo_de_lai",
                 "no_sei_do_aviso_lai",
-                "lai_vinculadas",
+                # "lai_vinculadas",
                 "no_sei_do_plaiguarda",
                 "gerar_plai",
             ],
             "Apreensão": [
                 "motivo_de_lai",
                 "no_sei_do_aviso_lai",
-                "lai_vinculadas",
+                # "lai_vinculadas",
                 "no_sei_do_plaiguarda",
                 "gerar_plai",
             ],
             "Interrupção": [
                 "motivo_de_lai",
                 "no_sei_do_aviso_lai",
-                "lai_vinculadas",
+                # "lai_vinculadas",
                 "no_sei_do_plaiguarda",
                 "gerar_plai",
             ],
@@ -331,14 +331,12 @@ FIELDS = {
         format_value=True,
         mapping={
             "Bloqueio Administrativo": [
-                "nome_da_entidade",
                 "observacao_tecnica_amostral",
                 "utilizou_algum_instrumento",
                 "utilizou_tecnicas_amostrais",
             ],
             "Certificação": [
                 "area_do_pacp",
-                "cnpjcpf_da_entidade",
                 "documento_instaurador_do_pado",
                 "endereco_da_inspecao",
                 "entidade_com_cadastro_stel",
@@ -355,7 +353,6 @@ FIELDS = {
             "Medição de CEMRF (RNI)": [
                 "campo_eletrico__pico_vm",
                 "campo_eletrico_rms_vm",
-                "cnpjcpf_da_entidade",
                 "entidade_outorgada",
                 "frequencia_final",
                 "frequencia_inicial",
@@ -363,7 +360,6 @@ FIELDS = {
                 "latitude_da_estacao",
                 "longitude_coordenadas",
                 "longitude_da_estacao",
-                "nome_da_entidade",
                 "observacao_tecnica_amostral",
                 "servicos_da_inspecao",
                 "tipo_de_medicao",
@@ -372,7 +368,6 @@ FIELDS = {
                 "utilizou_tecnicas_amostrais",
             ],
             "Outorga - Aspectos não Técnicos": [
-                "cnpjcpf_da_entidade",
                 "irregularidade",
                 "observacao_tecnica_amostral",
                 "pai_instaurado_pela_anatel",
@@ -382,8 +377,6 @@ FIELDS = {
             ],
             "Outorga - Aspectos Técnicos": [
                 "altura_do_sistema_irradiante",
-                "cnpjcpf_da_entidade",
-                "cnpjcpf_da_entidade",
                 "documento_instaurador_do_pado",
                 "entidade_outorgada",
                 "esta_em_operacao",
