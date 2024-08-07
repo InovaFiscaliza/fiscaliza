@@ -92,7 +92,7 @@ FIELDS = {
     "frequencias": SimpleField(180, "Frequência(s):"),
     "gerar_plai": FieldWithOptions(
         426,
-        "Gerar Plai",
+        "Gerar Plai?",
         options=["", "0", "1"],
         mapping={"1": ["tipo_do_processo_plai", "coord_fi_plai"]},
     ),
@@ -139,6 +139,15 @@ FIELDS = {
         options=[],  # Preechido dinamicamente dentro da classe Issue
         format_value=True,
     ),
+    "justificativa_da_improcedencia": FieldWithOptions(
+        1968,
+        "Justificativa da Improcedência:",
+        options=[
+            "Reclamante informou que interferência cessou",
+            "Dados obtidos indicam que interferência não procede",
+            "Não foi constatada portadora interferente em campo",
+        ],
+    ),
     "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
     "latitude_coordenadas": SimpleField(170, "Latitude (º):", True, _dtype="float"),
     "latitude_da_estacao": SimpleField(
@@ -165,7 +174,7 @@ FIELDS = {
     "numero_da_estacao": SimpleField(137, "Número da estação:", True),
     "numero_do_pai": SimpleField(211, "Número do PAI:"),
     "no_de_homologacao": SimpleField(161, "Nº de Homologação:"),
-    "no_do_lacre": SimpleField(165, "Nº do lacre", True),
+    "no_do_lacre": SimpleField(165, "Nº do lacre:", True),
     "no_pcdp": SimpleField(112, "Nº PCDP:"),
     "no_sav": SimpleField(111, "Nº SAV:"),
     "no_sei_do_aviso_lai": EncodedString(427, "Nº SEI Referendo (Aviso LAI):", True),
