@@ -155,14 +155,10 @@ FIELDS = {
         ],
     ),
     # "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
-    "latitude_coordenadas": SimpleField(170, "Latitude (º):", True, _dtype="float"),
-    "latitude_da_estacao": SimpleField(
-        191, "Latitude da estação:", True, _dtype="float"
-    ),
-    "longitude_coordenadas": SimpleField(171, "Longitude (º):", True, _dtype="float"),
-    "longitude_da_estacao": SimpleField(
-        192, "Longitude da estação:", True, _dtype="float"
-    ),
+    "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
+    "latitude_da_estacao": SimpleField(191, "Latitude da estação:", True),
+    "longitude_coordenadas": SimpleField(171, "Longitude (º):", True),
+    "longitude_da_estacao": SimpleField(192, "Longitude da estação:", True),
     "motivo_de_lai": FieldWithOptions(
         164,
         "Motivo de LAI:",
