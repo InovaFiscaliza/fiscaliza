@@ -154,7 +154,7 @@ FIELDS = {
             "Não foi constatada portadora interferente em campo",
         ],
     ),
-    "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
+    # "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
     "latitude_coordenadas": SimpleField(170, "Latitude (º):", True, _dtype="float"),
     "latitude_da_estacao": SimpleField(
         191, "Latitude da estação:", True, _dtype="float"
