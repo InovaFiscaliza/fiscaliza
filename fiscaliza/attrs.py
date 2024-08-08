@@ -102,12 +102,18 @@ FIELDS = {
                 "local_interf_confere_indicado",
                 "tipo_de_fonte_interferente",
                 "fonte_e_modelo",
+                "frequencia_mhz",
             ],
         },
     ),
     "fonte_e_modelo": SimpleField(
         2069,
         "Fonte e modelo:",
+        mandatory=True,
+    ),
+    "frequencia_mhz": SimpleField(
+        2071,
+        "Frequência (MHz):",
         mandatory=True,
     ),
     "frequencia_inicial": SimpleField(156, "Frequência inicial:", True, _dtype="float"),
