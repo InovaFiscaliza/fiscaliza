@@ -311,16 +311,14 @@ class Issue:
         return {k: attrs[k] for k in sorted(attrs)}
 
     @staticmethod
-    def _append_irregularity_options(
-        tipo_de_inspecao: str, editable_fields: dict
-    ) -> dict:
+    def _append_irregularity_options(editable_fields: dict) -> dict:
         """
         Appends the options of the 'irregularidade' field to the editable_fields dictionary.
         """
         if (
             "irregularidade" in editable_fields
         ):  # checking only the existence of the key, because it can be an empty list
-            match tipo_de_inspecao:
+            match editable_fields["tipo_de_inspecao"].value:
                 case "Certificação":
                     options = [
                         "Comercialização de produtos",
@@ -387,11 +385,7 @@ class Issue:
                 elif key == "fiscal_responsavel":
                     setattr(field, "options", [""] + self.attrs["membros"])
                 editable_fields[key] = field
-        if tipo_de_inspecao := self.attrs.get("tipo_de_inspecao"):
-            editable_fields = self._append_irregularity_options(
-                tipo_de_inspecao, editable_fields
-            )
-
+        editable_fields = self._append_irregularity_options(editable_fields)
         return self._update_fields(self.attrs, editable_fields)
 
     def mandatory_fields(self) -> dict:
@@ -480,7 +474,7 @@ class Issue:
                 del editable_fields[key]
         return editable_fields
 
-    def update_fields(self, dados: dict) -> dict:
+    def update_fields(self, dados: dict):
         """
         Check if the data to be submitted to the Fiscaliza server is complete and valid.
         """
@@ -489,6 +483,8 @@ class Issue:
         for key, value in dados.items():
             if key in self.editable_fields:
                 self.editable_fields[key](value)
+
+        self.editable_fields = self._append_irregularity_options(self.editable_fields)
 
     def _get_id_only_fields(self, data: dict) -> dict:
         if status := data.get("status"):
