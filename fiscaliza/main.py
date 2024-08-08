@@ -112,7 +112,9 @@ class Issue:
         """Recebe uma string formatada como json e extrai os valores das chaves de acordo com o tipo de campo"""
         if isinstance(field, str):
             json_obj = Issue.__format_json_string(field)
-            if isinstance(json_obj, (str, int, float)):
+            if isinstance(json_obj, (int, float)):
+                return str(json_obj)
+            elif isinstance(json_obj, str):
                 return json_obj
             return Issue.extract_value(json_obj)
 
@@ -245,8 +247,8 @@ class Issue:
             except ValueError:
                 pass
             attrs |= {
-                "latitude_coordenadas": lat,
-                "longitude_coordenadas": long,
+                "latitude_coordenadas": str(lat),
+                "longitude_coordenadas": str(long),
             }
         if coords := attrs.pop("coordenadas_estacao", None):
             coords = Issue.__format_json_string(coords)
@@ -256,8 +258,8 @@ class Issue:
             except ValueError:
                 pass
             attrs |= {
-                "latitude_da_estacao": lat,
-                "longitude_da_estacao": long,
+                "latitude_da_estacao": str(lat),
+                "longitude_da_estacao": str(long),
             }
         return attrs
 
