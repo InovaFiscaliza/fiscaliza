@@ -104,6 +104,7 @@ FIELDS = {
                 "fonte_e_modelo",
                 "frequencia_mhz",
                 "potencia_de_operacao_w",
+                "homologada",
             ],
         },
     ),
@@ -131,6 +132,12 @@ FIELDS = {
         "Gerar Relatório",
         options=["", "0", "1"],
         mapping={"1": ["html"]},
+    ),
+    "homologada": FieldWithOptions(
+        2074,
+        "Homologada?",
+        mandatory=True,
+        options=["", "Sim", "Não", "Indeterminado"],
     ),
     "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, _dtype="float"),
     "horas_de_deslocamento": SimpleField(
