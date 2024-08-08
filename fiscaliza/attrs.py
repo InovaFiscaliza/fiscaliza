@@ -33,7 +33,7 @@ FIELDS = {
     "acao_de_risco_a_vida_criada": FieldWithOptions(
         154,
         "Ação de risco à vida criada?",
-        options=["", "Sim", "Não"],
+        options=["", "Não", "Sim"],
         mapping={"Sim": ["acao_de_risco_a_vida"]},
     ),
     "acao_de_risco_a_vida": FieldWithOptions(
@@ -231,7 +231,11 @@ FIELDS = {
         149,
         "Houve interferência?",
         mandatory=True,
-        options=["", "Sim", "Não"],
+        options=[
+            "",
+            "Não",
+            "Sim",
+        ],
         mapping={"Sim": ["identificada_a_origem"]},
     ),
     "houve_obice": FieldWithOptions(
