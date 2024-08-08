@@ -103,6 +103,7 @@ FIELDS = {
                 "tipo_de_fonte_interferente",
                 "fonte_e_modelo",
                 "frequencia_mhz",
+                "potencia_de_operacao_w",
             ],
         },
     ),
@@ -249,6 +250,7 @@ FIELDS = {
         options=["", "Não", "Sim"],
         mapping={"Sim": ["numero_do_pai"]},
     ),
+    "potencia_de_operacao_w": SimpleField(2078, "Potência de Operação (W):", True),
     "potencia_medida": SimpleField(81, "Potência:"),
     "precisa_reservar_instrumentos": FieldWithOptions(
         596,
