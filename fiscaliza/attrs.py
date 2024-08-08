@@ -91,7 +91,14 @@ FIELDS = {
     "fiscais": FieldWithOptions(26, "Fiscais:", mandatory=True, multiple=True),
     "fiscal_responsavel": FieldWithOptions(25, "Fiscal responsável:", mandatory=True),
     "foi_constatada_interferencia": FieldWithOptions(
-        1967, "Foi constatada interferência?", mandatory=True, options=["", "0", "1"]
+        1967,
+        "Foi constatada interferência?",
+        mandatory=True,
+        options=["", "0", "1"],
+        mapping={
+            "0": ["justificativa_da_improcedencia"],
+            "1": ["interferencia_sanada"],
+        },
     ),
     "frequencia_inicial": SimpleField(156, "Frequência inicial:", True, _dtype="float"),
     "frequencia_final": SimpleField(158, "Frequência final:", True, _dtype="float"),
@@ -138,6 +145,20 @@ FIELDS = {
     "instrumentos_utilizados": FieldWithOptions(
         599, "Instrumentos Utilizados", True, True, options=[]
     ),
+    "interferencia_sanada": FieldWithOptions(
+        1969,
+        "Interferência sanada?",
+        mandatory=True,
+        options=[
+            "Sim, confirmado pelo denunciante",
+            "Sim, sem confirmação pelo denunciante",
+            "Não",
+        ],
+        mapping={
+            "Sim, sem confirmação pelo denunciante": ["justificativa_nao_confirmacao"],
+            "Não": ["justificativa_nao_resolucao"],
+        },
+    ),
     "irregularidade": FieldWithOptions(
         73,
         "Irregularidade:",
@@ -153,6 +174,14 @@ FIELDS = {
             "Dados obtidos indicam que interferência não procede",
             "Não foi constatada portadora interferente em campo",
         ],
+    ),
+    "justificativa_nao_confirmacao": SimpleField(
+        1970,
+        "Justificativa não confirmação:",
+        mandatory=True,
+    ),
+    "justificativa_nao_resolucao": SimpleField(
+        1971, "Justificativa não resolução:", mandatory=True
     ),
     # "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
     "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
