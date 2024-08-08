@@ -97,7 +97,7 @@ FIELDS = {
         options=["", "0", "1"],
         mapping={
             "0": ["justificativa_da_improcedencia"],
-            "1": ["interferencia_sanada"],
+            "1": ["interferencia_sanada", "local_interf_confere_indicado"],
         },
     ),
     "frequencia_inicial": SimpleField(156, "Frequência inicial:", True, _dtype="float"),
@@ -150,6 +150,7 @@ FIELDS = {
         "Interferência sanada?",
         mandatory=True,
         options=[
+            "",
             "Sim, confirmado pelo denunciante",
             "Sim, sem confirmação pelo denunciante",
             "Não",
@@ -170,6 +171,7 @@ FIELDS = {
         1968,
         "Justificativa da Improcedência:",
         options=[
+            "",
             "Reclamante informou que interferência cessou",
             "Dados obtidos indicam que interferência não procede",
             "Não foi constatada portadora interferente em campo",
@@ -186,6 +188,12 @@ FIELDS = {
     # "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
     "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
     "latitude_da_estacao": SimpleField(191, "Latitude da estação (º):", True),
+    "local_interf_confere_indicado": FieldWithOptions(
+        1972,
+        "Local interferência confere indicado?",
+        mandatory=True,
+        options=["", "Sim", "Não", "Parcialmente", "Não se aplica"],
+    ),
     "longitude_coordenadas": SimpleField(171, "Longitude (º):", True),
     "longitude_da_estacao": SimpleField(192, "Longitude da estação (º):", True),
     "motivo_de_lai": FieldWithOptions(
