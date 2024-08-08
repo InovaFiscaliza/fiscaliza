@@ -156,9 +156,9 @@ FIELDS = {
     ),
     # "lai_vinculadas": SimpleField(481, "LAI vinculadas"),
     "latitude_coordenadas": SimpleField(170, "Latitude (º):", True),
-    "latitude_da_estacao": SimpleField(191, "Latitude da estação:", True),
+    "latitude_da_estacao": SimpleField(191, "Latitude da estação (º):", True),
     "longitude_coordenadas": SimpleField(171, "Longitude (º):", True),
-    "longitude_da_estacao": SimpleField(192, "Longitude da estação:", True),
+    "longitude_da_estacao": SimpleField(192, "Longitude da estação (º):", True),
     "motivo_de_lai": FieldWithOptions(
         164,
         "Motivo de LAI:",
@@ -174,7 +174,7 @@ FIELDS = {
         ],
     ),
     "numero_da_estacao": SimpleField(137, "Número da estação:", True),
-    "numero_do_pai": SimpleField(211, "Número do PAI:"),
+    "numero_do_pai": SimpleField(211, "Nº SEI PAI:"),
     "no_de_homologacao": SimpleField(161, "Nº de Homologação:"),
     "no_do_lacre": SimpleField(165, "Nº do lacre:", True),
     "no_pcdp": SimpleField(112, "Nº PCDP:"),
@@ -277,7 +277,7 @@ FIELDS = {
         597, "Reserva de instrumentos:", True, True, True
     ),
     "sanada_ou_mitigada": FieldWithOptions(
-        163, "Sanada ou mitigada?", mandatory=True, options=["", "1", "0"]
+        163, "Sanada ou mitigada?", mandatory=True, options=["", "0", "1"]
     ),
     "servicos_da_inspecao": FieldWithOptions(
         57,
