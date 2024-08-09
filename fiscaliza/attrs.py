@@ -83,8 +83,8 @@ FIELDS = {
             "Não": ["nome_da_entidade", "cnpjcpf_da_entidade"],
         },
     ),
-    "entidade_da_inspecao": SimpleField(
-        30, "Entidade da Inspeção:", multiple=True, format_value=True
+    "entidade_da_inspecao": FieldWithOptions(
+        30, "Entidade da Inspeção:", multiple=True, format_value=True, options=[]
     ),
     "entidade_outorgada": FieldWithOptions(
         138,
