@@ -92,6 +92,11 @@ class Issue:
         )
         self._ascii2utf = {}
 
+    @property
+    def current_user(self):
+        user = dict(list(self.client.user.get("current")))
+        return f'{user.get("firstname", "")} {user.get("lastname", "")}'
+
     @staticmethod
     def __format_json_string(field: str) -> str:
         """Recebe uma string formatada como json e retorna a mesma string formatada como json"""
