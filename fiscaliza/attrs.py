@@ -66,6 +66,11 @@ FIELDS = {
     "copiar_instrumento_da_reserva": FieldWithOptions(
         629, "Copiar instrumento da reserva?", options=["", "0", "1"]
     ),
+    "distancia_ao_interferido_m_1": SimpleField(2076, "Distância ao interferido (m):"),
+    "distancia_ao_interferido_m_2": SimpleField(2076, "Distância ao interferido (m):"),
+    "distancia_ao_interferido_m_3": SimpleField(2076, "Distância ao interferido (m):"),
+    "distancia_ao_interferido_m_4": SimpleField(2076, "Distância ao interferido (m):"),
+    "distancia_ao_interferido_m_5": SimpleField(2076, "Distância ao interferido (m):"),
     "documento_instaurador_do_pado": SimpleField(134, "Documento instaurador do PADO:"),
     "endereco_da_inspecao": SimpleField(142, "Endereço da Inspeção:", True),
     "entidade_com_cadastro_stel": FieldWithOptions(
@@ -117,48 +122,48 @@ FIELDS = {
         "Fonte e modelo:",
     ),
     "fonte_e_modelo_1": SimpleField(
-        2069,
-        "Fonte e modelo 2:",
+        2076,
+        "Fonte e modelo:",
     ),
     "fonte_e_modelo_2": SimpleField(
-        2069,
-        "Fonte e modelo 3:",
+        2076,
+        "Fonte e modelo:",
     ),
     "fonte_e_modelo_3": SimpleField(
-        2069,
-        "Fonte e modelo 4:",
+        2076,
+        "Fonte e modelo:",
     ),
     "fonte_e_modelo_4": SimpleField(
-        2069,
-        "Fonte e modelo 5:",
+        2076,
+        "Fonte e modelo:",
     ),
     "fonte_e_modelo_5": SimpleField(
-        2069,
-        "Fonte e modelo 6:",
+        2076,
+        "Fonte e modelo:",
     ),
     "frequencia_mhz": SimpleField(
         2071,
         "Frequência (MHz):",
     ),
     "frequencia_mhz_1": SimpleField(
-        2071,
-        "Frequência (MHz) 2:",
+        2076,
+        "Frequência (MHz):",
     ),
     "frequencia_mhz_2": SimpleField(
-        2071,
-        "Frequência (MHz) 3:",
+        2076,
+        "Frequência (MHz):",
     ),
     "frequencia_mhz_3": SimpleField(
-        2071,
-        "Frequência (MHz) 4:",
+        2076,
+        "Frequência (MHz):",
     ),
     "frequencia_mhz_4": SimpleField(
-        2071,
-        "Frequência (MHz) 5:",
+        2076,
+        "Frequência (MHz):",
     ),
     "frequencia_mhz_5": SimpleField(
-        2071,
-        "Frequência (MHz) 6:",
+        2076,
+        "Frequência (MHz):",
     ),
     "frequencia_inicial": SimpleField(156, "Frequência inicial:", True, _dtype="float"),
     "frequencia_final": SimpleField(158, "Frequência final:", True, _dtype="float"),
@@ -219,7 +224,32 @@ FIELDS = {
         2074,
         "Homologada?",
         mandatory=True,
-        options=["", "Sim", "Não", "Indeterminado"],
+        options=["", "Não", "Sim", "Indeterminado"],
+    ),
+    "homologada_1": FieldWithOptions(
+        2076,
+        "Homologada?",
+        options=["", "Não", "Sim", "Indeterminado"],
+    ),
+    "homologada_2": FieldWithOptions(
+        2076,
+        "Homologada?",
+        options=["", "Não", "Sim", "Indeterminado"],
+    ),
+    "homologada_3": FieldWithOptions(
+        2076,
+        "Homologada?",
+        options=["", "Não", "Sim", "Indeterminado"],
+    ),
+    "homologada_4": FieldWithOptions(
+        2076,
+        "Homologada?",
+        options=["", "Não", "Sim", "Indeterminado"],
+    ),
+    "homologada_5": FieldWithOptions(
+        2076,
+        "Homologada?",
+        options=["", "Não", "Sim", "Indeterminado"],
     ),
     "horas_de_conclusao": SimpleField(94, "Horas de conclusão", True, _dtype="float"),
     "horas_de_deslocamento": SimpleField(
@@ -343,7 +373,12 @@ FIELDS = {
         options=["", "Não", "Sim"],
         mapping={"Sim": ["numero_do_pai"]},
     ),
-    "potencia_de_operacao_w": SimpleField(2078, "Potência de Operação (W):", True),
+    "potencia_de_operacao_w": SimpleField(2072, "Potência de Operação (W):", True),
+    "potencia_de_operacao_w_1": SimpleField(2076, "Potência de Operação (W):"),
+    "potencia_de_operacao_w_2": SimpleField(2076, "Potência de Operação (W) :"),
+    "potencia_de_operacao_w_3": SimpleField(2076, "Potência de Operação (W):"),
+    "potencia_de_operacao_w_4": SimpleField(2076, "Potência de Operação (W):"),
+    "potencia_de_operacao_w_5": SimpleField(2076, "Potência de Operação (W):"),
     "potencia_medida": SimpleField(81, "Potência:"),
     "precisa_reservar_instrumentos": FieldWithOptions(
         596,
@@ -479,7 +514,7 @@ FIELDS = {
     ),
     "tipo_de_fonte_interferente_1": FieldWithOptions(
         2076,
-        "Tipo de fonte interferente 2:",
+        "Tipo de fonte interferente:",
         options=[
             "",
             "BSR",
@@ -498,7 +533,7 @@ FIELDS = {
     ),
     "tipo_de_fonte_interferente_2": FieldWithOptions(
         2076,
-        "Tipo de fonte interferente 3:",
+        "Tipo de fonte interferente:",
         options=[
             "",
             "BSR",
@@ -517,7 +552,7 @@ FIELDS = {
     ),
     "tipo_de_fonte_interferente_3": FieldWithOptions(
         2076,
-        "Tipo de fonte interferente 4:",
+        "Tipo de fonte interferente:",
         options=[
             "",
             "BSR",
@@ -536,7 +571,7 @@ FIELDS = {
     ),
     "tipo_de_fonte_interferente_4": FieldWithOptions(
         2076,
-        "Tipo de fonte interferente 5:",
+        "Tipo de fonte interferente:",
         options=[
             "",
             "BSR",
@@ -555,7 +590,7 @@ FIELDS = {
     ),
     "tipo_de_fonte_interferente_5": FieldWithOptions(
         2076,
-        "Tipo de fonte interferente 6:",
+        "Tipo de fonte interferente:",
         options=[
             "",
             "BSR",
