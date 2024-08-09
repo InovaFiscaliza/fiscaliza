@@ -72,7 +72,7 @@ FIELDS = {
         189,
         "Entidade com cadastro STEL?",
         mandatory=True,
-        options=["", "Sim", "Não"],
+        options=["", "Não", "Sim"],
         mapping={
             "Sim": ["entidade_da_inspecao"],
             "Não": ["nome_da_entidade", "cnpjcpf_da_entidade"],
@@ -179,7 +179,7 @@ FIELDS = {
         2075,
         "Há outras fontes interferentes?",
         mandatory=True,
-        options=["", "Sim", "Não"],
+        options=["", "Não", "Sim"],
         mapping={
             "Sim": [
                 "tipo_de_fonte_interferente_1",
@@ -445,7 +445,7 @@ FIELDS = {
         150,
         "Situação de risco à vida?",
         mandatory=True,
-        options=["", "Sim", "Não"],
+        options=["", "Não", "Sim"],
     ),
     "tipificacao_da_infracao": FieldWithOptions(
         148,
