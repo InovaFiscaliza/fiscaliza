@@ -20,7 +20,7 @@ SPECIAL_FIELDS = {
     "coordenadas_estacao": Coordenadas(718, "Coordenadas Estação"),
     "coordenadas_geograficas": Coordenadas(717, "Coordenadas Geográficas", True),
     "gerar_plai": GerarPlai(426, "Gerar PLAI?"),
-    "outras_fontes_interferentes": EncodedString(
+    "outras_fontes_interferentes": EncodedString(  # NotImplemented
         2076, "Outras fontes interferentes:", True
     ),
 }
