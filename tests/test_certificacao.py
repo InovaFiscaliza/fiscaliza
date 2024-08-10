@@ -20,7 +20,10 @@ dados = {
     "coordenacao_responsavel": "FI2",
     "cnpjcpf_da_entidade": "27865757000102",
     "entidade_com_cadastro_stel": "Sim",
-    "entidade_da_inspecao": ["01109184000195", "27865757000102"],
+    "entidade_da_inspecao": [
+        "ZIP NET S/A (01109184000195)",
+        "¡BAZINGA! (27865757000102)",
+    ],
     "entidade_outorgada": random.choice(["0", "1"]),
     "esta_em_operacao": randint(0, 1),
     "numero_da_estacao": "1493671",
@@ -70,7 +73,7 @@ dados = {
     "servicos_da_inspecao": random.choices(list(SERVICOS.values()), k=2),
     "situacao_constatada": "Irregular",
     "situacao_de_risco_a_vida": "Sim",
-    "tipo_de_inspecao": "Uso do Espectro - Monitoração",
+    "tipo_de_inspecao": "Certificação",
     "ufmunicipio": random.choices(MUNICIPIOS, k=2),
     "uso_de_produto_homologado": random.choice(["0", "1"]),
     "utilizou_algum_instrumento": "0",
@@ -85,6 +88,8 @@ dados = {
     "due_date": "2024-05-30",
 }
 
-for tipo in FIELDS["tipo_de_inspecao"].options[1:]:
-    dados["tipo_de_inspecao"] = tipo
-    issue.update(dados)
+# for tipo in FIELDS["tipo_de_inspecao"].options[1:]:
+#     dados["tipo_de_inspecao"] = tipo
+#     issue.update(dados)
+
+issue.update(dados)

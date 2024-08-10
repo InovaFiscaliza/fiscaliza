@@ -133,7 +133,6 @@ class Issue:
 
         elif isinstance(field, (int, float)) or field is None:
             return field
-
         else:
             raise TypeError(
                 f"O tipo de campo {type(field)} não é suportado. "
