@@ -2,9 +2,12 @@ name: fiscaliza
 channels:
   - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.11.*
   - python-redmine
   - fastcore
   - python-dotenv
   - unidecode
+  - pip
+  - pip:
+      - fiscaliza>=1.0.0
 prefix: $env:USERPROFILE\AppData\Roaming\Anatel\apps
