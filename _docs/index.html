@@ -235,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="autenticação-e-conexão-com-o-servidor-do-redmine" class="level2">
 <h2 class="anchored" data-anchor-id="autenticação-e-conexão-com-o-servidor-do-redmine">Autenticação e Conexão com o servidor do Redmine</h2>
-<p>A classe <a href="https://InovaFiscaliza.github.io/fiscaliza/main.html#fiscaliza"><code>Fiscaliza</code></a> é somente para efetuar a conexão e autenticação com o servidor do Redmine.</p>
+<p>A classe <code>Fiscaliza</code> é somente para efetuar a conexão e autenticação com o servidor do Redmine.</p>
 <div id="cell-4" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>issue_id <span class="op">=</span> <span class="st">"124182"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fiscaliza <span class="op">=</span> Fiscaliza(os.environ[<span class="st">"USERNAME"</span>], os.environ[<span class="st">"PASSWORD"</span>], teste<span class="op">=</span><span class="va">True</span>)</span>
@@ -244,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="conexão-com-dada-inspeção" class="level2">
 <h2 class="anchored" data-anchor-id="conexão-com-dada-inspeção">Conexão com dada inspeção</h2>
-<p>O método <code>get_issue</code> instancia e retorna um objeto do tipo <a href="https://InovaFiscaliza.github.io/fiscaliza/main.html#issue"><code>Issue</code></a>, este que encapsula a funcionalidade principal de resgate de informações, validação e formatação de informações e atualização de inspeção. O mesmo objeto pode ser instanciado diretamente passando o <code>client</code> do objeto <a href="https://InovaFiscaliza.github.io/fiscaliza/main.html#fiscaliza"><code>Fiscaliza</code></a> após autenticado e o <code>id</code> da inspeção.</p>
+<p>O método <code>get_issue</code> instancia e retorna um objeto do tipo <code>Issue</code>, este que encapsula a funcionalidade principal de resgate de informações, validação e formatação de informações e atualização de inspeção. O mesmo objeto pode ser instanciado diretamente passando o <code>client</code> do objeto <code>Fiscaliza</code> após autenticado e o <code>id</code> da inspeção.</p>
 <pre><code>issue = Issue(fiscaliza.client, issue_id)</code></pre>
 </section>
 <section id="informações-da-inspeção" class="level2">
@@ -260,70 +260,60 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  'agrupamento': '',
  'allowed_statuses': '',
  'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
-  'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json'],
+  'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
  'ano_de_execucao': 2024,
  'app_fiscaliza': 0,
  'assigned_to': 'Eric Magalhães Delgado',
- 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:05:36',
+ 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:38',
  'author': 'Eric Magalhães Delgado',
  'changesets': '',
  'children': '',
  'classe_da_inspecao': 'Técnica',
  'closed_on': '',
+ 'cnpjcpf_da_entidade': 27865757000102,
  'coordenacao_responsavel': 'FI2',
  'created_on': '2024-04-18T12:38:03Z',
  'data_de_inicio_efetivo': '2024-07-25',
  'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
  'done_ratio': 0,
  'due_date': '2024-05-30',
- 'entidade_da_inspecao': [],
+ 'entidade_com_cadastro_stel': 'Não',
  'estimated_hours': '',
- 'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
- 'fiscal_responsavel': 'Eric Magalhães Delgado',
- 'horas_de_conclusao': 2,
- 'horas_de_deslocamento': 3,
- 'horas_de_execucao': 29,
- 'horas_de_preparacao': 1,
+ 'frequencias': '',
+ 'horas_de_conclusao': 3,
+ 'horas_de_deslocamento': 7,
+ 'horas_de_execucao': 11,
+ 'horas_de_preparacao': 3,
+ 'houve_interferencia': 'Sim',
  'id': 124182,
+ 'identificacao_da_nao_outorgada': '',
+ 'identificada_a_origem': 0,
  'irregularidade': [],
  'is_private': False,
- 'membros': ['Gilmar Ferreira do Nascimento',
-  'Luis Fernando Camelier de Queiroz',
-  'Michel Kulhavy Cerqueira',
-  'Iulo de Araújo Lima Lobo',
-  'Carlos Fernando Muniz Santos',
-  'Isabel Cristina Cruz Soares e Souza',
-  'Alessandro Vasconcelos Fernandes',
-  'Anecy Oliveira de Freitas',
-  'Wilton Machado de Oliveira',
-  'Ilva Perla Monteiro Ferreira',
-  'Lin Yu Wan',
-  'Alexnaldo Cerqueira da Silva',
-  'Jorgean Ferreira Leal',
-  'José Mauricio Leite Araújo',
-  'Arildo Oliva Franca Filho',
-  'Leonardo Lago Araújo',
-  'Brasilio Rios Leite',
-  'Fiscal UD',
-  'José Ivan Gomes',
-  'Jaqueline Cesario da Silva',
-  'Eric Magalhães Delgado',
-  'Ronaldo da Silva Alves Batista'],
+ 'latitude_coordenadas': -16.0,
+ 'longitude_coordenadas': -61.0,
  'no_fiscaliza_issue': {'numero': '124182',
   'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
  'no_pcdp': '',
  'no_sav': 'Teste de Quebra\n de linha',
+ 'no_sei_do_oficio_ao_mctic': '',
  'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=1982134'}",
- 'numero_do_pai': 123456,
+ 'nome_da_entidade': 'Globo S/A',
  'observacao_tecnica_amostral': 'Simulação com o HTZ',
- 'pai_instaurado_pela_anatel': 'Sim',
+ 'potencia_medida': '',
  'precisa_reservar_instrumentos': 0,
  'priority': 'Normal',
- 'procedimentos': ['Análise/coleta de Dados'],
+ 'procedimentos': ['Não Lacrado - Amparo Judicial',
+  'Não Lacrado - Desativado'],
  'project': 'GR08',
- 'servicos_da_inspecao': ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA',
-  '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO'],
+ 'qnt_produt_lacradosapreend': 0,
+ 'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+  '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
  'situacao_constatada': 'Irregular',
+ 'situacao_de_risco_a_vida': 'Sim',
  'spent_hours': 0.0,
  'start_date': '2024-03-01',
  'status': 'Relatando',
@@ -331,15 +321,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  'subtema': ['Radiomonitoração Terrestre'],
  'tema': ['Uso do Espectro'],
  'time_entries': '',
- 'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
- 'total_de_horas': 35.0,
+ 'tipificacao_da_infracao': '',
+ 'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+ 'total_de_horas': 24.0,
  'total_estimated_hours': '',
  'total_spent_hours': 0.0,
  'tracker': 'Atividade de Inspeção',
- 'ufmunicipio': ['MG/Bocaina de Minas', 'AL/União dos Palmares'],
- 'updated_on': '2024-07-25T08:05:36Z',
+ 'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+ 'unidade_de_frequencia': '',
+ 'unidade_de_potencia': '',
+ 'updated_on': '2024-07-26T10:14:38Z',
+ 'uso_de_produto_homologado': 0,
  'utilizou_algum_instrumento': 0,
- 'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+ 'utilizou_apoio_policial': 'Polícia Civil',
+ 'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
  'watchers': ''}</code></pre>
 </div>
 </div>
@@ -351,31 +346,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-10" class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>issue.editable_fields</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>{'status': (value: Rascunho),
+<pre><code>{'status': (value: Relatando),
  'description': (value: [PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.
  ) | &lt;mandatory&gt;,
  'start_date': (value: 2024-03-01) | &lt;mandatory&gt;,
- 'due_date': (value: 2024-11-30) | &lt;mandatory&gt;,
- 'tipo_de_inspecao': (value: ) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'fiscal_responsavel': (value: ) | &lt;mandatory&gt;, &lt;options&gt;,
- 'fiscais': (value: []) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'entidade_da_inspecao': (value: []), &lt;multiple&gt;,
- 'ufmunicipio': (value: []) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'servicos_da_inspecao': (value: []) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'procedimentos': (value: []) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
- 'horas_de_preparacao': (value: 0) | &lt;mandatory&gt;,
- 'horas_de_deslocamento': (value: 0) | &lt;mandatory&gt;,
- 'horas_de_execucao': (value: 0) | &lt;mandatory&gt;,
- 'horas_de_conclusao': (value: 0) | &lt;mandatory&gt;,
- 'no_sav': (value: ),
+ 'due_date': (value: 2024-05-30) | &lt;mandatory&gt;,
+ 'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'fiscal_responsavel': (value: Eric Magalhães Delgado) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'situacao_constatada': (value: Irregular) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
+ 'irregularidade': (value: []), &lt;multiple&gt;,
+ 'utilizou_apoio_policial': (value: Polícia Civil) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'potencia_medida': (value: ),
+ 'unidade_de_potencia': (value: ),
+ 'unidade_de_frequencia': (value: ),
+ 'horas_de_preparacao': (value: 3) | &lt;mandatory&gt;,
+ 'horas_de_deslocamento': (value: 7) | &lt;mandatory&gt;,
+ 'horas_de_execucao': (value: 11) | &lt;mandatory&gt;,
+ 'horas_de_conclusao': (value: 3) | &lt;mandatory&gt;,
+ 'no_sav': (value: Teste de Quebra
+  de linha),
  'no_pcdp': (value: ),
+ 'uso_de_produto_homologado': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'nome_da_entidade': (value: Globo S/A) | &lt;mandatory&gt;,
+ 'cnpjcpf_da_entidade': (value: 27865757000102),
+ 'qnt_produt_lacradosapreend': (value: 0) | &lt;mandatory&gt;,
+ 'tipificacao_da_infracao': (value: ), &lt;options&gt;,
+ 'houve_interferencia': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'situacao_de_risco_a_vida': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'identificada_a_origem': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'latitude_coordenadas': (value: -16.0) | &lt;mandatory&gt;,
+ 'longitude_coordenadas': (value: -61.0) | &lt;mandatory&gt;,
  'coordenacao_responsavel': (value: FI2), &lt;options&gt;,
+ 'frequencias': (value: ),
+ 'entidade_com_cadastro_stel': (value: Não) | &lt;mandatory&gt;, &lt;options&gt;,
  'agrupamento': (value: ),
+ 'identificacao_da_nao_outorgada': (value: ),
  'no_sei_processo_fiscalizacao': ({'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=1982134'}),
- 'precisa_reservar_instrumentos': (value: ) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'utilizou_algum_instrumento': (value: ) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'utilizou_tecnicas_amostrais': (value: ) | &lt;mandatory&gt;, &lt;options&gt;,
- 'observacao_tecnica_amostral': (value: ) | &lt;mandatory&gt;}</code></pre>
+ 'precisa_reservar_instrumentos': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'utilizou_algum_instrumento': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'observacao_tecnica_amostral': (value: Simulação com o HTZ) | &lt;mandatory&gt;}</code></pre>
 </div>
 </div>
 <p>Nesse caso as chaves são os nomes dos campos e os valores são os objetos que modelam o campo. Ao mostrar ou imprimir o dicionário, como mostrado acima, é impresso o valor atual do campo entre parênteses.</p>
@@ -391,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-13" class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>issue.editable_fields[<span class="st">'tipo_de_inspecao'</span>].value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>'Outorga - Aspectos não Técnicos'</code></pre>
+<pre><code>'Uso do Espectro - Não Outorgado'</code></pre>
 </div>
 </div>
 <section id="campos-obrigatórios-e-condicionais" class="level3">
@@ -404,30 +418,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  ) | &lt;mandatory&gt;,
  'start_date': (value: 2024-03-01) | &lt;mandatory&gt;,
  'due_date': (value: 2024-05-30) | &lt;mandatory&gt;,
- 'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'fiscal_responsavel': (value: Eric Magalhães Delgado) | &lt;mandatory&gt;, &lt;options&gt;,
  'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
  'situacao_constatada': (value: Irregular) | &lt;mandatory&gt;, &lt;options&gt;,
- 'procedimentos': (value: ['Análise/coleta de Dados']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
- 'horas_de_preparacao': (value: 1) | &lt;mandatory&gt;,
- 'horas_de_deslocamento': (value: 3) | &lt;mandatory&gt;,
- 'horas_de_execucao': (value: 29) | &lt;mandatory&gt;,
- 'horas_de_conclusao': (value: 2) | &lt;mandatory&gt;,
- 'pai_instaurado_pela_anatel': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
+ 'utilizou_apoio_policial': (value: Polícia Civil) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'horas_de_preparacao': (value: 3) | &lt;mandatory&gt;,
+ 'horas_de_deslocamento': (value: 7) | &lt;mandatory&gt;,
+ 'horas_de_execucao': (value: 11) | &lt;mandatory&gt;,
+ 'horas_de_conclusao': (value: 3) | &lt;mandatory&gt;,
+ 'uso_de_produto_homologado': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'nome_da_entidade': (value: Globo S/A) | &lt;mandatory&gt;,
+ 'qnt_produt_lacradosapreend': (value: 0) | &lt;mandatory&gt;,
+ 'houve_interferencia': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'situacao_de_risco_a_vida': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'identificada_a_origem': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'latitude_coordenadas': (value: -16.0) | &lt;mandatory&gt;,
+ 'longitude_coordenadas': (value: -61.0) | &lt;mandatory&gt;,
+ 'entidade_com_cadastro_stel': (value: Não) | &lt;mandatory&gt;, &lt;options&gt;,
  'precisa_reservar_instrumentos': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'utilizou_algum_instrumento': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | &lt;mandatory&gt;, &lt;options&gt;,
  'observacao_tecnica_amostral': (value: Simulação com o HTZ) | &lt;mandatory&gt;}</code></pre>
 </div>
 </div>
 <div id="cell-17" class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>issue.conditional_fields()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<pre><code>{'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'procedimentos': (value: ['Análise/coleta de Dados']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
- 'pai_instaurado_pela_anatel': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+<pre><code>{'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
+ 'uso_de_produto_homologado': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'houve_interferencia': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'identificada_a_origem': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'precisa_reservar_instrumentos': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'utilizou_algum_instrumento': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional}</code></pre>
 </div>
@@ -513,27 +538,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  'tipo_de_inspecao': (value: Certificação) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'fiscal_responsavel': (value: Eric Magalhães Delgado) | &lt;mandatory&gt;, &lt;options&gt;,
  'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'entidade_da_inspecao': (value: []), &lt;multiple&gt;,
- 'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
- 'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
+ 'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;,
  'situacao_constatada': (value: Irregular) | &lt;mandatory&gt;, &lt;options&gt;,
  'procedimentos': (value: ['Lacração']) | &lt;mandatory&gt;, &lt;multiple&gt;, &lt;options&gt;, conditional,
  'irregularidade': (value: []), &lt;multiple&gt;, &lt;options&gt;,
- 'horas_de_preparacao': (value: 1) | &lt;mandatory&gt;,
- 'horas_de_deslocamento': (value: 3) | &lt;mandatory&gt;,
- 'horas_de_execucao': (value: 29) | &lt;mandatory&gt;,
- 'horas_de_conclusao': (value: 2) | &lt;mandatory&gt;,
+ 'utilizou_apoio_policial': (value: Polícia Civil) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'potencia_medida': (value: ),
+ 'unidade_de_potencia': (value: ),
+ 'unidade_de_frequencia': (value: ),
+ 'horas_de_preparacao': (value: 3) | &lt;mandatory&gt;,
+ 'horas_de_deslocamento': (value: 7) | &lt;mandatory&gt;,
+ 'horas_de_execucao': (value: 11) | &lt;mandatory&gt;,
+ 'horas_de_conclusao': (value: 3) | &lt;mandatory&gt;,
  'no_sav': (value: Teste de Quebra
   de linha),
  'no_pcdp': (value: ),
- 'pai_instaurado_pela_anatel': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'uso_de_produto_homologado': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'nome_da_entidade': (value: Globo S/A) | &lt;mandatory&gt;,
+ 'cnpjcpf_da_entidade': (value: 27865757000102),
+ 'qnt_produt_lacradosapreend': (value: 0) | &lt;mandatory&gt;,
+ 'tipificacao_da_infracao': (value: ), &lt;options&gt;,
+ 'houve_interferencia': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'situacao_de_risco_a_vida': (value: Sim) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'identificada_a_origem': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
+ 'latitude_coordenadas': (value: -16.0) | &lt;mandatory&gt;,
+ 'longitude_coordenadas': (value: -61.0) | &lt;mandatory&gt;,
  'coordenacao_responsavel': (value: FI2), &lt;options&gt;,
- 'numero_do_pai': (value: 123456),
+ 'frequencias': (value: ),
+ 'entidade_com_cadastro_stel': (value: Não) | &lt;mandatory&gt;, &lt;options&gt;,
  'agrupamento': (value: ),
+ 'identificacao_da_nao_outorgada': (value: ),
  'no_sei_processo_fiscalizacao': ({'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=1982134'}),
  'precisa_reservar_instrumentos': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
  'utilizou_algum_instrumento': (value: 0) | &lt;mandatory&gt;, &lt;options&gt;, conditional,
- 'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | &lt;mandatory&gt;, &lt;options&gt;,
+ 'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | &lt;mandatory&gt;, &lt;options&gt;,
  'observacao_tecnica_amostral': (value: Simulação com o HTZ) | &lt;mandatory&gt;}</code></pre>
 </div>
 </div>
@@ -560,14 +599,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"foi_constatada_interferencia"</span>: randint(<span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"frequencia_inicial"</span>: randint(<span class="dv">70</span>, <span class="dv">110</span>),</span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"frequencia_final"</span>: randint(<span class="dv">110</span>, <span class="dv">117</span>),</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gerar_relatorio"</span>: randint(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gerar_relatorio"</span>: <span class="st">'0'</span>,</span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gerar_plai"</span>: randint(<span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tipo_do_processo_plai"</span>: random.choice(FIELDS[<span class="st">"tipo_do_processo_plai"</span>].options),</span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coord_fi_plai"</span>: random.choice(FIELDS[<span class="st">"coord_fi_plai"</span>].options),</span>
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"html_path"</span>: <span class="st">"/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.html"</span>,</span>
 <span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"uploads"</span>: [</span>
 <span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"path"</span>: <span class="st">"/mnt/c/Users/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json"</span>,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>            <span class="st">"path"</span>: <span class="st">"/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json"</span>,</span>
 <span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>            <span class="st">"filename"</span>: <span class="st">"Info.json"</span>,</span>
 <span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    ],</span>
@@ -616,38 +655,93 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <div id="cell-30" class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dados.update({<span class="st">"tipo_de_inspecao"</span>: <span class="st">"Uso do Espectro - Monitoração"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-31" class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>issue._parse_value_dict(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>{'custom_fields': [{'id': 178, 'value': 'FI2'},
+  {'id': 141, 'value': '27865757000102'},
+  {'id': 189, 'value': 'Não'},
+  {'id': 26, 'value': ['1262', '887']},
+  {'id': 25, 'value': '1262'},
+  {'id': 541, 'value': '0'},
+  {'id': 162, 'value': '1'},
+  {'id': 94, 'value': '1'},
+  {'id': 92, 'value': '3'},
+  {'id': 93, 'value': '34'},
+  {'id': 91, 'value': '4'},
+  {'id': 149, 'value': 'Sim'},
+  {'id': 140, 'value': 'Globo S/A'},
+  {'id': 693, 'value': 'Simulação com o HTZ'},
+  {'id': 596, 'value': '0'},
+  {'id': 71, 'value': ['Orientação ao Usuário', 'A Notificar']},
+  {'id': 143, 'value': '0'},
+  {'id': 111, 'value': 'Teste de Quebra\n de linha'},
+  {'id': 57,
+   'value': ['{"valor":"181 - RESTRITO - LIMITADO PRIVADO POR SATELITE","texto":"181 - RESTRITO - LIMITADO PRIVADO POR SATELITE"}',
+    '{"valor":"176 - COLETIVO - STFC/RADIOTELEFONICO - ESTACOES TERRENAS","texto":"176 - COLETIVO - STFC/RADIOTELEFONICO - ESTACOES TERRENAS"}']},
+  {'id': 62, 'value': 'Irregular'},
+  {'id': 150, 'value': 'Sim'},
+  {'id': 2,
+   'value': '{"valor":"Uso do Espectro - Monitoração","texto":"Uso do Espectro - Monitoração"}'},
+  {'id': 31,
+   'value': ['{"valor":"RO/Mirante da Serra","texto":"RO/Mirante da Serra"}',
+    '{"valor":"SC/Imbituba","texto":"SC/Imbituba"}']},
+  {'id': 132, 'value': '0'},
+  {'id': 598, 'value': '0'},
+  {'id': 75, 'value': 'Nenhum'},
+  {'id': 692, 'value': ''},
+  {'id': 717, 'value': '{"latitude"=&gt;"-33","longitude"=&gt;"-63"}'},
+  {'id': 718, 'value': '{"latitude"=&gt;"-32","longitude"=&gt;"-62"}'}],
+ 'uploads': [{'path': '/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json',
+   'filename': 'Info.json'}],
+ 'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
+ 'start_date': '2024-03-01',
+ 'due_date': '2024-05-30'}</code></pre>
+</div>
+</div>
+<div id="cell-32" class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-red-fg">ValidationError</span>                           Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[18], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">issue</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">update</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dados</span><span class="ansi-yellow-bg">)</span>
 
-File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:577</span>, in <span class="ansi-cyan-fg">Issue.update</span><span class="ansi-blue-fg">(self, dados)</span>
-<span class="ansi-green-fg ansi-bold">    575</span>     <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>client<span style="color:rgb(98,98,98)">.</span>issue<span style="color:rgb(98,98,98)">.</span>update(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>id, status_id<span style="color:rgb(98,98,98)">=</span>status_id, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>data)
-<span class="ansi-green-fg ansi-bold">    576</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 577</span>     data <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_parse_value_dict</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dados</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg ansi-bold">    578</span>     <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>client<span style="color:rgb(98,98,98)">.</span>issue<span style="color:rgb(98,98,98)">.</span>update(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>id, status_id<span style="color:rgb(98,98,98)">=</span>status_id, <span style="color:rgb(98,98,98)">*</span><span style="color:rgb(98,98,98)">*</span>data)
-<span class="ansi-green-fg ansi-bold">    579</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Atualizado para o status </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>new_status<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">"</span>)
+File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:573</span>, in <span class="ansi-cyan-fg">Issue.update</span><span class="ansi-blue-fg">(self, dados)</span>
+<span class="ansi-green-fg ansi-bold">    571</span> <span style="font-weight:bold;color:rgb(0,135,0)">else</span>:
+<span class="ansi-green-fg ansi-bold">    572</span>     data <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_parse_value_dict(dados)
+<span class="ansi-green-fg">--&gt; 573</span>     <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">client</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">issue</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">update</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">id</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">status_id</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">status_id</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">data</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    574</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Atualizado para o status </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>new_status<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">"</span>)
+<span class="ansi-green-fg ansi-bold">    575</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>refresh()
 
-File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:539</span>, in <span class="ansi-cyan-fg">Issue._parse_value_dict</span><span class="ansi-blue-fg">(self, dados)</span>
-<span class="ansi-green-fg ansi-bold">    537</span> data <span style="color:rgb(98,98,98)">=</span> {k: editable_fields[k](v) <span style="font-weight:bold;color:rgb(0,135,0)">for</span> k, v <span style="font-weight:bold;color:rgb(175,0,255)">in</span> data<span style="color:rgb(98,98,98)">.</span>items()}
-<span class="ansi-green-fg ansi-bold">    538</span> submitted_fields <span style="color:rgb(98,98,98)">=</span> {<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">custom_fields</span><span style="color:rgb(175,0,0)">"</span>: []}
-<span class="ansi-green-fg">--&gt; 539</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> uploads <span style="color:rgb(98,98,98)">:=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_check_uploads</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">dados</span><span class="ansi-yellow-bg">)</span>:
-<span class="ansi-green-fg ansi-bold">    540</span>     submitted_fields[<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">uploads</span><span style="color:rgb(175,0,0)">"</span>] <span style="color:rgb(98,98,98)">=</span> uploads
-<span class="ansi-green-fg ansi-bold">    541</span> <span style="font-weight:bold;color:rgb(0,135,0)">for</span> key, value <span style="font-weight:bold;color:rgb(175,0,255)">in</span> data<span style="color:rgb(98,98,98)">.</span>items():
+File <span class="ansi-green-fg">~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/managers/base.py:251</span>, in <span class="ansi-cyan-fg">ResourceManager.update</span><span class="ansi-blue-fg">(self, resource_id, **fields)</span>
+<span class="ansi-green-fg ansi-bold">    249</span> url <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_construct_update_url(query_update)
+<span class="ansi-green-fg ansi-bold">    250</span> request <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>_prepare_update_request(<span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>resource_class<span style="color:rgb(98,98,98)">.</span>query_update<span style="color:rgb(98,98,98)">.</span>formatter<span style="color:rgb(98,98,98)">.</span>unused_kwargs)
+<span class="ansi-green-fg">--&gt; 251</span> response <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">redmine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">engine</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">request</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">resource_class</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">http_method_update</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">data</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">request</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    253</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> response <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg ansi-bold">    254</span>     <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
 
-File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>, in <span class="ansi-cyan-fg">Issue._check_uploads</span><span class="ansi-blue-fg">(self, dados)</span>
-<span class="ansi-green-fg ansi-bold">    515</span>         <span style="font-weight:bold;color:rgb(0,135,0)">if</span> (path <span style="color:rgb(98,98,98)">:=</span> file<span style="color:rgb(98,98,98)">.</span>get(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">path</span><span style="color:rgb(175,0,0)">"</span>)) <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg ansi-bold">    516</span>             <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> Path(path)<span style="color:rgb(98,98,98)">.</span>is_file():
-<span class="ansi-green-fg">--&gt; 517</span>                 <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">ValueError</span>(
-<span class="ansi-green-fg ansi-bold">    518</span>                     <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Arquivo </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>path<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> não existe ou não é um arquivo</span><span style="color:rgb(175,0,0)">"</span>
-<span class="ansi-green-fg ansi-bold">    519</span>                 )
-<span class="ansi-green-fg ansi-bold">    520</span>             uploads<span style="color:rgb(98,98,98)">.</span>append(file)
-<span class="ansi-green-fg ansi-bold">    521</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> uploads
+File <span class="ansi-green-fg">~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/engines/base.py:83</span>, in <span class="ansi-cyan-fg">BaseEngine.request</span><span class="ansi-blue-fg">(self, method, url, headers, params, data)</span>
+<span class="ansi-green-fg ansi-bold">     72</span> <span style="font-style:italic;color:rgb(175,0,0)">"""</span>
+<span class="ansi-green-fg ansi-bold">     73</span> <span style="font-style:italic;color:rgb(175,0,0)">Makes a single request to Redmine and returns processed response.</span>
+<span class="ansi-green-fg ansi-bold">     74</span> 
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">     80</span> <span style="font-style:italic;color:rgb(175,0,0)">:type data: dict, bytes or file-like object</span>
+<span class="ansi-green-fg ansi-bold">     81</span> <span style="font-style:italic;color:rgb(175,0,0)">"""</span>
+<span class="ansi-green-fg ansi-bold">     82</span> kwargs <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>construct_request_kwargs(method, headers, params, data)
+<span class="ansi-green-fg">---&gt; 83</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">process_response</span><span class="ansi-yellow-bg">(</span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">session</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">request</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
 
-<span class="ansi-red-fg">ValueError</span>: Arquivo C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json não existe ou não é um arquivo</pre>
+File <span class="ansi-green-fg">~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/engines/base.py:178</span>, in <span class="ansi-cyan-fg">BaseEngine.process_response</span><span class="ansi-blue-fg">(self, response)</span>
+<span class="ansi-green-fg ansi-bold">    176</span> <span style="font-weight:bold;color:rgb(0,135,0)">elif</span> status_code <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(98,98,98)">422</span>:
+<span class="ansi-green-fg ansi-bold">    177</span>     errors <span style="color:rgb(98,98,98)">=</span> response<span style="color:rgb(98,98,98)">.</span>json()[<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">errors</span><span style="color:rgb(175,0,0)">'</span>]
+<span class="ansi-green-fg">--&gt; 178</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> exceptions<span style="color:rgb(98,98,98)">.</span>ValidationError(<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">, </span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(98,98,98)">.</span>join(<span style="color:rgb(175,0,0)">'</span><span style="color:rgb(175,0,0)">: </span><span style="color:rgb(175,0,0)">'</span><span style="color:rgb(98,98,98)">.</span>join(e) <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="color:rgb(0,135,0)">isinstance</span>(e, <span style="color:rgb(0,135,0)">list</span>) <span style="font-weight:bold;color:rgb(0,135,0)">else</span> e <span style="font-weight:bold;color:rgb(0,135,0)">for</span> e <span style="font-weight:bold;color:rgb(175,0,255)">in</span> errors))
+<span class="ansi-green-fg ansi-bold">    179</span> <span style="font-weight:bold;color:rgb(0,135,0)">elif</span> status_code <span style="color:rgb(98,98,98)">==</span> <span style="color:rgb(98,98,98)">500</span>:
+<span class="ansi-green-fg ansi-bold">    180</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> exceptions<span style="color:rgb(98,98,98)">.</span>ServerError
+
+<span class="ansi-red-fg">ValidationError</span>: Frequência inicial não pode ficar vazio, Unidade da frequência inicial não pode ficar vazio, Frequência final não pode ficar vazio, Unidade da frequência final não pode ficar vazio</pre>
 </div>
 </div>
 </div>
@@ -656,15 +750,16 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
 <h2 class="anchored" data-anchor-id="gerar-relatório-de-atividades">Gerar Relatório de Atividades</h2>
 <p>Para as inspeções de <code>Certificação</code> e <code>Uso do Espectro - Monitoração</code> é possível gerar o relatório de atividades no SEI por meio do Fiscaliza, para tal basta fornecer o valor:</p>
 <pre><code>dados['gerar_relatório'] = '1'</code></pre>
-<div id="cell-32" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'gerar_relatorio'</span>] <span class="op">=</span> <span class="st">'1'</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-34" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'Uso de Espectro - Monitoração'</span>]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'gerar_relatorio'</span>] <span class="op">=</span> <span class="st">'1'</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Atualizado para o status Relatando</code></pre>
 </div>
 </div>
-<div id="cell-33" class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>issue.attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-35" class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>issue.attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>{'acao': {'type': 'acao_de_inspecao',
   'status': 'Em andamento',
@@ -672,33 +767,44 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
   'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n'},
  'agrupamento': '',
  'allowed_statuses': '',
- 'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json'],
+ 'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
  'ano_de_execucao': 2024,
  'app_fiscaliza': 0,
  'assigned_to': 'Eric Magalhães Delgado',
- 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:03:48',
+ 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:07',
  'author': 'Eric Magalhães Delgado',
  'changesets': '',
  'children': '',
  'classe_da_inspecao': 'Técnica',
  'closed_on': '',
+ 'cnpjcpf_da_entidade': 27865757000102,
  'coordenacao_responsavel': 'FI2',
  'created_on': '2024-04-18T12:38:03Z',
  'data_de_inicio_efetivo': '2024-07-25',
  'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
  'done_ratio': 0,
  'due_date': '2024-05-30',
- 'entidade_da_inspecao': [],
+ 'entidade_com_cadastro_stel': 'Não',
  'estimated_hours': '',
  'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
  'fiscal_responsavel': 'Eric Magalhães Delgado',
- 'horas_de_conclusao': 4,
- 'horas_de_deslocamento': 3,
+ 'frequencias': '',
+ 'horas_de_conclusao': 3,
+ 'horas_de_deslocamento': 7,
  'horas_de_execucao': 11,
- 'horas_de_preparacao': 2,
+ 'horas_de_preparacao': 3,
+ 'houve_interferencia': 'Sim',
  'id': 124182,
+ 'identificacao_da_nao_outorgada': '',
+ 'identificada_a_origem': '',
  'irregularidade': [],
  'is_private': False,
+ 'latitude_coordenadas': -16.0,
+ 'longitude_coordenadas': -61.0,
  'membros': ['Gilmar Ferreira do Nascimento',
   'Luis Fernando Camelier de Queiroz',
   'Michel Kulhavy Cerqueira',
@@ -721,24 +827,25 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
   'Jaqueline Cesario da Silva',
   'Eric Magalhães Delgado',
   'Ronaldo da Silva Alves Batista'],
- 'motivo_de_lai': ['Interferência prejudicial'],
  'no_fiscaliza_issue': {'numero': '124182',
   'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
  'no_pcdp': '',
  'no_sav': 'Teste de Quebra\n de linha',
- 'no_sei_do_aviso_lai': '',
- 'no_sei_do_plaiguarda': '',
+ 'no_sei_do_oficio_ao_mctic': '',
  'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=1982134'}",
- 'numero_do_pai': 123456,
+ 'nome_da_entidade': 'Globo S/A',
  'observacao_tecnica_amostral': 'Simulação com o HTZ',
- 'pai_instaurado_pela_anatel': 'Sim',
+ 'potencia_medida': '',
  'precisa_reservar_instrumentos': 0,
  'priority': 'Normal',
- 'procedimentos': ['Emissão Termo Violação de Lacre', 'Interrupção'],
+ 'procedimentos': ['Não Lacrado - Amparo Judicial',
+  'Não Lacrado - Desativado'],
  'project': 'GR08',
- 'servicos_da_inspecao': ['729 - COLETIVO - TV A CABO',
-  '507 - RESTRITO - MÓVEL AERONÁUTICO'],
+ 'qnt_produt_lacradosapreend': 0,
+ 'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+  '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
  'situacao_constatada': 'Irregular',
+ 'situacao_de_risco_a_vida': 'Sim',
  'spent_hours': 0.0,
  'start_date': '2024-03-01',
  'status': 'Relatando',
@@ -746,30 +853,36 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
  'subtema': ['Radiomonitoração Terrestre'],
  'tema': ['Uso do Espectro'],
  'time_entries': '',
- 'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
- 'total_de_horas': 20.0,
+ 'tipificacao_da_infracao': '',
+ 'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+ 'total_de_horas': 24.0,
  'total_estimated_hours': '',
  'total_spent_hours': 0.0,
  'tracker': 'Atividade de Inspeção',
- 'ufmunicipio': ['MG/Baldim', 'PA/São João da Ponta'],
- 'updated_on': '2024-07-25T08:03:48Z',
+ 'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+ 'unidade_de_frequencia': '',
+ 'unidade_de_potencia': '',
+ 'updated_on': '2024-07-26T10:14:06Z',
+ 'uso_de_produto_homologado': 0,
  'utilizou_algum_instrumento': 0,
- 'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+ 'utilizou_apoio_policial': 'Polícia Civil',
+ 'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
  'watchers': ''}</code></pre>
 </div>
 </div>
 <blockquote class="blockquote">
 <p>Para substituir o relatório de atividades, basta refazer a chamada fornecendo o valor <code>1</code> para a chave <code>gerar_relatorio</code>.</p>
 </blockquote>
-<div id="cell-35" class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">"gerar_relatorio"</span>] <span class="op">=</span> <span class="st">"1"</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-37" class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">"Certificação"</span>]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">"gerar_relatorio"</span>] <span class="op">=</span> <span class="st">"1"</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Atualizado para o status Relatando</code></pre>
 </div>
 </div>
-<div id="cell-36" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>issue.attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-38" class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>issue.attrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <pre><code>{'acao': {'type': 'acao_de_inspecao',
   'status': 'Em andamento',
@@ -777,33 +890,44 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
   'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n'},
  'agrupamento': '',
  'allowed_statuses': '',
- 'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json'],
+ 'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+  'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
  'ano_de_execucao': 2024,
  'app_fiscaliza': 0,
  'assigned_to': 'Eric Magalhães Delgado',
- 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:03:48',
+ 'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:21',
  'author': 'Eric Magalhães Delgado',
  'changesets': '',
  'children': '',
  'classe_da_inspecao': 'Técnica',
  'closed_on': '',
+ 'cnpjcpf_da_entidade': 27865757000102,
  'coordenacao_responsavel': 'FI2',
  'created_on': '2024-04-18T12:38:03Z',
  'data_de_inicio_efetivo': '2024-07-25',
  'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
  'done_ratio': 0,
  'due_date': '2024-05-30',
- 'entidade_da_inspecao': [],
+ 'entidade_com_cadastro_stel': 'Não',
  'estimated_hours': '',
  'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
  'fiscal_responsavel': 'Eric Magalhães Delgado',
- 'horas_de_conclusao': 4,
- 'horas_de_deslocamento': 3,
+ 'frequencias': '',
+ 'horas_de_conclusao': 3,
+ 'horas_de_deslocamento': 7,
  'horas_de_execucao': 11,
- 'horas_de_preparacao': 2,
+ 'horas_de_preparacao': 3,
+ 'houve_interferencia': 'Sim',
  'id': 124182,
+ 'identificacao_da_nao_outorgada': '',
+ 'identificada_a_origem': 0,
  'irregularidade': [],
  'is_private': False,
+ 'latitude_coordenadas': -16.0,
+ 'longitude_coordenadas': -61.0,
  'membros': ['Gilmar Ferreira do Nascimento',
   'Luis Fernando Camelier de Queiroz',
   'Michel Kulhavy Cerqueira',
@@ -826,24 +950,25 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
   'Jaqueline Cesario da Silva',
   'Eric Magalhães Delgado',
   'Ronaldo da Silva Alves Batista'],
- 'motivo_de_lai': ['Interferência prejudicial'],
  'no_fiscaliza_issue': {'numero': '124182',
   'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
  'no_pcdp': '',
  'no_sav': 'Teste de Quebra\n de linha',
- 'no_sei_do_aviso_lai': '',
- 'no_sei_do_plaiguarda': '',
+ 'no_sei_do_oficio_ao_mctic': '',
  'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&amp;id_procedimento=1982134'}",
- 'numero_do_pai': 123456,
+ 'nome_da_entidade': 'Globo S/A',
  'observacao_tecnica_amostral': 'Simulação com o HTZ',
- 'pai_instaurado_pela_anatel': 'Sim',
+ 'potencia_medida': '',
  'precisa_reservar_instrumentos': 0,
  'priority': 'Normal',
- 'procedimentos': ['Emissão Termo Violação de Lacre', 'Interrupção'],
+ 'procedimentos': ['Não Lacrado - Amparo Judicial',
+  'Não Lacrado - Desativado'],
  'project': 'GR08',
- 'servicos_da_inspecao': ['729 - COLETIVO - TV A CABO',
-  '507 - RESTRITO - MÓVEL AERONÁUTICO'],
+ 'qnt_produt_lacradosapreend': 0,
+ 'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+  '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
  'situacao_constatada': 'Irregular',
+ 'situacao_de_risco_a_vida': 'Sim',
  'spent_hours': 0.0,
  'start_date': '2024-03-01',
  'status': 'Relatando',
@@ -851,25 +976,30 @@ File <span class="ansi-green-fg">~/anatel/fiscaliza/fiscaliza/main.py:517</span>
  'subtema': ['Radiomonitoração Terrestre'],
  'tema': ['Uso do Espectro'],
  'time_entries': '',
- 'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
- 'total_de_horas': 20.0,
+ 'tipificacao_da_infracao': '',
+ 'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+ 'total_de_horas': 24.0,
  'total_estimated_hours': '',
  'total_spent_hours': 0.0,
  'tracker': 'Atividade de Inspeção',
- 'ufmunicipio': ['MG/Baldim', 'PA/São João da Ponta'],
- 'updated_on': '2024-07-25T08:04:01Z',
+ 'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+ 'unidade_de_frequencia': '',
+ 'unidade_de_potencia': '',
+ 'updated_on': '2024-07-26T10:14:21Z',
+ 'uso_de_produto_homologado': 0,
  'utilizou_algum_instrumento': 0,
- 'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+ 'utilizou_apoio_policial': 'Polícia Civil',
+ 'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
  'watchers': ''}</code></pre>
 </div>
 </div>
 <blockquote class="blockquote">
 <p>Caso o intuito seja somente editar o campo <code>Relatório de Atividades</code>, basta fornecer o valor para a chave <code>relatorio_de_atividades</code> e não esquecer de fornecer o valor <code>0</code> para a chave <code>gerar_relatório</code> ou simplesmente excluí-la.</p>
 </blockquote>
-<div id="cell-38" class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'relatorio_de_atividades'</span>] <span class="op">=</span> <span class="st">'0206885'</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'gerar_relatorio'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-40" class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'relatorio_de_atividades'</span>] <span class="op">=</span> <span class="st">'0206885'</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>dados[<span class="st">'gerar_relatorio'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>issue.update(dados)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Atualizado para o status Relatando</code></pre>
 </div>

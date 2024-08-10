@@ -18,10 +18,8 @@ load_dotenv(override=True)
 
 ## Autenticação e Conexão com o servidor do Redmine
 
-A classe
-[`Fiscaliza`](https://InovaFiscaliza.github.io/fiscaliza/main.html#fiscaliza)
-é somente para efetuar a conexão e autenticação com o servidor do
-Redmine.
+A classe `Fiscaliza` é somente para efetuar a conexão e autenticação com
+o servidor do Redmine.
 
 ``` python
 issue_id = "124182"
@@ -31,13 +29,11 @@ issue = fiscaliza.get_issue(issue_id)
 
 ## Conexão com dada inspeção
 
-O método `get_issue` instancia e retorna um objeto do tipo
-[`Issue`](https://InovaFiscaliza.github.io/fiscaliza/main.html#issue),
-este que encapsula a funcionalidade principal de resgate de informações,
+O método `get_issue` instancia e retorna um objeto do tipo `Issue`, este
+que encapsula a funcionalidade principal de resgate de informações,
 validação e formatação de informações e atualização de inspeção. O mesmo
 objeto pode ser instanciado diretamente passando o `client` do objeto
-[`Fiscaliza`](https://InovaFiscaliza.github.io/fiscaliza/main.html#fiscaliza)
-após autenticado e o `id` da inspeção.
+`Fiscaliza` após autenticado e o `id` da inspeção.
 
     issue = Issue(fiscaliza.client, issue_id)
 
@@ -57,70 +53,60 @@ issue.attrs
      'agrupamento': '',
      'allowed_statuses': '',
      'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
-      'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json'],
+      'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
      'ano_de_execucao': 2024,
      'app_fiscaliza': 0,
      'assigned_to': 'Eric Magalhães Delgado',
-     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:05:36',
+     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:38',
      'author': 'Eric Magalhães Delgado',
      'changesets': '',
      'children': '',
      'classe_da_inspecao': 'Técnica',
      'closed_on': '',
+     'cnpjcpf_da_entidade': 27865757000102,
      'coordenacao_responsavel': 'FI2',
      'created_on': '2024-04-18T12:38:03Z',
      'data_de_inicio_efetivo': '2024-07-25',
      'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
      'done_ratio': 0,
      'due_date': '2024-05-30',
-     'entidade_da_inspecao': [],
+     'entidade_com_cadastro_stel': 'Não',
      'estimated_hours': '',
-     'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
-     'fiscal_responsavel': 'Eric Magalhães Delgado',
-     'horas_de_conclusao': 2,
-     'horas_de_deslocamento': 3,
-     'horas_de_execucao': 29,
-     'horas_de_preparacao': 1,
+     'frequencias': '',
+     'horas_de_conclusao': 3,
+     'horas_de_deslocamento': 7,
+     'horas_de_execucao': 11,
+     'horas_de_preparacao': 3,
+     'houve_interferencia': 'Sim',
      'id': 124182,
+     'identificacao_da_nao_outorgada': '',
+     'identificada_a_origem': 0,
      'irregularidade': [],
      'is_private': False,
-     'membros': ['Gilmar Ferreira do Nascimento',
-      'Luis Fernando Camelier de Queiroz',
-      'Michel Kulhavy Cerqueira',
-      'Iulo de Araújo Lima Lobo',
-      'Carlos Fernando Muniz Santos',
-      'Isabel Cristina Cruz Soares e Souza',
-      'Alessandro Vasconcelos Fernandes',
-      'Anecy Oliveira de Freitas',
-      'Wilton Machado de Oliveira',
-      'Ilva Perla Monteiro Ferreira',
-      'Lin Yu Wan',
-      'Alexnaldo Cerqueira da Silva',
-      'Jorgean Ferreira Leal',
-      'José Mauricio Leite Araújo',
-      'Arildo Oliva Franca Filho',
-      'Leonardo Lago Araújo',
-      'Brasilio Rios Leite',
-      'Fiscal UD',
-      'José Ivan Gomes',
-      'Jaqueline Cesario da Silva',
-      'Eric Magalhães Delgado',
-      'Ronaldo da Silva Alves Batista'],
+     'latitude_coordenadas': -16.0,
+     'longitude_coordenadas': -61.0,
      'no_fiscaliza_issue': {'numero': '124182',
       'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
      'no_pcdp': '',
      'no_sav': 'Teste de Quebra\n de linha',
+     'no_sei_do_oficio_ao_mctic': '',
      'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}",
-     'numero_do_pai': 123456,
+     'nome_da_entidade': 'Globo S/A',
      'observacao_tecnica_amostral': 'Simulação com o HTZ',
-     'pai_instaurado_pela_anatel': 'Sim',
+     'potencia_medida': '',
      'precisa_reservar_instrumentos': 0,
      'priority': 'Normal',
-     'procedimentos': ['Análise/coleta de Dados'],
+     'procedimentos': ['Não Lacrado - Amparo Judicial',
+      'Não Lacrado - Desativado'],
      'project': 'GR08',
-     'servicos_da_inspecao': ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA',
-      '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO'],
+     'qnt_produt_lacradosapreend': 0,
+     'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+      '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
      'situacao_constatada': 'Irregular',
+     'situacao_de_risco_a_vida': 'Sim',
      'spent_hours': 0.0,
      'start_date': '2024-03-01',
      'status': 'Relatando',
@@ -128,15 +114,20 @@ issue.attrs
      'subtema': ['Radiomonitoração Terrestre'],
      'tema': ['Uso do Espectro'],
      'time_entries': '',
-     'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
-     'total_de_horas': 35.0,
+     'tipificacao_da_infracao': '',
+     'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+     'total_de_horas': 24.0,
      'total_estimated_hours': '',
      'total_spent_hours': 0.0,
      'tracker': 'Atividade de Inspeção',
-     'ufmunicipio': ['MG/Bocaina de Minas', 'AL/União dos Palmares'],
-     'updated_on': '2024-07-25T08:05:36Z',
+     'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+     'unidade_de_frequencia': '',
+     'unidade_de_potencia': '',
+     'updated_on': '2024-07-26T10:14:38Z',
+     'uso_de_produto_homologado': 0,
      'utilizou_algum_instrumento': 0,
-     'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+     'utilizou_apoio_policial': 'Polícia Civil',
+     'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
      'watchers': ''}
 
 O atributo acima retorna um dicionário com atributos atuais da Inspeção
@@ -155,31 +146,50 @@ método mais informativo:
 issue.editable_fields
 ```
 
-    {'status': (value: Rascunho),
+    {'status': (value: Relatando),
      'description': (value: [PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.
      ) | <mandatory>,
      'start_date': (value: 2024-03-01) | <mandatory>,
-     'due_date': (value: 2024-11-30) | <mandatory>,
-     'tipo_de_inspecao': (value: ) | <mandatory>, <options>, conditional,
-     'fiscal_responsavel': (value: ) | <mandatory>, <options>,
-     'fiscais': (value: []) | <mandatory>, <multiple>, <options>,
-     'entidade_da_inspecao': (value: []), <multiple>,
-     'ufmunicipio': (value: []) | <mandatory>, <multiple>, <options>,
-     'servicos_da_inspecao': (value: []) | <mandatory>, <multiple>, <options>,
-     'procedimentos': (value: []) | <mandatory>, <multiple>, <options>, conditional,
-     'horas_de_preparacao': (value: 0) | <mandatory>,
-     'horas_de_deslocamento': (value: 0) | <mandatory>,
-     'horas_de_execucao': (value: 0) | <mandatory>,
-     'horas_de_conclusao': (value: 0) | <mandatory>,
-     'no_sav': (value: ),
+     'due_date': (value: 2024-05-30) | <mandatory>,
+     'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | <mandatory>, <options>, conditional,
+     'fiscal_responsavel': (value: Eric Magalhães Delgado) | <mandatory>, <options>,
+     'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | <mandatory>, <multiple>, <options>,
+     'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | <mandatory>, <multiple>, <options>,
+     'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | <mandatory>, <multiple>, <options>,
+     'situacao_constatada': (value: Irregular) | <mandatory>, <options>,
+     'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | <mandatory>, <multiple>, <options>, conditional,
+     'irregularidade': (value: []), <multiple>,
+     'utilizou_apoio_policial': (value: Polícia Civil) | <mandatory>, <options>,
+     'potencia_medida': (value: ),
+     'unidade_de_potencia': (value: ),
+     'unidade_de_frequencia': (value: ),
+     'horas_de_preparacao': (value: 3) | <mandatory>,
+     'horas_de_deslocamento': (value: 7) | <mandatory>,
+     'horas_de_execucao': (value: 11) | <mandatory>,
+     'horas_de_conclusao': (value: 3) | <mandatory>,
+     'no_sav': (value: Teste de Quebra
+      de linha),
      'no_pcdp': (value: ),
+     'uso_de_produto_homologado': (value: 0) | <mandatory>, <options>, conditional,
+     'nome_da_entidade': (value: Globo S/A) | <mandatory>,
+     'cnpjcpf_da_entidade': (value: 27865757000102),
+     'qnt_produt_lacradosapreend': (value: 0) | <mandatory>,
+     'tipificacao_da_infracao': (value: ), <options>,
+     'houve_interferencia': (value: Sim) | <mandatory>, <options>, conditional,
+     'situacao_de_risco_a_vida': (value: Sim) | <mandatory>, <options>,
+     'identificada_a_origem': (value: 0) | <mandatory>, <options>, conditional,
+     'latitude_coordenadas': (value: -16.0) | <mandatory>,
+     'longitude_coordenadas': (value: -61.0) | <mandatory>,
      'coordenacao_responsavel': (value: FI2), <options>,
+     'frequencias': (value: ),
+     'entidade_com_cadastro_stel': (value: Não) | <mandatory>, <options>,
      'agrupamento': (value: ),
+     'identificacao_da_nao_outorgada': (value: ),
      'no_sei_processo_fiscalizacao': ({'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}),
-     'precisa_reservar_instrumentos': (value: ) | <mandatory>, <options>, conditional,
-     'utilizou_algum_instrumento': (value: ) | <mandatory>, <options>, conditional,
-     'utilizou_tecnicas_amostrais': (value: ) | <mandatory>, <options>,
-     'observacao_tecnica_amostral': (value: ) | <mandatory>}
+     'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
+     'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional,
+     'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | <mandatory>, <options>,
+     'observacao_tecnica_amostral': (value: Simulação com o HTZ) | <mandatory>}
 
 Nesse caso as chaves são os nomes dos campos e os valores são os objetos
 que modelam o campo. Ao mostrar ou imprimir o dicionário, como mostrado
@@ -207,7 +217,7 @@ da notação de ponto
 issue.editable_fields['tipo_de_inspecao'].value
 ```
 
-    'Outorga - Aspectos não Técnicos'
+    'Uso do Espectro - Não Outorgado'
 
 ### Campos Obrigatórios e Condicionais
 
@@ -222,30 +232,41 @@ issue.mandatory_fields()
      ) | <mandatory>,
      'start_date': (value: 2024-03-01) | <mandatory>,
      'due_date': (value: 2024-05-30) | <mandatory>,
-     'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | <mandatory>, <options>, conditional,
+     'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | <mandatory>, <options>, conditional,
      'fiscal_responsavel': (value: Eric Magalhães Delgado) | <mandatory>, <options>,
      'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | <mandatory>, <multiple>, <options>,
-     'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | <mandatory>, <multiple>, <options>,
-     'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | <mandatory>, <multiple>, <options>,
+     'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | <mandatory>, <multiple>, <options>,
+     'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | <mandatory>, <multiple>, <options>,
      'situacao_constatada': (value: Irregular) | <mandatory>, <options>,
-     'procedimentos': (value: ['Análise/coleta de Dados']) | <mandatory>, <multiple>, <options>, conditional,
-     'horas_de_preparacao': (value: 1) | <mandatory>,
-     'horas_de_deslocamento': (value: 3) | <mandatory>,
-     'horas_de_execucao': (value: 29) | <mandatory>,
-     'horas_de_conclusao': (value: 2) | <mandatory>,
-     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
+     'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | <mandatory>, <multiple>, <options>, conditional,
+     'utilizou_apoio_policial': (value: Polícia Civil) | <mandatory>, <options>,
+     'horas_de_preparacao': (value: 3) | <mandatory>,
+     'horas_de_deslocamento': (value: 7) | <mandatory>,
+     'horas_de_execucao': (value: 11) | <mandatory>,
+     'horas_de_conclusao': (value: 3) | <mandatory>,
+     'uso_de_produto_homologado': (value: 0) | <mandatory>, <options>, conditional,
+     'nome_da_entidade': (value: Globo S/A) | <mandatory>,
+     'qnt_produt_lacradosapreend': (value: 0) | <mandatory>,
+     'houve_interferencia': (value: Sim) | <mandatory>, <options>, conditional,
+     'situacao_de_risco_a_vida': (value: Sim) | <mandatory>, <options>,
+     'identificada_a_origem': (value: 0) | <mandatory>, <options>, conditional,
+     'latitude_coordenadas': (value: -16.0) | <mandatory>,
+     'longitude_coordenadas': (value: -61.0) | <mandatory>,
+     'entidade_com_cadastro_stel': (value: Não) | <mandatory>, <options>,
      'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
      'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional,
-     'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | <mandatory>, <options>,
+     'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | <mandatory>, <options>,
      'observacao_tecnica_amostral': (value: Simulação com o HTZ) | <mandatory>}
 
 ``` python
 issue.conditional_fields()
 ```
 
-    {'tipo_de_inspecao': (value: Outorga - Aspectos não Técnicos) | <mandatory>, <options>, conditional,
-     'procedimentos': (value: ['Análise/coleta de Dados']) | <mandatory>, <multiple>, <options>, conditional,
-     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
+    {'tipo_de_inspecao': (value: Uso do Espectro - Não Outorgado) | <mandatory>, <options>, conditional,
+     'procedimentos': (value: ['Não Lacrado - Amparo Judicial', 'Não Lacrado - Desativado']) | <mandatory>, <multiple>, <options>, conditional,
+     'uso_de_produto_homologado': (value: 0) | <mandatory>, <options>, conditional,
+     'houve_interferencia': (value: Sim) | <mandatory>, <options>, conditional,
+     'identificada_a_origem': (value: 0) | <mandatory>, <options>, conditional,
      'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
      'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional}
 
@@ -339,27 +360,41 @@ issue.editable_fields
      'tipo_de_inspecao': (value: Certificação) | <mandatory>, <options>, conditional,
      'fiscal_responsavel': (value: Eric Magalhães Delgado) | <mandatory>, <options>,
      'fiscais': (value: ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista']) | <mandatory>, <multiple>, <options>,
-     'entidade_da_inspecao': (value: []), <multiple>,
-     'ufmunicipio': (value: ['MG/Bocaina de Minas', 'AL/União dos Palmares']) | <mandatory>, <multiple>, <options>,
-     'servicos_da_inspecao': (value: ['099 - RESTRITO - SERVIÇO DE RADIAÇÃO RESTRITA', '032 - COLETIVO - RADIOENLACES ASSOCIADOS AO SERVIÇO REDE TRANSPORTE TELECOMUNICAÇÃO']) | <mandatory>, <multiple>, <options>,
+     'ufmunicipio': (value: ['PR/Lindoeste', 'RS/Canoas']) | <mandatory>, <multiple>, <options>,
+     'servicos_da_inspecao': (value: ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO', '043 - COLETIVO - ESPECIAL DE RADIORRECADO']) | <mandatory>, <multiple>, <options>,
      'situacao_constatada': (value: Irregular) | <mandatory>, <options>,
      'procedimentos': (value: ['Lacração']) | <mandatory>, <multiple>, <options>, conditional,
      'irregularidade': (value: []), <multiple>, <options>,
-     'horas_de_preparacao': (value: 1) | <mandatory>,
-     'horas_de_deslocamento': (value: 3) | <mandatory>,
-     'horas_de_execucao': (value: 29) | <mandatory>,
-     'horas_de_conclusao': (value: 2) | <mandatory>,
+     'utilizou_apoio_policial': (value: Polícia Civil) | <mandatory>, <options>,
+     'potencia_medida': (value: ),
+     'unidade_de_potencia': (value: ),
+     'unidade_de_frequencia': (value: ),
+     'horas_de_preparacao': (value: 3) | <mandatory>,
+     'horas_de_deslocamento': (value: 7) | <mandatory>,
+     'horas_de_execucao': (value: 11) | <mandatory>,
+     'horas_de_conclusao': (value: 3) | <mandatory>,
      'no_sav': (value: Teste de Quebra
       de linha),
      'no_pcdp': (value: ),
-     'pai_instaurado_pela_anatel': (value: Sim) | <mandatory>, <options>, conditional,
+     'uso_de_produto_homologado': (value: 0) | <mandatory>, <options>, conditional,
+     'nome_da_entidade': (value: Globo S/A) | <mandatory>,
+     'cnpjcpf_da_entidade': (value: 27865757000102),
+     'qnt_produt_lacradosapreend': (value: 0) | <mandatory>,
+     'tipificacao_da_infracao': (value: ), <options>,
+     'houve_interferencia': (value: Sim) | <mandatory>, <options>, conditional,
+     'situacao_de_risco_a_vida': (value: Sim) | <mandatory>, <options>,
+     'identificada_a_origem': (value: 0) | <mandatory>, <options>, conditional,
+     'latitude_coordenadas': (value: -16.0) | <mandatory>,
+     'longitude_coordenadas': (value: -61.0) | <mandatory>,
      'coordenacao_responsavel': (value: FI2), <options>,
-     'numero_do_pai': (value: 123456),
+     'frequencias': (value: ),
+     'entidade_com_cadastro_stel': (value: Não) | <mandatory>, <options>,
      'agrupamento': (value: ),
+     'identificacao_da_nao_outorgada': (value: ),
      'no_sei_processo_fiscalizacao': ({'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}),
      'precisa_reservar_instrumentos': (value: 0) | <mandatory>, <options>, conditional,
      'utilizou_algum_instrumento': (value: 0) | <mandatory>, <options>, conditional,
-     'utilizou_tecnicas_amostrais': (value: Usou técnicas amostrais) | <mandatory>, <options>,
+     'utilizou_tecnicas_amostrais': (value: Não usou técnicas amostrais) | <mandatory>, <options>,
      'observacao_tecnica_amostral': (value: Simulação com o HTZ) | <mandatory>}
 
 Caso o conjunto de dados já seja conhecido para dado tipo de inspeção,
@@ -394,14 +429,14 @@ dados = {
     "foi_constatada_interferencia": randint(0, 1),
     "frequencia_inicial": randint(70, 110),
     "frequencia_final": randint(110, 117),
-    "gerar_relatorio": randint(0, 1),
+    "gerar_relatorio": '0',
     "gerar_plai": randint(0, 1),
     "tipo_do_processo_plai": random.choice(FIELDS["tipo_do_processo_plai"].options),
     "coord_fi_plai": random.choice(FIELDS["coord_fi_plai"].options),
     "html_path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.html",
     "uploads": [
         {
-            "path": "/mnt/c/Users/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json",
+            "path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json",
             "filename": "Info.json",
         }
     ],
@@ -452,39 +487,95 @@ dados = {
 </details>
 
 ``` python
+dados.update({"tipo_de_inspecao": "Uso do Espectro - Monitoração"})
+```
+
+``` python
+issue._parse_value_dict(dados)
+```
+
+    {'custom_fields': [{'id': 178, 'value': 'FI2'},
+      {'id': 141, 'value': '27865757000102'},
+      {'id': 189, 'value': 'Não'},
+      {'id': 26, 'value': ['1262', '887']},
+      {'id': 25, 'value': '1262'},
+      {'id': 541, 'value': '0'},
+      {'id': 162, 'value': '1'},
+      {'id': 94, 'value': '1'},
+      {'id': 92, 'value': '3'},
+      {'id': 93, 'value': '34'},
+      {'id': 91, 'value': '4'},
+      {'id': 149, 'value': 'Sim'},
+      {'id': 140, 'value': 'Globo S/A'},
+      {'id': 693, 'value': 'Simulação com o HTZ'},
+      {'id': 596, 'value': '0'},
+      {'id': 71, 'value': ['Orientação ao Usuário', 'A Notificar']},
+      {'id': 143, 'value': '0'},
+      {'id': 111, 'value': 'Teste de Quebra\n de linha'},
+      {'id': 57,
+       'value': ['{"valor":"181 - RESTRITO - LIMITADO PRIVADO POR SATELITE","texto":"181 - RESTRITO - LIMITADO PRIVADO POR SATELITE"}',
+        '{"valor":"176 - COLETIVO - STFC/RADIOTELEFONICO - ESTACOES TERRENAS","texto":"176 - COLETIVO - STFC/RADIOTELEFONICO - ESTACOES TERRENAS"}']},
+      {'id': 62, 'value': 'Irregular'},
+      {'id': 150, 'value': 'Sim'},
+      {'id': 2,
+       'value': '{"valor":"Uso do Espectro - Monitoração","texto":"Uso do Espectro - Monitoração"}'},
+      {'id': 31,
+       'value': ['{"valor":"RO/Mirante da Serra","texto":"RO/Mirante da Serra"}',
+        '{"valor":"SC/Imbituba","texto":"SC/Imbituba"}']},
+      {'id': 132, 'value': '0'},
+      {'id': 598, 'value': '0'},
+      {'id': 75, 'value': 'Nenhum'},
+      {'id': 692, 'value': ''},
+      {'id': 717, 'value': '{"latitude"=>"-33","longitude"=>"-63"}'},
+      {'id': 718, 'value': '{"latitude"=>"-32","longitude"=>"-62"}'}],
+     'uploads': [{'path': '/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json',
+       'filename': 'Info.json'}],
+     'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
+     'start_date': '2024-03-01',
+     'due_date': '2024-05-30'}
+
+``` python
 issue.update(dados)
 ```
 
-    ValueError: Arquivo C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json não existe ou não é um arquivo
+    ValidationError: Frequência inicial não pode ficar vazio, Unidade da frequência inicial não pode ficar vazio, Frequência final não pode ficar vazio, Unidade da frequência final não pode ficar vazio
     [0;31m---------------------------------------------------------------------------[0m
-    [0;31mValueError[0m                                Traceback (most recent call last)
+    [0;31mValidationError[0m                           Traceback (most recent call last)
     Cell [0;32mIn[18], line 1[0m
     [0;32m----> 1[0m [43missue[49m[38;5;241;43m.[39;49m[43mupdate[49m[43m([49m[43mdados[49m[43m)[49m
 
-    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:577[0m, in [0;36mIssue.update[0;34m(self, dados)[0m
-    [1;32m    575[0m     [38;5;28mself[39m[38;5;241m.[39mclient[38;5;241m.[39missue[38;5;241m.[39mupdate([38;5;28mself[39m[38;5;241m.[39mid, status_id[38;5;241m=[39mstatus_id, [38;5;241m*[39m[38;5;241m*[39mdata)
-    [1;32m    576[0m [38;5;28;01melse[39;00m:
-    [0;32m--> 577[0m     data [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_parse_value_dict[49m[43m([49m[43mdados[49m[43m)[49m
-    [1;32m    578[0m     [38;5;28mself[39m[38;5;241m.[39mclient[38;5;241m.[39missue[38;5;241m.[39mupdate([38;5;28mself[39m[38;5;241m.[39mid, status_id[38;5;241m=[39mstatus_id, [38;5;241m*[39m[38;5;241m*[39mdata)
-    [1;32m    579[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mAtualizado para o status [39m[38;5;132;01m{[39;00mnew_status[38;5;132;01m}[39;00m[38;5;124m"[39m)
+    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:573[0m, in [0;36mIssue.update[0;34m(self, dados)[0m
+    [1;32m    571[0m [38;5;28;01melse[39;00m:
+    [1;32m    572[0m     data [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_parse_value_dict(dados)
+    [0;32m--> 573[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mclient[49m[38;5;241;43m.[39;49m[43missue[49m[38;5;241;43m.[39;49m[43mupdate[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mid[49m[43m,[49m[43m [49m[43mstatus_id[49m[38;5;241;43m=[39;49m[43mstatus_id[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mdata[49m[43m)[49m
+    [1;32m    574[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mAtualizado para o status [39m[38;5;132;01m{[39;00mnew_status[38;5;132;01m}[39;00m[38;5;124m"[39m)
+    [1;32m    575[0m [38;5;28mself[39m[38;5;241m.[39mrefresh()
 
-    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:539[0m, in [0;36mIssue._parse_value_dict[0;34m(self, dados)[0m
-    [1;32m    537[0m data [38;5;241m=[39m {k: editable_fields[k](v) [38;5;28;01mfor[39;00m k, v [38;5;129;01min[39;00m data[38;5;241m.[39mitems()}
-    [1;32m    538[0m submitted_fields [38;5;241m=[39m {[38;5;124m"[39m[38;5;124mcustom_fields[39m[38;5;124m"[39m: []}
-    [0;32m--> 539[0m [38;5;28;01mif[39;00m uploads [38;5;241m:=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_check_uploads[49m[43m([49m[43mdados[49m[43m)[49m:
-    [1;32m    540[0m     submitted_fields[[38;5;124m"[39m[38;5;124muploads[39m[38;5;124m"[39m] [38;5;241m=[39m uploads
-    [1;32m    541[0m [38;5;28;01mfor[39;00m key, value [38;5;129;01min[39;00m data[38;5;241m.[39mitems():
+    File [0;32m~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/managers/base.py:251[0m, in [0;36mResourceManager.update[0;34m(self, resource_id, **fields)[0m
+    [1;32m    249[0m url [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_construct_update_url(query_update)
+    [1;32m    250[0m request [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_prepare_update_request([38;5;28mself[39m[38;5;241m.[39mresource_class[38;5;241m.[39mquery_update[38;5;241m.[39mformatter[38;5;241m.[39munused_kwargs)
+    [0;32m--> 251[0m response [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mredmine[49m[38;5;241;43m.[39;49m[43mengine[49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mresource_class[49m[38;5;241;43m.[39;49m[43mhttp_method_update[49m[43m,[49m[43m [49m[43murl[49m[43m,[49m[43m [49m[43mdata[49m[38;5;241;43m=[39;49m[43mrequest[49m[43m)[49m
+    [1;32m    253[0m [38;5;28;01mif[39;00m response [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
+    [1;32m    254[0m     [38;5;28;01mreturn[39;00m [38;5;28;01mNone[39;00m
 
-    File [0;32m~/anatel/fiscaliza/fiscaliza/main.py:517[0m, in [0;36mIssue._check_uploads[0;34m(self, dados)[0m
-    [1;32m    515[0m         [38;5;28;01mif[39;00m (path [38;5;241m:=[39m file[38;5;241m.[39mget([38;5;124m"[39m[38;5;124mpath[39m[38;5;124m"[39m)) [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
-    [1;32m    516[0m             [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m Path(path)[38;5;241m.[39mis_file():
-    [0;32m--> 517[0m                 [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
-    [1;32m    518[0m                     [38;5;124mf[39m[38;5;124m"[39m[38;5;124mArquivo [39m[38;5;132;01m{[39;00mpath[38;5;132;01m}[39;00m[38;5;124m não existe ou não é um arquivo[39m[38;5;124m"[39m
-    [1;32m    519[0m                 )
-    [1;32m    520[0m             uploads[38;5;241m.[39mappend(file)
-    [1;32m    521[0m [38;5;28;01mreturn[39;00m uploads
+    File [0;32m~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/engines/base.py:83[0m, in [0;36mBaseEngine.request[0;34m(self, method, url, headers, params, data)[0m
+    [1;32m     72[0m [38;5;250m[39m[38;5;124;03m"""[39;00m
+    [1;32m     73[0m [38;5;124;03mMakes a single request to Redmine and returns processed response.[39;00m
+    [1;32m     74[0m 
+    [0;32m   (...)[0m
+    [1;32m     80[0m [38;5;124;03m:type data: dict, bytes or file-like object[39;00m
+    [1;32m     81[0m [38;5;124;03m"""[39;00m
+    [1;32m     82[0m kwargs [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mconstruct_request_kwargs(method, headers, params, data)
+    [0;32m---> 83[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mprocess_response[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43msession[49m[38;5;241;43m.[39;49m[43mrequest[49m[43m([49m[43mmethod[49m[43m,[49m[43m [49m[43murl[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m[43m)[49m
 
-    [0;31mValueError[0m: Arquivo C:\Users\rsilva\code\fiscaliza\tests\Report_2024.02.18_T11.30.55_123456.json não existe ou não é um arquivo
+    File [0;32m~/micromamba/envs/fiscaliza/lib/python3.12/site-packages/redminelib/engines/base.py:178[0m, in [0;36mBaseEngine.process_response[0;34m(self, response)[0m
+    [1;32m    176[0m [38;5;28;01melif[39;00m status_code [38;5;241m==[39m [38;5;241m422[39m:
+    [1;32m    177[0m     errors [38;5;241m=[39m response[38;5;241m.[39mjson()[[38;5;124m'[39m[38;5;124merrors[39m[38;5;124m'[39m]
+    [0;32m--> 178[0m     [38;5;28;01mraise[39;00m exceptions[38;5;241m.[39mValidationError([38;5;124m'[39m[38;5;124m, [39m[38;5;124m'[39m[38;5;241m.[39mjoin([38;5;124m'[39m[38;5;124m: [39m[38;5;124m'[39m[38;5;241m.[39mjoin(e) [38;5;28;01mif[39;00m [38;5;28misinstance[39m(e, [38;5;28mlist[39m) [38;5;28;01melse[39;00m e [38;5;28;01mfor[39;00m e [38;5;129;01min[39;00m errors))
+    [1;32m    179[0m [38;5;28;01melif[39;00m status_code [38;5;241m==[39m [38;5;241m500[39m:
+    [1;32m    180[0m     [38;5;28;01mraise[39;00m exceptions[38;5;241m.[39mServerError
+
+    [0;31mValidationError[0m: Frequência inicial não pode ficar vazio, Unidade da frequência inicial não pode ficar vazio, Frequência final não pode ficar vazio, Unidade da frequência final não pode ficar vazio
 
 ## Gerar Relatório de Atividades
 
@@ -495,6 +586,7 @@ para tal basta fornecer o valor:
     dados['gerar_relatório'] = '1'
 
 ``` python
+dados['Uso de Espectro - Monitoração']
 dados['gerar_relatorio'] = '1'
 issue.update(dados)
 ```
@@ -511,33 +603,44 @@ issue.attrs
       'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n'},
      'agrupamento': '',
      'allowed_statuses': '',
-     'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json'],
+     'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
      'ano_de_execucao': 2024,
      'app_fiscaliza': 0,
      'assigned_to': 'Eric Magalhães Delgado',
-     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:03:48',
+     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:07',
      'author': 'Eric Magalhães Delgado',
      'changesets': '',
      'children': '',
      'classe_da_inspecao': 'Técnica',
      'closed_on': '',
+     'cnpjcpf_da_entidade': 27865757000102,
      'coordenacao_responsavel': 'FI2',
      'created_on': '2024-04-18T12:38:03Z',
      'data_de_inicio_efetivo': '2024-07-25',
      'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
      'done_ratio': 0,
      'due_date': '2024-05-30',
-     'entidade_da_inspecao': [],
+     'entidade_com_cadastro_stel': 'Não',
      'estimated_hours': '',
      'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
      'fiscal_responsavel': 'Eric Magalhães Delgado',
-     'horas_de_conclusao': 4,
-     'horas_de_deslocamento': 3,
+     'frequencias': '',
+     'horas_de_conclusao': 3,
+     'horas_de_deslocamento': 7,
      'horas_de_execucao': 11,
-     'horas_de_preparacao': 2,
+     'horas_de_preparacao': 3,
+     'houve_interferencia': 'Sim',
      'id': 124182,
+     'identificacao_da_nao_outorgada': '',
+     'identificada_a_origem': '',
      'irregularidade': [],
      'is_private': False,
+     'latitude_coordenadas': -16.0,
+     'longitude_coordenadas': -61.0,
      'membros': ['Gilmar Ferreira do Nascimento',
       'Luis Fernando Camelier de Queiroz',
       'Michel Kulhavy Cerqueira',
@@ -560,24 +663,25 @@ issue.attrs
       'Jaqueline Cesario da Silva',
       'Eric Magalhães Delgado',
       'Ronaldo da Silva Alves Batista'],
-     'motivo_de_lai': ['Interferência prejudicial'],
      'no_fiscaliza_issue': {'numero': '124182',
       'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
      'no_pcdp': '',
      'no_sav': 'Teste de Quebra\n de linha',
-     'no_sei_do_aviso_lai': '',
-     'no_sei_do_plaiguarda': '',
+     'no_sei_do_oficio_ao_mctic': '',
      'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}",
-     'numero_do_pai': 123456,
+     'nome_da_entidade': 'Globo S/A',
      'observacao_tecnica_amostral': 'Simulação com o HTZ',
-     'pai_instaurado_pela_anatel': 'Sim',
+     'potencia_medida': '',
      'precisa_reservar_instrumentos': 0,
      'priority': 'Normal',
-     'procedimentos': ['Emissão Termo Violação de Lacre', 'Interrupção'],
+     'procedimentos': ['Não Lacrado - Amparo Judicial',
+      'Não Lacrado - Desativado'],
      'project': 'GR08',
-     'servicos_da_inspecao': ['729 - COLETIVO - TV A CABO',
-      '507 - RESTRITO - MÓVEL AERONÁUTICO'],
+     'qnt_produt_lacradosapreend': 0,
+     'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+      '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
      'situacao_constatada': 'Irregular',
+     'situacao_de_risco_a_vida': 'Sim',
      'spent_hours': 0.0,
      'start_date': '2024-03-01',
      'status': 'Relatando',
@@ -585,21 +689,27 @@ issue.attrs
      'subtema': ['Radiomonitoração Terrestre'],
      'tema': ['Uso do Espectro'],
      'time_entries': '',
-     'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
-     'total_de_horas': 20.0,
+     'tipificacao_da_infracao': '',
+     'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+     'total_de_horas': 24.0,
      'total_estimated_hours': '',
      'total_spent_hours': 0.0,
      'tracker': 'Atividade de Inspeção',
-     'ufmunicipio': ['MG/Baldim', 'PA/São João da Ponta'],
-     'updated_on': '2024-07-25T08:03:48Z',
+     'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+     'unidade_de_frequencia': '',
+     'unidade_de_potencia': '',
+     'updated_on': '2024-07-26T10:14:06Z',
+     'uso_de_produto_homologado': 0,
      'utilizou_algum_instrumento': 0,
-     'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+     'utilizou_apoio_policial': 'Polícia Civil',
+     'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
      'watchers': ''}
 
 > Para substituir o relatório de atividades, basta refazer a chamada
 > fornecendo o valor `1` para a chave `gerar_relatorio`.
 
 ``` python
+dados["Certificação"]
 dados["gerar_relatorio"] = "1"
 issue.update(dados)
 ```
@@ -616,33 +726,44 @@ issue.attrs
       'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n'},
      'agrupamento': '',
      'allowed_statuses': '',
-     'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json'],
+     'anexos': ['https://sistemasnethm/fiscaliza/attachments/download/9190/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9191/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9192/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9196/Info.json',
+      'https://sistemasnethm/fiscaliza/attachments/download/9197/Info.json'],
      'ano_de_execucao': 2024,
      'app_fiscaliza': 0,
      'assigned_to': 'Eric Magalhães Delgado',
-     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 25/07/2024 às 05:03:48',
+     'atualizacao': 'Atualizada por Ronaldo da Silva Alves Batista em 26/07/2024 às 07:14:21',
      'author': 'Eric Magalhães Delgado',
      'changesets': '',
      'children': '',
      'classe_da_inspecao': 'Técnica',
      'closed_on': '',
+     'cnpjcpf_da_entidade': 27865757000102,
      'coordenacao_responsavel': 'FI2',
      'created_on': '2024-04-18T12:38:03Z',
      'data_de_inicio_efetivo': '2024-07-25',
      'description': '[PMEC 2024 Etapa 2] Monitorar canais e faixas de frequências relacionados às aplicações críticas (como, por exemplo, radionavegação e radiocomunicação aeronáutica e canais de emergência) na forma a ser estabelecida no Plano de Ação de Fiscalização.\r\n',
      'done_ratio': 0,
      'due_date': '2024-05-30',
-     'entidade_da_inspecao': [],
+     'entidade_com_cadastro_stel': 'Não',
      'estimated_hours': '',
      'fiscais': ['Eric Magalhães Delgado', 'Ronaldo da Silva Alves Batista'],
      'fiscal_responsavel': 'Eric Magalhães Delgado',
-     'horas_de_conclusao': 4,
-     'horas_de_deslocamento': 3,
+     'frequencias': '',
+     'horas_de_conclusao': 3,
+     'horas_de_deslocamento': 7,
      'horas_de_execucao': 11,
-     'horas_de_preparacao': 2,
+     'horas_de_preparacao': 3,
+     'houve_interferencia': 'Sim',
      'id': 124182,
+     'identificacao_da_nao_outorgada': '',
+     'identificada_a_origem': 0,
      'irregularidade': [],
      'is_private': False,
+     'latitude_coordenadas': -16.0,
+     'longitude_coordenadas': -61.0,
      'membros': ['Gilmar Ferreira do Nascimento',
       'Luis Fernando Camelier de Queiroz',
       'Michel Kulhavy Cerqueira',
@@ -665,24 +786,25 @@ issue.attrs
       'Jaqueline Cesario da Silva',
       'Eric Magalhães Delgado',
       'Ronaldo da Silva Alves Batista'],
-     'motivo_de_lai': ['Interferência prejudicial'],
      'no_fiscaliza_issue': {'numero': '124182',
       'link_acesso': 'https://sistemasnethm/fiscaliza/issues/124182'},
      'no_pcdp': '',
      'no_sav': 'Teste de Quebra\n de linha',
-     'no_sei_do_aviso_lai': '',
-     'no_sei_do_plaiguarda': '',
+     'no_sei_do_oficio_ao_mctic': '',
      'no_sei_processo_fiscalizacao': "{'numero': '53554.000005/2024-18', 'link_acesso': 'https://seihm.anatel.gov.br/sei/controlador.php?acao=procedimento_trabalhar&id_procedimento=1982134'}",
-     'numero_do_pai': 123456,
+     'nome_da_entidade': 'Globo S/A',
      'observacao_tecnica_amostral': 'Simulação com o HTZ',
-     'pai_instaurado_pela_anatel': 'Sim',
+     'potencia_medida': '',
      'precisa_reservar_instrumentos': 0,
      'priority': 'Normal',
-     'procedimentos': ['Emissão Termo Violação de Lacre', 'Interrupção'],
+     'procedimentos': ['Não Lacrado - Amparo Judicial',
+      'Não Lacrado - Desativado'],
      'project': 'GR08',
-     'servicos_da_inspecao': ['729 - COLETIVO - TV A CABO',
-      '507 - RESTRITO - MÓVEL AERONÁUTICO'],
+     'qnt_produt_lacradosapreend': 0,
+     'servicos_da_inspecao': ['728 - RESTRITO - ESPECIAL DE REPETICAO DE TELEVISAO',
+      '043 - COLETIVO - ESPECIAL DE RADIORRECADO'],
      'situacao_constatada': 'Irregular',
+     'situacao_de_risco_a_vida': 'Sim',
      'spent_hours': 0.0,
      'start_date': '2024-03-01',
      'status': 'Relatando',
@@ -690,15 +812,20 @@ issue.attrs
      'subtema': ['Radiomonitoração Terrestre'],
      'tema': ['Uso do Espectro'],
      'time_entries': '',
-     'tipo_de_inspecao': 'Outorga - Aspectos não Técnicos',
-     'total_de_horas': 20.0,
+     'tipificacao_da_infracao': '',
+     'tipo_de_inspecao': 'Uso do Espectro - Não Outorgado',
+     'total_de_horas': 24.0,
      'total_estimated_hours': '',
      'total_spent_hours': 0.0,
      'tracker': 'Atividade de Inspeção',
-     'ufmunicipio': ['MG/Baldim', 'PA/São João da Ponta'],
-     'updated_on': '2024-07-25T08:04:01Z',
+     'ufmunicipio': ['PR/Lindoeste', 'RS/Canoas'],
+     'unidade_de_frequencia': '',
+     'unidade_de_potencia': '',
+     'updated_on': '2024-07-26T10:14:21Z',
+     'uso_de_produto_homologado': 0,
      'utilizou_algum_instrumento': 0,
-     'utilizou_tecnicas_amostrais': 'Usou técnicas amostrais',
+     'utilizou_apoio_policial': 'Polícia Civil',
+     'utilizou_tecnicas_amostrais': 'Não usou técnicas amostrais',
      'watchers': ''}
 
 > Caso o intuito seja somente editar o campo `Relatório de Atividades`,
