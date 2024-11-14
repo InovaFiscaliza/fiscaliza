@@ -3,7 +3,7 @@ import pytest
 from redminelib import Redmine
 from dotenv import load_dotenv
 
-from main import Fiscaliza
+from fiscaliza.main import Fiscaliza
 
 load_dotenv(override=True)
 

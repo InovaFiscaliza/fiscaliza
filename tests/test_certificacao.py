@@ -1,6 +1,7 @@
 import os
 import random
 from random import randint
+from pathlib import Path
 from dotenv import load_dotenv
 from fiscaliza.main import Fiscaliza
 from fiscaliza.constants import MUNICIPIOS, SERVICOS
@@ -36,10 +37,10 @@ dados = {
     "gerar_plai": 1,
     "tipo_do_processo_plai": random.choice(FIELDS["tipo_do_processo_plai"].options),
     "coord_fi_plai": random.choice(FIELDS["coord_fi_plai"].options),
-    "html_path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.html",
+    "html_path": Path(__file__).parent / "Report_2024.02.18_T11.30.55_123456.html",
     "uploads": [
         {
-            "path": "/mnt/c/Users/rsilva/code/fiscaliza/tests/Report_2024.02.18_T11.30.55_123456.json",
+            "path": Path(__file__).parent / "Report_2024.02.18_T11.30.55_123456.json",
             "filename": "Info.json",
         }
     ],
