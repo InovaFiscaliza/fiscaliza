@@ -15,5 +15,5 @@ dependencies:
   - urllib3=2.2.2
   - pip
   - pip:
-      - fiscaliza>=1.0.1
+      - fiscaliza>=1.0.2
 prefix: $env:USERPROFILE\AppData\Roaming\Anatel\apps
